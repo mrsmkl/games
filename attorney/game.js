@@ -1,39 +1,201 @@
 'use strict';
-const $=id=>document.getElementById(id), KEY='behind-curtain-rewrite-v2';
-const cast={iris:['Iris Quill','Defense attorney','defense',0],pip:['Pip Foley','Assistant • former sound technician','defense',1],mara:['Mara Bell','Defendant • sound engineer','defense',2],vera:['Vera Flint','Prosecutor','court',0],hank:['Hank Ledger','Detective','court',1],judge:['Judge','District court','court',2],celia:['Celia Rook','Stage manager','theatre',0],tessa:['Tessa Flash','Theatre critic','theatre',2]};
+const $=id=>document.getElementById(id), KEY='behind-curtain-two-days-v3';
+const cast={
+  "iris": [
+    "Iris Quill",
+    "Defense attorney",
+    "defense",
+    0
+  ],
+  "pip": [
+    "Pip Foley",
+    "Assistant • former sound technician",
+    "defense",
+    1
+  ],
+  "mara": [
+    "Mara Bell",
+    "Defendant • sound engineer",
+    "defense",
+    2
+  ],
+  "vera": [
+    "Vera Flint",
+    "Prosecutor",
+    "court",
+    0
+  ],
+  "hank": [
+    "Hank Ledger",
+    "Detective",
+    "court",
+    1
+  ],
+  "judge": [
+    "Judge",
+    "District court",
+    "court",
+    2
+  ],
+  "celia": [
+    "Celia Rook",
+    "Stage manager",
+    "theatre",
+    0
+  ],
+  "tessa": [
+    "Tessa Flash",
+    "Theatre critic",
+    "theatre",
+    2
+  ]
+};
 const evidence=[
   {
     "id": "report",
     "name": "Scene report",
     "tag": "POLICE • EXHIBIT 01",
-    "text": "Adrian Vale was found behind the stage desk after the 8:02 blackout. Fatal injury: a blow from the brass award. Medical estimate: 7:50–8:05. Mara’s fingerprints are on the base. SEALED RECOVERY ANNEX — At 8:12, police recovered a detached handle beneath the body. It was concealed until officers moved Vale; it is not visible in the photograph. A fresh coral-coloured thread was caught inside the newly broken joint. The annex was supplied only to the court and counsel, not witnesses or press."
+    "text": "Adrian Vale, theatre director, was found behind the desk after the 8:02 p.m. blackout. Preliminary opinion: death from a blow, with the apparent brass theatre award treated as the weapon. Full laboratory inventory pending. The medical estimate is 7:50–8:05 p.m. Mara’s fingerprints are on the award’s base. Officers recovered a broken handle from underneath the body at 8:12 p.m., after securing the scene. Until recovery, the handle was concealed by the body. This recovery detail was withheld from public reports."
   },
   {
     "id": "mic",
     "name": "Microphone service slip",
     "tag": "THEATRE • EXHIBIT 02",
-    "text": "7:55 p.m. — Stage microphone disconnected at the patch panel to stop feedback. Signed: Mara Bell. It remained unplugged until police secured the scene. Auditorium playback speakers remained connected. The publicity schedule lists an 8:02 blackout followed by an 8:03 “return of the author”; Mara was not given that schedule."
+    "text": "7:55 p.m. — Stage microphone disconnected at the patch panel to stop feedback. Signed: Mara Bell. It remained unplugged until police secured the scene. The auditorium speakers were still connected to the playback console."
   },
   {
     "id": "alibi",
     "name": "Corridor camera",
     "tag": "SECURITY • EXHIBIT 03",
-    "text": "Continuous footage, clock independently verified. Mara enters the upstairs booth at 7:56 and leaves at 8:03; no other exit. At 7:59:10, Vale passes the lower landing, visible through the stairwell, drinking from a white mug and straightening his bow tie. His face is clear. He returns towards the stage at 7:59:22. The footage continues unbroken. This is after the 7:58 photograph."
+    "text": "Continuous corridor footage: Mara enters the upstairs sound booth at 7:56 p.m. and leaves at 8:03 p.m. There is no other exit. The camera clock was checked against the police time signal."
   },
   {
     "id": "photo",
     "name": "Tessa’s 7:58 photograph",
     "tag": "PHOTO • EXHIBIT 04",
-    "text": "Original file, timestamp verified: 7:58. The mirror shows Vale lying motionless beside the desk and an award on the floor. A still image establishes a pose, not whether a person is dead. The detached handle is not visible. Tessa’s coral scarf is intact in this earlier photograph. The framing is precise enough to show the collapsed figure while concealing the space behind the desk."
+    "text": "Original photograph, timestamp verified: 7:58 p.m. In the gold mirror behind Tessa, Vale is collapsed beside the desk. The award is already on the floor. The detached handle is not visible in this photograph. The original file timestamp was verified against the camera clock; the time is shown in the evidence overlay."
   },
   {
     "id": "log",
     "name": "Playback cue log",
     "tag": "CONSOLE • EXHIBIT 05",
-    "text": "8:02:00 — Manual GO from Celia’s stage-left console. Upstairs booth: monitor-only. Cue 17B plays “Mara, put that down!” and a crash, edited from a rehearsal about lowering a speaker. SIGNED AUDIT: the originally approved cue was harmless thunder. At 8:00:20 the replacement file was signed and uploaded from press terminal P1 using Tessa Flash’s personal press key; the terminal’s confirmation photograph shows Tessa operating it. Celia’s station could trigger the cue but could not edit its file. Cue 18, scheduled for 8:03 but cancelled when the performance was stopped, was titled “RESURRECTION / THE THREE DEAD AUTHORS”. Its attached slide identifies three prizewinning literary estates as shell companies paid into the same account belonging to Tessa Flash."
+    "text": "8:02:00 p.m. — Manual GO, cue 17B: VALE_REHEARSAL_EDIT.wav. Trigger source: stage-manager console, stage left. The upstairs booth was in monitor-only mode. The clip contains “Mara, put that down!” followed by a crash. In the unedited rehearsal, he was asking Mara to lower a speaker."
+  },
+  {
+    "id": "camera2",
+    "name": "Restored landing footage",
+    "tag": "DAY 2 • CAMERA CONTINUATION",
+    "art": "alibi",
+    "text": "Recovered overnight from the recorder’s second channel. Synchronized with the booth footage: 7:59:10 — Vale crosses the lower landing alive, carrying coffee; 7:59:22 — returns towards stage. Mara remains in the upstairs booth until 8:03. At 8:01:40 Vale sits behind the stage desk. Recording continuity and his identity are independently verified. The 7:58 photograph therefore predates his death."
+  },
+  {
+    "id": "lab",
+    "name": "Two-award laboratory report",
+    "tag": "DAY 2 • CORRECTED FORENSICS",
+    "art": "report",
+    "text": "Overnight inventory separates two matching awards. A: hollow resin replica, brass paint, breakaway handle, Mara’s prints on base. B: solid brass original, recovered under desk scenery with blood and tissue; its broken handle lay beneath Vale. Preliminary scene labels had grouped A’s base and B’s handle as one object. The fatal wound is consistent with a heavy object falling from above, not A’s light resin body. Celia’s admitted strike with A caused a superficial injury; Vale survived it. Both handles share the same moulded shape."
+  },
+  {
+    "id": "packet",
+    "name": "Publicity rehearsal packet",
+    "tag": "DAY 2 • SEALED PRESS ARCHIVE",
+    "art": "photo",
+    "text": "Recovered from Tessa’s embargoed press folder overnight. Vale planned a fake death at 7:58 and an 8:03 resurrection to announce three supposedly rediscovered plays. He deliberately provoked Celia while a breakaway replica was on the desk, then played dead for Tessa’s photograph. Tessa agreed to publicize the stunt and uploaded the scream file supplied by Pip; Celia was promised a credit for her late sister. None received the rigging instructions. The signed publicity contract names Pip Foley as technical producer. Tessa admits the estates and provenance were fabricated marketing."
+  },
+  {
+    "id": "relay",
+    "name": "Isolated rig safety recorder",
+    "tag": "DAY 2 • HARDWARE AUDIT",
+    "art": "log",
+    "text": "Independent safety recorder, disconnected from the audio editor. At 8:00:31, Pip Foley’s personal service key enabled an undocumented relay on cue 17B; the booth camera shows him at the maintenance cabinet. His measured load test recorded 4.8 kg, matching the solid brass award, not a paper banner. At 8:02:00 Celia’s manual GO both played the scream and released that load directly over Vale’s desk. Celia’s console displayed AUDIO ONLY. The old public cue log did not include this isolated rig channel."
+  },
+  {
+    "id": "ledger",
+    "name": "Escrow instructions and cue revision",
+    "tag": "DAY 2 • BANK-CERTIFIED ARCHIVE",
+    "art": "report",
+    "text": "Bank-certified instructions identify Pip Foley as sole beneficial owner of all three fictional literary estates; Tessa was a paid publicity front. Vale had scheduled an 8:03 projection exposing the estates and Pip’s diverted royalties. At 8:00:46 Pip signed revision R17: “Replace banner load with award B. Remove safety catch. Suppress relay label on operator display. Keep cue 18 cancelled.” The revision hash matches the isolated recorder. A confirmation photograph shows Pip approving R17. The escrow archive was immutable before the performance; police recovered it independently overnight."
   }
 ];
-const clues=[{name:'Disconnected microphone',id:'mic',bg:'stage',who:'pip',line:'The speakers can play a recording even when the stage microphone is unplugged. Someone wanted an audience for a voice that wasn’t live.'},{name:'Upstairs sound booth',id:'alibi',bg:'booth',who:'mara',line:'Celia sent me upstairs at 7:56. I didn’t leave until after the scream. Please… I only picked up the award because I thought I could help.'},{name:'Critic’s photograph',id:'photo',bg:'stage',who:'pip',line:'Tessa was taking a selfie, but the mirror caught something else. Vale is lying on the floor at 7:58. A pose is not a diagnosis.'},{name:'Stage-manager console',id:'log',bg:'booth',who:'pip',line:'Cue 17B. A rehearsal recording, manually triggered at 8:02 from stage left. Mara’s booth couldn’t have sent that command.'}];
+const clues=[
+  {
+    "name": "Disconnected microphone",
+    "id": "mic",
+    "bg": "stage",
+    "who": "pip",
+    "line": "The speakers can play a recording even when the stage microphone is unplugged. Someone wanted an audience for a voice that wasn’t live.",
+    "day": 1
+  },
+  {
+    "name": "Upstairs sound booth",
+    "id": "alibi",
+    "bg": "booth",
+    "who": "mara",
+    "line": "Celia sent me upstairs at 7:56. I didn’t leave until after the scream. Please… I only picked up the award because I thought I could help.",
+    "day": 1
+  },
+  {
+    "name": "Critic’s photograph",
+    "id": "photo",
+    "bg": "stage",
+    "who": "pip",
+    "line": "Tessa was taking a selfie, but the mirror caught something else. Vale is already on the floor at 7:58. Keep that time in mind.",
+    "day": 1
+  },
+  {
+    "name": "Stage-manager console",
+    "id": "log",
+    "bg": "booth",
+    "who": "pip",
+    "line": "Cue 17B. A rehearsal recording, manually triggered at 8:02 from stage left. Mara’s booth couldn’t have sent that command.",
+    "day": 1
+  },
+  {
+    "name": "Recorder’s second channel",
+    "id": "camera2",
+    "bg": "booth",
+    "who": "hank",
+    "day": 2,
+    "x": 28,
+    "y": 35
+  },
+  {
+    "name": "Reopened property inventory",
+    "id": "lab",
+    "bg": "stage",
+    "who": "hank",
+    "day": 2,
+    "x": 65,
+    "y": 70
+  },
+  {
+    "name": "Embargoed press folder",
+    "id": "packet",
+    "bg": "stage",
+    "who": "tessa",
+    "day": 2,
+    "x": 30,
+    "y": 60
+  },
+  {
+    "name": "Rig safety cabinet",
+    "id": "relay",
+    "bg": "booth",
+    "who": "hank",
+    "day": 2,
+    "x": 12,
+    "y": 40
+  },
+  {
+    "name": "Certified escrow archive",
+    "id": "ledger",
+    "bg": "booth",
+    "who": "vera",
+    "day": 2,
+    "x": 72,
+    "y": 60
+  }
+];
 const trials=[
   {
     "title": "A voice in the darkness",
@@ -43,341 +205,527 @@ const trials=[
     "lines": [
       "At 8:02, witnesses heard Vale shout, “Mara, put that down!”",
       "His voice came over the stage microphone. He was certainly alive at 8:02.",
-      "A crash followed. Mara was found holding the award.",
-      "A dispute, the shout, and her fingerprints led us to arrest her."
+      "A crash followed. When the lights returned, Mara was holding the award.",
+      "Her fingerprints match the base. That is why we arrested her."
     ],
     "press": [
-      "The blackout was a planned cue. Does that make the voice live?",
-      "Check the service time against the time of the shout.",
-      "She says she picked up the base after coming downstairs.",
-      "Several witnesses can all be misled by the same sound."
+      "Several audience members agree on the time. The blackout was a scheduled lighting cue.",
+      "The detective assumed the microphone was live. Is there a document that tests that assumption?",
+      "Mara says she picked it up afterward. Holding a weapon is not the same as using it.",
+      "Fingerprints tell us who touched an object, but rarely when."
     ],
     "success": [
       [
-        "iris",
-        "The microphone was disconnected at 7:55. The speakers carried a recording, not a live voice!",
+        "hank",
+        "Wait—the microphone was unplugged? Then I wrote down the time of the sound as though it were the time of the crime.",
         "intense"
       ],
       [
-        "hank",
-        "Then I treated the time of a sound as the time of an attack.",
-        "intense"
+        "iris",
+        "The stage microphone had been disconnected since 7:55. That voice could not have been transmitted live!"
       ],
       [
         "vera",
-        "A false sound does not tell us when the real blow landed."
+        "The speakers were still working. A recording is possible. But possibility does not establish the time of death."
       ],
       [
         "judge",
-        "Call the witness with the photograph."
+        "Then we need something more reliable than a voice in the dark. Call the next witness."
       ]
-    ]
+    ],
+    "day": 1
   },
   {
-    "title": "The photograph of a dead man",
+    "title": "The last sighting",
     "who": "tessa",
     "target": 2,
     "proof": "photo",
     "lines": [
-      "I came to review a play, not participate in one.",
-      "At 7:58 I took a perfectly ordinary photograph of myself.",
-      "Vale was standing beside his desk at that exact moment.",
-      "I heard the shout four minutes later and assumed the worst."
+      "I was in the front row before the performance. A dreadful view of the understudies.",
+      "At 7:58 I took a photograph of myself with the gold mirror behind me.",
+      "Vale was still standing beside his desk at that time. I am absolutely certain.",
+      "Then came the blackout, that awful shout, and the crash."
     ],
     "press": [
-      "A critic can also have a role in the evening’s publicity.",
-      "The file timestamp is verified. Its contents deserve equal attention.",
-      "Look at the mirror. Is that a standing figure?",
-      "A sound and a photograph are separate observations."
+      "An excellent view of the stage, then. Including the mirror beside the desk.",
+      "The original file and the checked camera clock agree. The photograph really is from 7:58.",
+      "Is her memory consistent with what her own camera captured? Look at the photograph in the record.",
+      "The recording tells us when the sound played, not when the blow landed."
     ],
     "success": [
       [
         "iris",
-        "Your own photograph shows Vale lying beside the desk at 7:58!",
-        "intense"
+        "Your photograph contradicts you. In the mirror, Vale is already collapsed, with the award beside him. At 7:58."
       ],
       [
         "tessa",
-        "Then… the murder must already have happened. I was looking at the lens, not at him.",
-        "thought"
+        "Oh. I… remembered him from earlier. I never looked at the reflection."
       ],
       [
-        "pip",
-        "That would put the collapse before the scream. But we should be careful about the word “murder”."
+        "iris",
+        "Mara was upstairs from 7:56 to 8:03. The false scream drew her down to a crime that had already happened."
       ],
       [
         "vera",
-        "The stage manager will explain why this evening had a scheduled blackout."
+        "Then whoever controlled that scream controlled our timeline. I call the stage manager."
       ]
-    ]
+    ],
+    "day": 1
   },
   {
-    "title": "A murder with a prompt book",
+    "title": "The person behind the cue",
     "who": "celia",
     "target": 1,
     "proof": "log",
     "lines": [
-      "The Royal needed an opening night no newspaper could ignore.",
-      "The 8:02 sound was automatic. My station sent no command.",
-      "I sent Mara upstairs because Adrian wanted her out of the scene.",
-      "I thought he was waiting behind the desk for his next entrance."
+      "I run a precise theatre. Cues are planned weeks in advance.",
+      "The 8:02 sound was automatic. Only Mara’s upstairs booth could control it.",
+      "I stayed at my stage-left station throughout the blackout.",
+      "When the lights returned, I saw Mara gripping that broken handle."
     ],
     "press": [
-      "What kind of opening requires the director to hide behind his desk?",
-      "The log identifies both the command and its source.",
-      "A real instruction can put an innocent person in the wrong story.",
-      "Ask what entrance was supposed to follow the blackout."
+      "The blackout was planned. Was the scream on the original cue sheet?",
+      "Automatic, she says. Compare that claim with the trigger source in the console log.",
+      "That puts her beside the stage-manager console. A convenient place to control the sound.",
+      "The broken handle? Notice exactly what she claims to have seen."
     ],
     "success": [
       [
         "iris",
-        "MANUAL GO. You pressed the button at stage left.",
-        "intense"
+        "The console log says MANUAL GO. From your station, Ms. Rook. Mara’s booth was in monitor-only mode."
       ],
       [
         "celia",
-        "Yes. I lied because I thought admitting it would make me responsible for his death.",
-        "intense"
-      ],
-      [
-        "celia",
-        "Adrian was staging his own murder. A photograph of a corpse, a blackout, then his triumphant resurrection at 8:03. My cue was supposed to be thunder."
-      ],
-      [
-        "judge",
-        "The deceased booked himself a resurrection?",
-        "intense"
-      ],
-      [
-        "celia",
-        "He called it immersive publicity. I called it a liability. He promised to credit my sister’s play if I helped."
+        "I… may have pressed it. An accidental cue. That does not make me a murderer."
       ],
       [
         "vera",
-        "You admit helping with a hoax. That does not establish when the hoax became a murder."
-      ],
-      [
-        "tessa",
-        "Nonsense. The photograph proves he was already dead at 7:58. There could be no later attack.",
+        "The defense has proved a false timeline, but not who struck the blow.",
         "intense"
       ],
       [
         "iris",
-        "Then let us put that claim on the record."
+        "There is one more problem. Ms. Rook said she saw Mara gripping the broken handle."
       ]
-    ]
+    ],
+    "day": 1
   },
   {
-    "title": "The victim takes an interval",
-    "who": "tessa",
+    "title": "A detail she could not have seen",
+    "who": "celia",
     "target": 0,
-    "proof": "alibi",
+    "proof": "report",
     "lines": [
-      "Vale was dead by 7:58. He could not have walked anywhere after that.",
-      "The figure in my photograph is the real Adrian Vale.",
-      "Celia’s resurrection story is an excuse invented after the arrest.",
-      "Mara could have attacked him before going upstairs."
+      "I saw the broken handle in Mara’s hand from my station. I never went near Vale’s body.",
+      "Anyone could have noticed it when the lights came back.",
+      "I only triggered a sound cue. You cannot prove anything else."
     ],
     "press": [
-      "A photograph freezes one instant. What does continuous footage show a minute later?",
-      "We agree about his identity. It is his condition that is disputed.",
-      "The archived schedule mentions a return at 8:03.",
-      "Mara stays upstairs until 8:03. First establish the latest time Vale was alive."
+      "Which exhibit records where the police actually recovered the handle? A photograph cannot show something hidden under the body.",
+      "The handle is hidden under Vale. That detail was never disclosed during testimony.",
+      "The recording, the false account, and the hidden handle must be considered together."
     ],
     "success": [
       [
         "iris",
-        "At 7:59:10, Vale walks past the lower landing drinking from a mug. The camera clock is verified, and his face is clear.",
+        "The police recovered the handle from underneath Vale’s body at 8:12. It remained concealed until they moved him. Mara held the base. From your station, you could not have seen that broken piece."
+      ],
+      [
+        "celia",
+        "He… he snapped it when he grabbed my wrist. I never meant—"
+      ],
+      [
+        "judge",
+        "Ms. Rook. Are you describing the moment of the attack?"
+      ],
+      [
+        "celia",
+        "He stole my sister’s play. Every line. I confronted him before the curtain… I struck him. Then I ran the scheduled cue instead of stopping the show. I wanted a few more minutes before anyone found him."
+      ],
+      [
+        "mara",
+        "All that time, I thought I should have come down sooner."
+      ],
+      [
+        "iris",
+        "The sound was a lie, Mara. Your story wasn’t."
+      ],
+      [
+        "vera",
+        "The confession changes the case. But the signed medical report and full property inventory are due tomorrow. I request an overnight adjournment before the court enters a verdict."
+      ],
+      [
+        "judge",
+        "Granted. Ms. Rook will remain available for questioning. Ms. Bell, the court will resume tomorrow morning."
+      ],
+      [
+        "mara",
+        "One more night?",
+        "thought"
+      ],
+      [
+        "iris",
+        "One more night. I will be here when the doors open.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "title": "The photograph’s second meaning",
+    "who": "tessa",
+    "target": 1,
+    "proof": "camera2",
+    "lines": [
+      "Yesterday I accepted that the photograph showed Vale’s death.",
+      "After 7:58 he could not possibly have walked anywhere.",
+      "Celia confessed to striking him before that photograph."
+    ],
+    "press": [
+      "A photograph records a pose. Yesterday we attached a diagnosis.",
+      "Compare the recovered second channel with the photograph’s time.",
+      "A confession to an action is not proof of every consequence."
+    ],
+    "success": [
+      [
+        "iris",
+        "The recovered footage shows Vale walking with coffee at 7:59:10. He survived whatever happened before your photograph.",
         "intense"
       ],
       [
         "judge",
-        "The corpse took a tea break?",
+        "The deceased took an interval?"
+      ],
+      [
+        "tessa",
+        "Yes. He told me he intended to get up again. I concealed the publicity arrangement because it looked monstrous once he really died.",
+        "thought"
+      ],
+      [
+        "vera",
+        "Mara remained upstairs until 8:03. Her exclusion now rests on continuous footage, not a supposed time of death from a still image."
+      ],
+      [
+        "iris",
+        "But Celia struck him. What exactly did she strike him with?"
+      ]
+    ],
+    "day": 2
+  },
+  {
+    "title": "The confession and the wrong weapon",
+    "who": "celia",
+    "target": 0,
+    "proof": "lab",
+    "lines": [
+      "The award I swung was the same solid brass object that killed him.",
+      "Its handle broke. That is why I knew what the concealed piece looked like.",
+      "I lied about seeing Mara hold it because I was afraid to admit my own attack."
+    ],
+    "press": [
+      "The overnight inventory separates two objects previously labelled as one.",
+      "Two replicas can share a handle shape. Which base carried Mara’s prints?",
+      "That explains the lie. It does not decide which injury was fatal."
+    ],
+    "success": [
+      [
+        "iris",
+        "You swung award A: a hollow resin replica. Award B, the solid brass original, caused the fatal injury from above.",
+        "intense"
+      ],
+      [
+        "hank",
+        "We grouped a base from one award with a handle from the other. The full inventory and laboratory work corrected that preliminary assumption.",
+        "thought"
+      ],
+      [
+        "celia",
+        "He gave me something that would break, made me think I had killed him, and then went for coffee?",
+        "intense"
+      ],
+      [
+        "iris",
+        "He exploited a real confrontation for a staged death. You are responsible for striking him, but the evidence does not make that strike the murder."
+      ],
+      [
+        "vera",
+        "And someone later put the real award above the desk. Who designed the rest of this performance?"
+      ]
+    ],
+    "day": 2
+  },
+  {
+    "title": "The critic’s second job",
+    "who": "tessa",
+    "target": 1,
+    "proof": "packet",
+    "lines": [
+      "I agreed to publish an outrageous opening-night photograph.",
+      "Celia designed the entire stunt. No outside technician was involved.",
+      "I uploaded the scream but never went near the rigging."
+    ],
+    "press": [
+      "The embargoed folder describes the photograph and the later resurrection.",
+      "Look at the technical producer named in the signed publicity contract.",
+      "The audio upload and the mechanical preparation are different actions."
+    ],
+    "success": [
+      [
+        "iris",
+        "The signed packet names Pip Foley as technical producer. My assistant.",
         "intense"
       ],
       [
         "pip",
-        "A coffee break, technically. The cup is in the property inventory."
-      ],
-      [
-        "iris",
-        "The photograph captured a performance. Vale returned towards the stage at 7:59:22. Mara remained upstairs until 8:03."
-      ],
-      [
-        "vera",
-        "That excludes Mara from the fatal attack, not merely from a sound cue. I withdraw that theory."
+        "I freelanced for the show. That does not mean I killed anyone. I helped you get an innocent woman out of this.",
+        "thought"
       ],
       [
         "tessa",
-        "Then arrest the woman at the console. She chose to play the scream.",
-        "intense"
+        "He supplied the sound edit. I was meant to sell a resurrection and three rediscovered masterpieces. I did not know about anything above the desk."
       ],
       [
         "celia",
-        "I chose GO. I did not choose that recording. Someone changed what my button would play.",
-        "intense"
-      ],
-      [
-        "iris",
-        "The console remembers the difference."
-      ]
-    ]
-  },
-  {
-    "title": "The critic’s invisible rewrite",
-    "who": "tessa",
-    "target": 1,
-    "proof": "log",
-    "lines": [
-      "I spent the interval preparing my review at the press terminal.",
-      "Celia uploaded the scream. I never changed a sound file.",
-      "My press key was with me throughout the evening.",
-      "I know nothing about the cancelled resurrection slide."
-    ],
-    "press": [
-      "The terminal has a signed upload history and a confirmation photograph.",
-      "Separate the person who uploaded the file from the person who triggered it.",
-      "The audit identifies the key and the operator, not merely an unattended computer.",
-      "Why were three allegedly dead authors sharing one living critic’s bank account?"
-    ],
-    "success": [
-      [
-        "iris",
-        "At 8:00:20, your personal key signed the replacement upload. The terminal’s confirmation photograph shows you doing it. Celia’s station could not edit the file.",
-        "intense"
+        "And my sister’s lost play?"
       ],
       [
         "tessa",
-        "Fine. I supplied an audio gag. I thought it was part of his ridiculous stunt. That is not murder.",
-        "intense"
+        "Invented provenance. I am sorry. The handwriting was copied. You were promised the credit to keep you working.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Pip. You knew the show’s design yesterday, while I was relying on you to explain its evidence."
+      ],
+      [
+        "pip",
+        "I thought the stunt had gone wrong. I wanted the person who actually pressed GO to answer for it.",
+        "thought"
       ],
       [
         "vera",
-        "And the cancelled slide? Three literary estates, one account: yours."
-      ],
-      [
-        "tessa",
-        "They were pen names. Marketing arrangements. Literature has always used masks."
-      ],
-      [
-        "celia",
-        "He showed me my sister’s handwriting. He said he had found her lost final draft.",
-        "intense"
-      ],
-      [
-        "tessa",
-        "A facsimile. Your sister was not one of my authors. Vale asked me to manufacture a provenance convincing enough to secure your cooperation."
-      ],
-      [
-        "iris",
-        "He promised Celia a tribute, promised you publicity, and secretly scheduled an exposé of the person selling three dead writers’ work."
-      ],
-      [
-        "tessa",
-        "He was going to walk out alive and ruin me. Yes, I changed his precious soundtrack. But when I saw him, the detached handle was already under his body. Anyone could see that in my photograph.",
-        "intense"
-      ],
-      [
-        "iris",
-        "Your photograph? Let us examine exactly what it could show.",
-        "intense"
+        "Mr. Foley, leave the defense bench. You will answer as a witness."
       ]
-    ]
+    ],
+    "day": 2
   },
   {
-    "title": "A detail outside the frame",
-    "who": "tessa",
+    "title": "What the GO button really did",
+    "who": "pip",
     "target": 0,
-    "proof": "report",
+    "proof": "relay",
     "lines": [
-      "My photograph showed the detached handle beneath Vale. That is how I knew where it was.",
-      "I never touched him or the broken award.",
-      "The coral thread could have come from any old stage costume."
+      "Cue 17B only played sound. It could not release a physical object.",
+      "Celia chose when to press GO. I was away from the stage at 8:02.",
+      "Any rig setting left in the cabinet was merely old theatre machinery."
     ],
     "press": [
-      "The sealed recovery annex records whether the handle was visible before officers moved the body.",
-      "Compare the concealed handle, the newly broken joint, and her scarf in the earlier photograph.",
-      "The thread was inside a freshly broken joint, not loose on the stage. This supports the other evidence; colour alone does not identify a killer."
+      "The audio log was only one channel. Read the independent safety recorder.",
+      "A person can prepare a mechanism before another person unknowingly triggers it.",
+      "The recorder timestamps a new service-key operation at 8:00:31."
     ],
     "success": [
       [
         "iris",
-        "The handle was concealed beneath Vale until police moved him at 8:12. Your photograph cannot show it. The recovery annex was never given to witnesses.",
+        "The isolated recorder links cue 17B to a release above the desk. You enabled it at 8:00:31; the maintenance camera and your service key identify you.",
         "intense"
       ],
       [
-        "tessa",
-        "The… the angle of the mirror—",
+        "hank",
+        "The load test measured 4.8 kilograms. Exactly the mass of the brass award."
+      ],
+      [
+        "pip",
+        "The release was for a paper banner. Someone must have substituted the load after I tested it.",
         "intense"
       ],
       [
         "iris",
-        "You invented a visible source for hidden knowledge. And a coral thread was trapped inside the fresh break. Your scarf was intact in the photograph taken before the real attack.",
+        "You tested the weight of the award, then concealed the relay from Celia’s display. Her button played the alibi and released the weapon together."
+      ],
+      [
+        "vera",
+        "We have the mechanism and its operator. The remaining question is whether this was an error or an intended substitution."
+      ],
+      [
+        "pip",
+        "I never authorized an award in that rig. You cannot produce an instruction that says I did.",
+        "intense"
+      ]
+    ],
+    "day": 2
+  },
+  {
+    "title": "The producer’s final revision",
+    "who": "pip",
+    "target": 0,
+    "proof": "ledger",
+    "lines": [
+      "I never ordered the brass award substituted or the safety catch removed.",
+      "I was only a technician. The fake literary estates belonged to Tessa.",
+      "Helping the defense would make no sense if I had planned the murder."
+    ],
+    "press": [
+      "The bank archive contains an authenticated, immutable cue revision, not a recollection.",
+      "Follow beneficial ownership rather than the name on the publicity poster.",
+      "A helpful guide can also steer which apparent solution the defense reaches."
+    ],
+    "success": [
+      [
+        "iris",
+        "Revision R17: replace the banner with award B, remove the catch, suppress the relay label, cancel cue 18. Signed by you at 8:00:46. The photograph and hardware hash confirm it.",
+        "intense"
+      ],
+      [
+        "pip",
+        "Vale was going to take everything. The royalties, the estates, the story I built for him.",
         "intense"
       ],
       [
         "vera",
-        "Knowledge alone is not a verdict. But the concealed detail, the fresh trace, your authenticated replacement cue and Vale’s planned exposure require an explanation."
+        "The bank identifies you as their sole beneficial owner. Tessa sold the fraud; you received its proceeds. Vale’s cancelled slide was going to expose that."
       ],
       [
-        "tessa",
-        "He came back from the stairs laughing. Said the best review I ever wrote would be my own confession.",
+        "pip",
+        "He wanted to resurrect himself over my public ruin. So I made sure he stayed dead.",
         "intense"
       ],
       [
-        "tessa",
-        "I struck him with the award. He caught the handle and my scarf as he fell. The handle snapped beneath him. It was just before eight.",
-        "intense"
-      ],
-      [
-        "tessa",
-        "Then I went to the press terminal. I used the rehearsal clip to make everyone hear Mara’s name at 8:02. Celia would press GO on schedule."
+        "pip",
+        "He sat on his mark at 8:01:40, waiting for the blackout. Celia pressed GO at 8:02. The scream covered the fall. Nobody looked up."
       ],
       [
         "iris",
-        "The first dead body was a publicity stunt. The second was real. You hid the murder between an alibi photograph and a fake resurrection.",
+        "Celia’s real anger supplied a false murder. Tessa’s staged photograph supplied a false time. Mara’s name supplied a false suspect. And you supplied us with a convincing false solution.",
         "intense"
+      ],
+      [
+        "pip",
+        "I knew which exhibits you would need. I thought you would stop after the confession.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Yesterday I did. Today we checked the parts you did not show us."
       ],
       [
         "judge",
-        "A murder disguised as a murder disguised as advertising. I require a recess from that sentence.",
-        "intense"
+        "A fake death used to conceal a real death, concealed again inside a defense investigation. I would like the next case to concern a stolen bicycle."
       ],
       [
-        "celia",
-        "My sister’s play was never in his drawer at all. I helped sell a lie because I wanted her name on the poster.",
+        "mara",
+        "Was any part of what you told me real?",
+        "thought"
+      ],
+      [
+        "pip",
+        "You were innocent. That part was real.",
         "thought"
       ],
       [
         "mara",
-        "And I thought the last thing he did was call for me.",
-        "thought"
-      ],
-      [
-        "iris",
-        "He did not. That voice belonged to a rehearsal. You were never the person this story was about."
+        "You do not get to use that as kindness.",
+        "intense"
       ],
       [
         "vera",
-        "The prosecution requests an investigation into Tessa Flash’s confession and the literary-estate fraud. The case against Mara Bell cannot stand."
+        "The prosecution withdraws the charge against Mara Bell and requests Pip Foley’s arrest. Celia’s assault and the fraudulent estates will be investigated separately."
       ],
       [
         "judge",
         "Mara Bell… NOT GUILTY.",
         "thought"
+      ],
+      [
+        "iris",
+        "Two days. Two endings. This time, nobody else had written the last line for us.",
+        "thought"
       ]
-    ]
+    ],
+    "day": 2
   }
 ];
-const opening=[["iris","By morning, every newspaper had the same story: a director cried out, a crash followed, and a sound engineer was found holding a bloodied award."],["iris","My client, Mara Bell, had spent the night in a cell. She had asked for a lawyer. What she seemed to need first was someone who would let her finish a sentence."],["mara","They keep asking why Adrian shouted my name. I do not know. I was upstairs, listening to the show through headphones."],["iris","Tell me what you remember, not what you think they want explained."],["mara","The blackout was part of the opening scene. Then I heard him, and the crash. I ran down. He was on the floor behind the desk."],["iris","And the award?"],["mara","I picked it up by the base. It was beside him. I thought I could help, but I cannot even tell you how lifting it was supposed to help."],["iris","Shock does not always produce a sensible sequence of actions. We will establish the sequence of events instead."],["pip","The police have released the stage for our inspection. I used to work at the Royal; I can show you how the sound system fits together."],["mara","Celia is there, and Tessa has stayed to give her statement. Detective Ledger can explain the report. Ms. Flint said she would speak to you before the hearing."],["iris","Then we start with the people who were there, and the room they were in. We have a scene report in the court record. Everything else, we check for ourselves."],["pip","A voice, a weapon, and a time. Let’s find out whether those three things actually belong together."]];
-const courtIntro=[['judge','The court is now in session for the trial of Mara Bell.'],['vera','The victim called the defendant’s name. She was then found holding the murder weapon. The evidence speaks clearly.'],['iris','Then I intend to listen very carefully.'],['judge','Detective Ledger, your testimony, please.']];
-let state={mode:'title',stage:0,statement:0,hp:5,found:[],dialogue:[],cursor:0,after:'investigate',history:[],selected:'report'};
+const opening=[
+  [
+    "iris",
+    "By morning, every newspaper had the same story: a director cried out, a crash followed, and a sound engineer was found holding a bloodied award."
+  ],
+  [
+    "iris",
+    "My client, Mara Bell, had spent the night in a cell. She had asked for a lawyer. What she seemed to need first was someone who would let her finish a sentence."
+  ],
+  [
+    "mara",
+    "They keep asking why Adrian shouted my name. I do not know. I was upstairs, listening to the show through headphones."
+  ],
+  [
+    "iris",
+    "Tell me what you remember, not what you think they want explained."
+  ],
+  [
+    "mara",
+    "The blackout was part of the opening scene. Then I heard him, and the crash. I ran down. He was on the floor behind the desk."
+  ],
+  [
+    "iris",
+    "And the award?"
+  ],
+  [
+    "mara",
+    "I picked it up by the base. It was beside him. I thought I could help, but I cannot even tell you how lifting it was supposed to help."
+  ],
+  [
+    "iris",
+    "Shock does not always produce a sensible sequence of actions. We will establish the sequence of events instead."
+  ],
+  [
+    "pip",
+    "The police have released the stage for our inspection. I used to work at the Royal; I can show you how the sound system fits together."
+  ],
+  [
+    "mara",
+    "Celia is there, and Tessa has stayed to give her statement. Detective Ledger can explain the report. Ms. Flint said she would speak to you before the hearing."
+  ],
+  [
+    "iris",
+    "Then we start with the people who were there, and the room they were in. We have a scene report in the court record. Everything else, we check for ourselves."
+  ],
+  [
+    "pip",
+    "A voice, a weapon, and a time. Let’s find out whether those three things actually belong together."
+  ]
+];
+const courtIntro=[
+  [
+    "judge",
+    "The court is now in session for the trial of Mara Bell."
+  ],
+  [
+    "vera",
+    "The victim called the defendant’s name. She was then found holding the murder weapon. The evidence speaks clearly."
+  ],
+  [
+    "iris",
+    "Then I intend to listen very carefully."
+  ],
+  [
+    "judge",
+    "Detective Ledger, your testimony, please."
+  ]
+];
+const day2Opening=[["iris","Day 2. 8:15 a.m. I expected a signed report and a verdict. Detective Ledger was waiting outside with two property bags."],["hank","We made a mistake in the first inventory. There are two awards. The lab has separated them, and the recorder team recovered a second camera channel."],["iris","Does this change Celia’s confession?"],["hank","It changes what her confession proves. You need to see the material before court."],["vera","I have reopened access to the theatre. Tessa’s embargoed folder and a bank-certified archive arrived overnight as well. Everyone will be questioned again."],["mara","Yesterday you said we had the answer.","thought"],["iris","Yesterday we had a confession. Today we make sure it answers the right question.","thought"],["pip","I can help sort the records. We should be careful not to lose sight of what Celia admitted.","neutral"],["iris","We will check every part of it. Start with the new material in the stage and booth."]];
+const day2Intro=[["judge","Day two. Before a verdict, the court will hear the newly recovered evidence."],["vera","The prosecution no longer treats yesterday’s reconstruction as established. A confession must agree with the physical record."],["iris","We begin with the photograph. Its timestamp was correct. Our interpretation was not."],["judge","Ms. Flash. Return to the witness stand."]];
+function activeClues(){return clues.filter(c=>c.day===(state.day||1));}
+function evidenceFor(id){return evidence.find(e=>e.id===id);}
+
+let state={day:1,mode:'title',stage:0,statement:0,hp:5,found:[],dialogue:[],cursor:0,after:'investigate',history:[],selected:'report'};
 let sound=false, audio=new Audio(), currentTrack=-1, wantedTrack=0, loaded=new Set(), feedbackAfter=null;
 audio.loop=true;audio.volume=.33;
 function save(){if(state.mode==='title')return;try{localStorage.setItem(KEY,JSON.stringify(state));$('saveStatus').textContent='Progress saved';}catch{$('saveStatus').textContent='Saving unavailable';}}
-function restore(){try{const x=JSON.parse(localStorage.getItem(KEY));if(!x||!['dialogue','investigate','cross','ending'].includes(x.mode)||!Number.isInteger(x.stage)||x.stage<0||x.stage>=trials.length||!Array.isArray(x.found)||!Array.isArray(x.dialogue)||!Array.isArray(x.history))return null;
-x.found=[...new Set(x.found.filter(id=>clues.some(c=>c.id===id)))];x.hp=Number.isInteger(x.hp)&&x.hp>0&&x.hp<=5?x.hp:5;x.statement=Number.isInteger(x.statement)&&x.statement>=0&&x.statement<trials[x.stage].lines.length?x.statement:0;
-if(x.mode==='dialogue'&&(!Number.isInteger(x.cursor)||x.cursor<0||x.cursor>=x.dialogue.length||!['cross','investigate','ending'].includes(x.after)||!x.dialogue.every(d=>Array.isArray(d)&&cast[d[0]]&&typeof d[1]==='string')))return null;
+function restore(){try{const x=JSON.parse(localStorage.getItem(KEY));if(!x||!['dialogue','investigate','cross','ending','intermission'].includes(x.mode)||!Number.isInteger(x.stage)||x.stage<0||x.stage>=trials.length||!Array.isArray(x.found)||!Array.isArray(x.dialogue)||!Array.isArray(x.history))return null;
+x.day=x.day===2?2:1;if(x.day===1&&x.stage>3&&x.mode!=='intermission'&&!(x.mode==='dialogue'&&x.after==='intermission'))return null;if(x.day===2&&x.stage<4)return null;
+x.found=[...new Set(x.found.filter(id=>clues.some(c=>c.id===id&&c.day<=x.day)))];x.hp=Number.isInteger(x.hp)&&x.hp>0&&x.hp<=5?x.hp:5;x.statement=Number.isInteger(x.statement)&&x.statement>=0&&x.statement<trials[x.stage].lines.length?x.statement:0;
+if(x.mode==='dialogue'&&(!Number.isInteger(x.cursor)||x.cursor<0||x.cursor>=x.dialogue.length||!['cross','investigate','ending','intermission'].includes(x.after)||!x.dialogue.every(d=>Array.isArray(d)&&cast[d[0]]&&typeof d[1]==='string')))return null;
 x.history=x.history.filter(h=>h&&typeof h.who==='string'&&typeof h.line==='string').slice(-100);x.optionalSeen=Array.isArray(x.optionalSeen)?[...new Set(x.optionalSeen.filter(id=>optionalScenes.some(s=>s.id===id)))]:[];if(x.optionalReturn){const r=x.optionalReturn;if(x.mode!=='dialogue'||!['investigate','cross','ending'].includes(r.mode)||!optionalScenes.some(s=>s.id===r.id)&&!clues.some(c=>c.id===r.id)||!Number.isInteger(r.statement)||r.statement<0||r.statement>=trials[x.stage].lines.length)return null;}if(!['stage','booth','talk','court','ending'].includes(x.notesGroup)||x.mode==='dialogue')x.notesGroup=null;if(x.notesGroup){if(x.mode==='cross')x.notesGroup='court';else if(x.mode==='ending')x.notesGroup='ending';else if(!['stage','booth','talk'].includes(x.notesGroup))x.notesGroup='stage';}if(!interviewCast.includes(x.notesPerson))x.notesPerson='mara';return x;}catch{return null;}}
 function track(n){wantedTrack=n;if(!sound)return;if(!window.MUSIC?.[n]){if(!loaded.has(n)){loaded.add(n);let s=document.createElement('script');s.src=`assets/music${n}.js`;s.onerror=()=>{loaded.delete(n);sound=false;$('music').textContent='♫ Retry sound'};document.body.append(s);}return;}if(currentTrack!==n){audio.pause();audio.src=MUSIC[n];currentTrack=n;}audio.play().catch(()=>{sound=false;$('music').textContent='♫ Click to play'});}
 window.addEventListener('musicready',()=>track(wantedTrack));
@@ -394,41 +742,45 @@ function person(id,expression='neutral'){const c=cast[id]||cast.iris;const mood=
 function log(who,line){const last=state.history.at(-1);if(!last||last.line!==line)state.history.push({who:cast[who]?.[0]||who,line});if(state.history.length>100)state.history.shift();}
 function speak(lines,after,music=null){state.dialogueTrack=music;state.mode='dialogue';state.dialogue=lines;state.cursor=0;state.after=after;render();}
 function visible(id,yes){$(id).hidden=!yes;}
-function render(){visible('notesScreen',false);const m=state.mode,cross=m==='cross',dialogue=m==='dialogue';updateExtrasUI();const surreal=(m==='ending'&&state.alternateEnding)||(dialogue&&state.optionalReturn?.id==='duck_tribunal'&&state.cursor>=3);document.body.classList.toggle('surreal',!!surreal);visible('duckReveal',!!surreal);visible('rewindAlternate',m==='ending'&&!!state.alternateEnding);document.body.classList.toggle('cross',cross);['title','investigate','ending'].forEach(id=>visible(id,m===id));visible('dialogue',cross||dialogue);visible('portrait',cross||dialogue);visible('crossControls',cross);visible('testimonyBadge',cross);visible('credibility',cross);visible('location',m!=='title'&&m!=='ending');$('record').disabled=m==='title';$('location').textContent=m==='investigate'||(dialogue&&state.after==='investigate')?'Theatre Royal · Before the hearing':'District Court · Courtroom No. 3';
+function render(){visible('notesScreen',false);$('chapter').textContent='DAY '+(state.day||1)+' — TURNABOUT ON CUE';const m=state.mode,cross=m==='cross',dialogue=m==='dialogue';updateExtrasUI();const surreal=(m==='ending'&&state.alternateEnding)||(dialogue&&state.optionalReturn?.id==='duck_tribunal'&&state.cursor>=3);document.body.classList.toggle('surreal',!!surreal);visible('duckReveal',!!surreal);visible('rewindAlternate',m==='ending'&&!!state.alternateEnding);document.body.classList.toggle('cross',cross);['title','investigate','ending','intermission'].forEach(id=>visible(id,m===id));visible('dialogue',cross||dialogue);visible('portrait',cross||dialogue);visible('crossControls',cross);visible('testimonyBadge',cross);visible('credibility',cross);visible('location',m!=='title'&&m!=='ending'&&m!=='intermission');$('record').disabled=m==='title';$('location').textContent=m==='investigate'||(dialogue&&state.after==='investigate')?'Theatre Royal · Day '+(state.day||1):'District Court · Day '+(state.day||1);
  if(state.notesGroup&&['investigate','cross','ending'].includes(m)){
  ['investigate','ending','dialogue','portrait','crossControls','testimonyBadge','credibility','location','extras','duckReveal'].forEach(id=>visible(id,false));
  visible('notesScreen',true);document.body.classList.remove('cross','surreal');bg(state.notesGroup==='booth'?'booth':m==='investigate'?'stage':'courtroom');track(m==='investigate'?0:1);drawNotes();$('objective').textContent='Examine the scene · Choose a topic · Esc to return';save();return;
  }
  if(m==='title'){bg('stage');track(0);$('resume').hidden=!restore();$('chapter').textContent='CASE 01 — TURNABOUT ON CUE';$('objective').textContent='Find the truth behind the performance.';return;}
- if(m==='investigate'){bg('stage');track(0);$('toCourt').disabled=false;$('objective').textContent='Theatre Royal · Examine the rooms and interview the people involved';}
+ if(m==='intermission'){bg('courtroom');track(0);$('objective').textContent='Day 1 complete · Progress saved';$('chapter').textContent='DAY 1 — ADJOURNED';}
+ if(m==='investigate'){bg('stage');track(0);$('toCourt').disabled=false;$('investigate').querySelector('.eyebrow').textContent='DAY '+(state.day||1)+' · INVESTIGATION';$('investigate').querySelector('h2').innerHTML=state.day===2?'Read the scene<br>again.':'Every room<br>has a story.';$('investigate').querySelector('p').textContent=state.day===2?'Review the new reports in both rooms and speak to everyone again before the second hearing.':'Walk the stage, examine the sound booth, and hear the accounts of the people who were here.';$('objective').textContent='Theatre Royal · Examine the rooms and interview the people involved';}
  if(dialogue){const [who,line,expression]=state.dialogue[state.cursor]||opening[0];person(who,expression||expressionFor(who,line));if(surreal)visible('portrait',false);if(surreal&&who==='judge'){$('speaker').textContent='The Honourable Quack';$('role').textContent='Presiding waterfowl';}$('line').textContent=line;log(who,line);$('next').hidden=false;$('hint').textContent='Enter or Space to continue';if(state.optionalReturn){bg(state.scene);track(state.dialogueTrack??0);$('location').textContent=''+(state.optionalReturn.group==='booth'?'Sound booth':state.optionalReturn.mode==='investigate'?'Theatre Royal':'District Court');$('hint').textContent='Enter to continue · Return when you are ready';}else if(state.after==='investigate'){bg(state.scene||'stage');track(0)}else {bg('courtroom');track(state.dialogueTrack??(state.after==='ending'?3:state.stage>=2?3:1))}$('objective').textContent='Listen carefully. Every detail may matter.';}
- if(cross){const t=trials[state.stage];bg('courtroom');track(state.stage>=2?3:1);person(t.who,t.who==='tessa'&&state.stage>=3?'intense':t.who==='celia'?'thought':'neutral');$('line').textContent='“'+t.lines[state.statement]+'”';log(t.who,t.lines[state.statement]);$('next').hidden=true;$('hint').textContent='Press for details. Present evidence on the statement it contradicts.';$('testimonyTitle').textContent=t.title;$('statementCount').textContent=`STATEMENT ${state.statement+1} / ${t.lines.length}`;$('credibility').textContent='◆'.repeat(state.hp)+'◇'.repeat(5-state.hp);$('objective').textContent='Find the contradiction · ← → browse · P press · E present';$('chapter').textContent=`CASE 01 — CROSS-EXAMINATION ${state.stage+1}${state.stage===trials.length-1?' · FINAL CONTRADICTION':''}`;}
- if(m==='ending'){const alt=!!state.alternateEnding;const section=$('ending');section.querySelector('.eyebrow').textContent=alt?'ALTERNATE ENDING · 01 / THE QUACKENING':'CASE CLOSED';section.querySelector('h1').textContent=alt?'All rise. All quack.':'Not guilty.';section.querySelector('p').textContent=alt?'The verdict was never about you. It was about the breadcrumbs.':'The truth finally has the stage.';$('chapter').textContent=alt?'CASE 01 — THE QUACKENING':'CASE 01 — CASE CLOSED';bg('courtroom');track(alt?3:0);$('endingText').textContent=alt?'The theatre unfolds into a lily pad. Celia becomes Minister of Crumbs. Vera prosecutes the concept of dry land. Mara finally gets her quiet afternoon, although she is now a lighthouse. You are appointed a small but respected pond. CASE ADJOURNED UNTIL THE NEXT MIGRATION.':'Mara is free. Tessa’s confession opens a murder investigation and a spectacular literary-fraud inquiry. Celia brings her sister’s real, unfinished pages out of storage; the Royal will perform them under the right name. Pip bans resurrection cues from all future productions. The judge orders a coffee.';$('objective').textContent=alt?'Alternative ending discovered · Rewind to continue the original case':'Turnabout on Cue · Complete';}
+ if(cross){const t=trials[state.stage];bg('courtroom');track(state.stage>=2?3:1);person(t.who,(t.who==='pip'&&state.stage>=7)||(t.who==='tessa'&&state.stage>=4)?'intense':t.who==='celia'?'thought':'neutral');$('line').textContent='“'+t.lines[state.statement]+'”';log(t.who,t.lines[state.statement]);$('next').hidden=true;$('hint').textContent='Press for details. Present evidence on the statement it contradicts.';$('testimonyTitle').textContent=t.title;$('statementCount').textContent=`STATEMENT ${state.statement+1} / ${t.lines.length}`;$('credibility').textContent='◆'.repeat(state.hp)+'◇'.repeat(5-state.hp);$('objective').textContent='Find the contradiction · ← → browse · P press · E present';$('chapter').textContent=`DAY ${state.day||1} — CROSS-EXAMINATION ${state.stage-(state.day===2?4:0)+1}${state.stage===trials.length-1?' · FINAL CONTRADICTION':''}`;}
+ if(m==='ending'){const alt=!!state.alternateEnding;const section=$('ending');section.querySelector('.eyebrow').textContent=alt?'ALTERNATE ENDING · 01 / THE QUACKENING':'CASE CLOSED';section.querySelector('h1').textContent=alt?'All rise. All quack.':'Not guilty.';section.querySelector('p').textContent=alt?'The verdict was never about you. It was about the breadcrumbs.':'The truth finally has the stage.';$('chapter').textContent=alt?'CASE 01 — THE QUACKENING':'CASE 01 — CASE CLOSED';bg('courtroom');track(alt?3:0);$('endingText').textContent=alt?'The theatre unfolds into a lily pad. Celia becomes Minister of Crumbs. Vera prosecutes the concept of dry land. Mara finally gets her quiet afternoon, although she is now a lighthouse. You are appointed a small but respected pond. CASE ADJOURNED UNTIL THE NEXT MIGRATION.':'Mara leaves court free. Pip is arrested on suspicion of murder; the rigging records and his confession are preserved. Tessa faces a fraud investigation, and Celia must answer for the nonfatal assault. Celia gives Iris her sister’s real unfinished pages. The next production will carry an honest name. Iris closes her office’s second desk, then walks with Mara into a quiet afternoon.';$('objective').textContent=alt?'Alternative ending discovered · Rewind to continue the original case':'Turnabout on Cue · Complete';}
 
  save();}
-function begin(){state={mode:'dialogue',stage:0,statement:0,hp:5,found:[],dialogue:opening,cursor:0,after:'investigate',history:[],selected:'report'};sound=true;$('music').textContent='♫ Sound on';render();}
+function begin(){state={day:1,mode:'dialogue',stage:0,statement:0,hp:5,found:[],dialogue:opening,cursor:0,after:'investigate',history:[],selected:'report'};sound=true;$('music').textContent='♫ Sound on';render();}
 function advance(){if(state.mode!=='dialogue')return;if(++state.cursor>=state.dialogue.length){if(state.optionalReturn){finishOptional(true);return;}state.mode=state.after;if(state.mode==='cross')state.statement=0;}render();}
-const investigationDialogue=[[["iris","The stage microphone is unplugged. Was that part of the show?"],["pip","Feedback, according to Mara’s signed slip. Disconnected at 7:55."],["iris","Then how did an audience hear Vale at 8:02?"],["pip","The speakers could still play recordings. Disconnecting a microphone only removes that live input."],["iris","This attached publicity schedule is stranger: “8:03 — return of the author.”"],["pip","A man who had already arrived apparently intended to arrive again. Theatre."]],[["iris","One door to the booth. No other exit?"],["mara","None. Celia sent me upstairs at 7:56. I stayed until I heard the shout."],["pip","The continuous footage confirms that. Both clocks have been checked."],["iris","Who is that on the lower landing?"],["pip","Vale. At 7:59:10. Face visible, white mug, bow tie. Back towards the stage at 7:59:22."],["mara","He always took coffee before a show. Even when everyone else was rushing."],["iris","Keep that sequence. It tells us more than a single still image."]],[["tessa","My photograph is an embarrassment. Naturally, everyone wants the original."],["iris","The mirror behind you shows Vale lying beside the desk."],["tessa","At 7:58. The police verified the timestamp. I was watching the lens."],["pip","An excellent composition. The desk hides almost everything except the body and the award."],["iris","A body is not necessarily a dead body. Let us record what the image shows and leave the diagnosis open."],["tessa","You have the original. Please do not turn a critic into a photographer as well."]],[["iris","Cue 17B: a manual GO from stage left at 8:02."],["pip","But the approved file was thunder. At 8:00:20 someone replaced it with the rehearsal shout and a crash."],["iris","Does the audit identify who?"],["pip","Tessa’s personal press key, terminal P1. The confirmation photograph shows her at the keyboard. Celia could press GO, but could not edit files from her station."],["iris","And cue 18?"],["pip","Cancelled when the performance was stopped. “RESURRECTION / THE THREE DEAD AUTHORS.” Three literary estates, one bank account belonging to Tessa Flash. There is a slide attached to the export."],["iris","Take the complete export. We need the approved cue, its replacement, and the cancelled finale in the record."]]];
-function examine(i){state.notesGroup=null;const c=clues[i];if(!state.found.includes(c.id))state.found.push(c.id);state.optionalReturn={mode:'investigate',statement:state.statement,scene:state.scene||'stage',group:c.bg,id:c.id};state.scene=c.bg;speak([...investigationDialogue[i],['iris',evidence.find(e=>e.id===c.id).name+' added to the court record.']],'investigate');}
+const investigationDialogue=[[["iris","The microphone stand is still facing the empty front row. Why is there a cable on the floor?"],["pip","Mara disconnected the stage mic at the patch panel. Here is the service slip: 7:55, her signature."],["iris","Yet everyone heard Vale at 8:02."],["pip","These are separate routes into the speakers. Unplug a microphone and you lose that live input. A recording can still play through the same speakers."],["iris","Then hearing a voice does not establish that someone was speaking at that moment. Let’s keep the slip."]],[["iris","There is only one door into this booth?"],["mara","One door, no other exit. Celia sent me up after the microphone trouble. I stayed until I heard Adrian."],["pip","The corridor camera records you entering at 7:56 and leaving at 8:03. The police checked its clock."],["iris","What can you see from here?"],["mara","The stage through the window, but not behind the desk. I was watching the levels, not looking down the whole time."],["iris","The footage establishes where you were. We still need to establish when the attack happened."]],[["tessa","If the angle makes me look startled, that is because the front row lighting is criminal."],["iris","We are interested in the mirror behind you. May I enlarge the original?"],["tessa","You may. I took it at 7:58. The police checked the file and the camera clock."],["pip","Look at the reflection. Vale is already collapsed beside the desk, with the award on the floor."],["tessa","I thought… I remembered him standing there. I had not looked at that corner of the image."],["iris","That is why we keep the original. Four minutes before the shout, something was already badly wrong."]],[["iris","This display lists each cue and the command that started it. Can it distinguish a timer from a person pressing a button?"],["pip","Yes. Cue 17B, 8:02 precisely. Manual GO. Trigger source: the stage-manager console at stage left."],["iris","Could the upstairs booth have sent it?"],["pip","It was in monitor-only mode. This command came from the downstairs station. The log can be reviewed here in the booth."],["iris","And the file?"],["pip","An edited rehearsal: “Mara, put that down!” and a crash. In the full recording, he was asking her to lower a speaker."],["iris","The words were real. The situation the audience imagined was not. Add the log and recording notes to the record."]],[["hank","This is the recorder’s second channel, restored overnight. The first export only followed the booth door."],["iris","The lower landing. Is that Vale?"],["hank","At 7:59:10. Face verified. Coffee in one hand. He returns towards the stage twelve seconds later."],["iris","After the photograph. Alive."],["hank","At 8:01:40 he sits behind the stage desk. Mara never leaves the booth until 8:03."],["iris","Then yesterday’s apparent time of death was wrong. Preserve the continuous sequence."]],[["hank","Property bag A: the base Mara picked up. Bag B: the heavy award we found under collapsed desk scenery."],["iris","Two awards?"],["hank","A is resin with brass paint. B is solid brass. Both have the same moulded handle shape. We initially grouped A’s base with B’s detached handle."],["iris","Celia could recognize the shape from breaking the replica without knowing what happened to the real award."],["hank","Her strike caused a superficial injury. The fatal injury came from above, with the weight and material of B. The lab has corrected the inventory."],["iris","Her admission is real. Its supposed fatal consequence is not."]],[["tessa","I should have given you the embargoed folder yesterday. I was afraid I would look like a participant."],["iris","You were a participant. In what?"],["tessa","Vale planned a death photograph and a resurrection at 8:03. Three lost plays, three dead authors, one miraculous opening."],["iris","And Celia?"],["tessa","He provoked her with a breakaway trophy on the desk. She was not told it was a prop. Then he played dead for my camera. Cruelty passed off as publicity."],["iris","Who was the technical producer?"],["tessa","Pip. His name is on the contract. He supplied my scream file. I did not touch any rigging."],["iris","My assistant organized the performance we spent yesterday reconstructing. I need a moment."]],[["hank","The sound editor cannot write to this safety recorder. It logs the rig independently."],["iris","An undocumented relay attached to cue 17B."],["hank","Enabled at 8:00:31 using Pip’s service key. The maintenance camera shows him at the cabinet. His test measured a 4.8-kilogram load."],["iris","The weight of the real award."],["hank","At 8:02 Celia’s GO released it above the desk while playing the scream. Her display said AUDIO ONLY."],["iris","A perfectly ordinary button, given a second job its operator could not see."]],[["vera","The bank preserved these instructions before the performance. Their signatures, confirmation photograph and revision hash were independently checked."],["iris","Three fictional literary estates. All owned by Pip."],["vera","Tessa supplied publicity. Pip collected the royalties. Vale’s 8:03 projection was intended to expose him."],["iris","And revision R17?"],["vera","Pip orders the award substituted, the safety catch removed and the relay label hidden. He also cancels cue 18. This is an instruction to make the dangerous change, not an innocent audio edit."],["iris","He was not just explaining the evidence yesterday. He was choosing the ending we would reach."]]];
+function examine(i){state.notesGroup=null;const c=clues[i];if(!c||c.day!==(state.day||1))return;if(!state.found.includes(c.id))state.found.push(c.id);state.optionalReturn={mode:'investigate',statement:state.statement,scene:state.scene||'stage',group:c.bg,id:c.id};state.scene=c.bg;speak([...investigationDialogue[i],['iris',evidence.find(e=>e.id===c.id).name+' added to the court record.']],'investigate');}
 function step(d){if(state.mode!=='cross')return;state.statement=(state.statement+d+trials[state.stage].lines.length)%trials[state.stage].lines.length;render();}
 function modal(title,html,kicker='CASE 01'){ $('modalTitle').textContent=title;$('modalKicker').textContent=kicker;$('modalBody').innerHTML=html;if(!$('modal').open)$('modal').showModal();}
 function feedback(title,text,callback=null){feedbackAfter=callback;modal(title,'<p id="feedbackText"></p><button id="feedbackOK" class="primary">Continue →</button>');$('feedbackText').textContent=text;$('feedbackOK').onclick=()=>{$('modal').close();};}
 $('modal').addEventListener('close',()=>{if(feedbackAfter){let f=feedbackAfter;feedbackAfter=null;f();}});
 function press(){if(state.mode!=='cross')return;const t=trials[state.stage];feedback('Hold it!',t.press[state.statement]);}
 const evidenceNotes={
-report:{label:'RECOVERY • 20:12',alt:'Brass theatre award, broken side handle and police recovery folder.',points:[['Broken attachment',64,49,'A side handle has snapped away from the award. This is separate from its solid base.'],['Recovered handle',75,76,'Police recovered this detached handle beneath Vale’s body at 8:12. It was concealed from all witnesses. The sealed annex was supplied only to the court and counsel.'],['Fingerprint record',15,44,'Mara’s fingerprints are on the base. A coral thread was caught inside the newly broken handle joint; the trace supports the other evidence but is not an identification by itself.']]},
+report:{label:'RECOVERY • 20:12',alt:'Brass theatre award, broken side handle and police recovery folder.',points:[['Broken attachment',64,49,'A side handle has snapped away from the award. This is separate from its solid base.'],['Recovered handle',75,76,'Police recovered this detached handle beneath Vale’s body at 8:12. It could not have been seen from Celia’s station.'],['Fingerprint record',15,44,'Mara’s fingerprints were on the base. They do not establish when she touched the award.']]},
 mic:{label:'SERVICE • 19:55',alt:'Unplugged stage audio cable beside a patch panel and service slip.',points:[['Unplugged connector',44,57,'The stage microphone was disconnected at 7:55. It could not carry a live voice at 8:02.'],['Service entry',73,81,'Mara signed the maintenance slip. The auditorium playback speakers remained connected.']]},
-alibi:{label:'CAMERA 02 • 19:56–20:03',alt:'Security view of the corridor outside the sound booth.',points:[['Only entrance',70,25,'Mara stays upstairs from 7:56 to 8:03. The continuous recording also shows Vale alive on the lower landing at 7:59:10, returning towards the stage at 7:59:22.']]},
-photo:{label:'VERIFIED CAPTURE • 19:58',alt:'Tessa’s selfie with Vale collapsed beside his desk in the mirror reflection.',points:[['Mirror reflection',77,48,'Vale lies motionless at 7:58. The photograph proves his pose, not his death; compare the continuous corridor footage.'],['Award on the floor',65,62,'The award lies beside Vale. The detached handle cannot be seen. Tessa’s scarf is intact at this point; the sealed recovery annex records a later trace.']]},
-log:{label:'CUE 17B • 20:02:00',alt:'Stage-manager playback console with a GO button and cue monitor.',points:[['Manual trigger',49,54,'The log records a manual GO at 8:02:00 from the stage-manager console, not an automatic cue.'],['Playback file',27,24,'The audit records Tessa’s authenticated replacement at 8:00:20, confirmed by the terminal photograph. The cancelled 8:03 slide exposes three fictional literary estates paid into her account.']]}
+alibi:{label:'CAMERA 02 • 19:56–20:03',alt:'Security view of the corridor outside the sound booth.',points:[['Only entrance',70,25,'Continuous footage records Mara entering at 7:56 and leaving at 8:03. There is no other exit.']]},
+photo:{label:'VERIFIED CAPTURE • 19:58',alt:'Tessa’s selfie with Vale collapsed beside his desk in the mirror reflection.',points:[['Mirror reflection',77,48,'Vale is collapsed beside the desk at 7:58, four minutes before the recorded shout.'],['Award on the floor',65,62,'The award is beside Vale. The detached handle cannot be seen; consult the recovery report for its location.']]},
+log:{label:'CUE 17B • 20:02:00',alt:'Stage-manager playback console with a GO button and cue monitor.',points:[['Manual trigger',49,54,'The log records a manual GO at 8:02:00 from the stage-manager console, not an automatic cue.'],['Playback file',27,24,'VALE_REHEARSAL_EDIT.wav contains the shout and crash. The upstairs booth was monitor-only.']]}
 };
-function evidencePicture(id){return window.ART?.['evidence_'+id]||'';}
-function inspectEvidence(id,present){const e=evidence.find(x=>x.id===id),note=evidenceNotes[id];modal(e.name,'<button id="backToRecord">← Back to record</button><div class="inspection"><img id="inspectionImage"><span class="capture-label"></span><div id="detailMarkers"></div></div><p id="inspectionNote" aria-live="polite">Select a numbered detail, or use Tab and Enter to inspect it.</p>','EXAMINE EVIDENCE');$('inspectionImage').src=evidencePicture(id);$('inspectionImage').alt=note.alt;$('modalBody').querySelector('.capture-label').textContent=note.label;note.points.forEach(([label,x,y,text],i)=>{let b=document.createElement('button');b.className='detail-marker';b.style.left=x+'%';b.style.top=y+'%';b.textContent=i+1;b.setAttribute('aria-label',label);b.onclick=()=>{$('inspectionNote').textContent=label+' — '+text;};$('detailMarkers').append(b)});$('backToRecord').onclick=()=>record(present);$('backToRecord').focus();}
+function evidencePicture(id){return window.ART?.['evidence_'+(evidenceFor(id)?.art||id)]||'';}
+function notesFor(id){return evidenceNotes[id]||{label:'DAY 2 • DOCUMENT EXTRACT',alt:'Related scene illustration. The new findings are in the written exhibit.',points:[['Read new findings',50,50,evidenceFor(id).text]]};}
+function inspectEvidence(id,present){const e=evidence.find(x=>x.id===id),note=notesFor(id);modal(e.name,'<button id="backToRecord">← Back to record</button><div class="inspection"><img id="inspectionImage"><span class="capture-label"></span><div id="detailMarkers"></div></div><p id="inspectionNote" aria-live="polite">Select a numbered detail, or use Tab and Enter to inspect it.</p>','EXAMINE EVIDENCE');$('inspectionImage').src=evidencePicture(id);$('inspectionImage').alt=note.alt;$('modalBody').querySelector('.capture-label').textContent=note.label;note.points.forEach(([label,x,y,text],i)=>{let b=document.createElement('button');b.className='detail-marker';b.style.left=x+'%';b.style.top=y+'%';b.textContent=i+1;b.setAttribute('aria-label',label);b.onclick=()=>{$('inspectionNote').textContent=label+' — '+text;};$('detailMarkers').append(b)});$('backToRecord').onclick=()=>record(present);$('backToRecord').focus();}
 function record(present=false){const available=evidence.filter(e=>e.id==='report'||state.found.includes(e.id));if(!available.find(e=>e.id===state.selected))state.selected='report';modal(present?'Present evidence':'Court record','<div class="evidence-grid"><div id="evidenceList" class="evidence-list"></div><div id="evidenceDetail" class="evidence-detail"></div></div>',present?'CHOOSE THE EVIDENCE THAT CONTRADICTS THIS STATEMENT':'EVIDENCE • SELECT AN ITEM TO INSPECT');function select(id){state.selected=id;const e=available.find(x=>x.id===id),note=evidenceNotes[id];$('evidenceList').replaceChildren();available.forEach(x=>{let b=document.createElement('button'),img=document.createElement('img');img.src=evidencePicture(x.id);img.alt='';b.append(img,document.createTextNode(x.name));b.className=x.id===id?'selected':'';b.setAttribute('aria-pressed',String(x.id===id));b.onclick=()=>select(x.id);$('evidenceList').append(b)});const d=$('evidenceDetail');d.innerHTML='<span class="tag"></span><h3></h3><button class="evidence-preview" aria-label="Inspect evidence image"><img><span class="capture-label"></span><span class="inspect-caption">Inspect details ↗</span></button><p></p><div class="evidence-actions"></div>';d.querySelector('.tag').textContent=e.tag;d.querySelector('h3').textContent=e.name;d.querySelector('img').src=evidencePicture(id);d.querySelector('img').alt=note.alt;d.querySelector('.capture-label').textContent=note.label;d.querySelector('.evidence-preview').onclick=()=>inspectEvidence(id,present);d.querySelector('p').textContent=e.text;if(present){let b=document.createElement('button');b.className='primary';b.textContent='Present this evidence →';b.onclick=()=>submit(id);d.querySelector('.evidence-actions').append(b)}}select(state.selected);}
-function submit(id){if(state.mode!=='cross')return;const t=trials[state.stage];if(state.statement===t.target&&id===t.proof){$('modal').close();$('burst').classList.remove('show');void $('burst').offsetWidth;$('burst').classList.add('show');track(2);const end=state.stage===trials.length-1;if(!end)state.stage++;state.hp=Math.min(5,state.hp+1);speak(t.success,end?'ending':'cross',end?3:2);}else{state.hp--;save();if(state.hp<=0){feedback('Take a breath. Rebuild the argument.','The court grants a short recess. Review the record, then retry this testimony with restored credibility.',()=>{state.hp=5;state.statement=0;render()})}else feedback('That does not contradict this statement.','You lose one point of credibility. Try pressing the witness for a more precise claim, then match it with a detail in your evidence.',render);}}
+function submit(id){if(state.mode!=='cross')return;const t=trials[state.stage];if(id!=='report'&&!state.found.includes(id))return;if(state.statement===t.target&&id===t.proof){$('modal').close();$('burst').classList.remove('show');void $('burst').offsetWidth;$('burst').classList.add('show');track(2);const end=state.stage===trials.length-1,overnight=state.stage===3;if(!end)state.stage++;state.hp=Math.min(5,state.hp+1);speak(t.success,end?'ending':overnight?'intermission':'cross',end?3:2);}else{state.hp--;save();if(state.hp<=0){feedback('Take a breath. Rebuild the argument.','The court grants a short recess. Review the record, then retry this testimony with restored credibility.',()=>{state.hp=5;state.statement=0;render()})}else feedback('That does not contradict this statement.','You lose one point of credibility. Try pressing the witness for a more precise claim, then match it with a detail in your evidence.',render);}}
+function startDayTwo(){if(state.mode!=='intermission')return;state.day=2;state.stage=4;state.statement=0;state.hp=5;state.notesGroup=null;state.scene='stage';speak(day2Opening,'investigate',0);}
+$('nextDay').onclick=startDayTwo;
 $('rewindAlternate').onclick=rewindAlternate;
 $('extras').onclick=()=>openExtras();$('exploreStage').onclick=()=>openExtras('stage');$('exploreBooth').onclick=()=>openExtras('booth');$('talkPeople').onclick=()=>openExtras('talk');$('leaveAside').onclick=()=>finishOptional(false);
-$('start').onclick=()=>{if(!restore()){begin();return;}modal('Start a new case?','<p>This replaces the saved playthrough in this browser.</p><button id="newCaseConfirm" class="primary">Start new case</button> <button id="keepCase">Keep my save</button>');$('newCaseConfirm').onclick=()=>{$('modal').close();begin()};$('keepCase').onclick=()=>$('modal').close();};$('resume').onclick=()=>{const s=restore();if(s){state=s;render()}};$('next').onclick=advance;$('toCourt').onclick=()=>{if(state.found.length===4)speak(courtIntro,'cross');else feedback('Before the hearing','Pip checks the file. “We have not finished documenting the scene. Let’s take another look around both rooms before we leave.”')};$('prev').onclick=()=>step(-1);$('forward').onclick=()=>step(1);$('press').onclick=press;$('present').onclick=()=>record(true);$('record').onclick=()=>record(false);$('close').onclick=()=>$('modal').close();$('restart').onclick=()=>{state.mode='title';render()};$('caseMenu').onclick=()=>{if(state.mode==='title')return;save();state.mode='title';render()};$('music').onclick=()=>{sound=!sound;$('music').textContent=sound?'♫ Sound on':'♫ Sound off';if(sound)track(wantedTrack);else audio.pause()};$('fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{feedback('Fullscreen unavailable','Your browser could not enter fullscreen. You can continue in this window.')}};
+$('start').onclick=()=>{if(!restore()){begin();return;}modal('Start a new case?','<p>This replaces the saved playthrough in this browser.</p><button id="newCaseConfirm" class="primary">Start new case</button> <button id="keepCase">Keep my save</button>');$('newCaseConfirm').onclick=()=>{$('modal').close();begin()};$('keepCase').onclick=()=>$('modal').close();};$('resume').onclick=()=>{const s=restore();if(s){state=s;render()}};$('next').onclick=advance;$('toCourt').onclick=()=>{if(activeClues().every(c=>state.found.includes(c.id)))speak(state.day===2?day2Intro:courtIntro,'cross');else feedback('Before the hearing','Pip checks the file. “We have not finished documenting the scene. Let’s take another look around both rooms before we leave.”')};$('prev').onclick=()=>step(-1);$('forward').onclick=()=>step(1);$('press').onclick=press;$('present').onclick=()=>record(true);$('record').onclick=()=>record(false);$('close').onclick=()=>$('modal').close();$('restart').onclick=()=>{state.mode='title';render()};$('caseMenu').onclick=()=>{if(state.mode==='title')return;save();state.mode='title';render()};$('music').onclick=()=>{sound=!sound;$('music').textContent=sound?'♫ Sound on':'♫ Sound off';if(sound)track(wantedTrack);else audio.pause()};$('fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{feedback('Fullscreen unavailable','Your browser could not enter fullscreen. You can continue in this window.')}};
 $('help').onclick=()=>modal('How to play','<p><b>Investigate</b> the theatre and sound booth, examine objects, and interview the people involved. Discoveries are added to the court record.</p><p><b>Interviews</b> lets you choose a person and a topic. You can revisit conversations, return to the rooms, and speak with people during the hearing and after the verdict.</p><p>During testimony, use <b>← / →</b> to change statements. Press <b>P</b> to ask for more detail. Press <b>E</b> to present evidence that contradicts the current statement.</p><p><b>Enter / Space:</b> advance dialogue. <b>Tab:</b> open the court record when the scene is focused. <b>Esc:</b> close a panel.</p><p>Wrong evidence costs credibility. At zero, retry the testimony. Progress saves automatically in this browser.</p><p>Original cast, story, art and synthesized music. Unofficial fan project, not affiliated with Capcom.</p>');
 $('history').onclick=()=>{modal('Transcript','<div class="transcript"></div>');let list=$('modalBody').firstChild;state.history.forEach(x=>{let p=document.createElement('p'),b=document.createElement('b');b.textContent=x.who+': ';p.append(b,document.createTextNode(x.line));list.append(p)})};
 document.addEventListener('keydown',e=>{if($('modal').open||e.altKey||e.ctrlKey||e.metaKey)return;if(state.notesGroup&&state.mode!=='title'){if(e.key==='Escape'){e.preventDefault();closeNotes()}return;}const focused=e.target.closest('button,a,input,select,textarea');if(e.key==='Tab'){if(!focused&&state.mode!=='title'){e.preventDefault();record(false)}return}if(focused&&(e.key==='Enter'||e.key===' '))return;if(e.key==='Enter'||e.key===' '){e.preventDefault();advance()}else if(state.mode==='cross'){if(e.key==='ArrowLeft'){e.preventDefault();step(-1)}else if(e.key==='ArrowRight'){e.preventDefault();step(1)}else if(e.key.toLowerCase()==='p')press();else if(e.key.toLowerCase()==='e')record(true)}});
