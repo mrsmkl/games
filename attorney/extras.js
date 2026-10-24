@@ -586,6 +586,10 @@ function drawNotes(){
  let items=availableExtras(group);
  if(group==='talk'){
   if(!interviewCast.includes(interviewPerson))interviewPerson='mara';state.notesPerson=interviewPerson;
+  const chooser=document.createElement('label');chooser.className='interview-picker';chooser.textContent='Interview';
+  const select=document.createElement('select');select.setAttribute('aria-label','Choose a character to interview');
+  interviewCast.forEach(id=>{const option=document.createElement('option');option.value=id;option.textContent=cast[id][0];select.append(option)});
+  select.value=interviewPerson;select.onchange=()=>openExtras('talk',select.value);chooser.append(select);$('interviewPeople').append(chooser);
   interviewCast.forEach(id=>{const b=document.createElement('button');b.textContent=cast[id][0];b.setAttribute('aria-pressed',String(id===interviewPerson));b.onclick=()=>openExtras('talk',id);$('interviewPeople').append(b)});
   items=items.filter(s=>(s.character||interviewOwners[s.id])===interviewPerson);
   const intro=document.createElement('p');intro.className='interview-description';intro.textContent=cast[interviewPerson][0]+' · '+cast[interviewPerson][1];$('interviewPeople').append(intro);
