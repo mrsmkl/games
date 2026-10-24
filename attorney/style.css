@@ -84,3 +84,6 @@
 }
 
 #intermission{position:absolute;inset:0;padding:7% 8%;overflow:auto;background:linear-gradient(90deg,#0b171eee,#0b171e55)}#intermission h1{font-size:clamp(56px,7vw,96px)}#intermission .day-save-note{font-size:12px;color:var(--muted)}#nextDay{min-height:48px;margin:12px 0}@media(max-width:600px){#intermission{padding:30px 24px}#intermission h1{font-size:58px}#intermission p{font-size:14px}}
+#portrait.ghost-portrait{opacity:.63;filter:grayscale(.9) sepia(.45) hue-rotate(135deg) saturate(1.8) drop-shadow(0 0 22px #9edfff);mix-blend-mode:screen}
+.ghost-hearing #backdrop{filter:brightness(.38) saturate(.55)}
+.ghost-hearing #dialogue{border-top-color:#a6e0ee}.ghost-hearing .dialogue-top strong{color:#c2f0fa}
