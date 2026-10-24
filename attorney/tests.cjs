@@ -90,3 +90,16 @@ assert.equal(vm.runInContext('state.notesGroup',ui),null);
 vm.runInContext("state.mode='cross';state.stage=2;state.statement=2;openExtras();closeNotes()",ui);
 assert.equal(vm.runInContext('state.statement',ui),2);
 console.log('Passed: case notes are non-modal screens; saved interview and exact testimony return.');
+
+vm.runInContext("state.mode='investigate';openExtras('talk','mara')",ui);
+assert.equal(uiElements.notesTitle.textContent,'Mara Bell');
+assert.equal(uiElements.extraLayout.className,'interview-layout');
+assert.equal(uiElements.extraMap.hidden,false);
+assert.equal(uiElements.extraMap.children[0].attrs['aria-label'],'Mara Bell');
+vm.runInContext("startOptional('mara_night','talk')",ui);
+assert.equal(vm.runInContext('state.scene',ui),'booth');
+vm.runInContext('finishOptional(false)',ui);
+assert.equal(uiElements.notesTitle.textContent,'Mara Bell');
+vm.runInContext("openExtras('stage')",ui);
+assert.equal(uiElements.notesScreen.className,'');
+console.log('Passed: character portrait screens, location-matched dialogue, return to interview, clean location switch.');
