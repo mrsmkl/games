@@ -1,55 +1,6 @@
 'use strict';
-const $=id=>document.getElementById(id), KEY='behind-curtain-two-days-v3';
-const cast={
-  "iris": [
-    "Iris Quill",
-    "Defense attorney",
-    "defense",
-    0
-  ],
-  "pip": [
-    "Pip Foley",
-    "Assistant • former sound technician",
-    "defense",
-    1
-  ],
-  "mara": [
-    "Mara Bell",
-    "Defendant • sound engineer",
-    "defense",
-    2
-  ],
-  "vera": [
-    "Vera Flint",
-    "Prosecutor",
-    "court",
-    0
-  ],
-  "hank": [
-    "Hank Ledger",
-    "Detective",
-    "court",
-    1
-  ],
-  "judge": [
-    "Judge",
-    "District court",
-    "court",
-    2
-  ],
-  "celia": [
-    "Celia Rook",
-    "Stage manager",
-    "theatre",
-    0
-  ],
-  "tessa": [
-    "Tessa Flash",
-    "Theatre critic",
-    "theatre",
-    2
-  ]
-};
+const $=id=>document.getElementById(id), KEY='behind-curtain-ghost-v4';
+const cast={"iris":["Iris Quill","Defense attorney","defense",0],"pip":["Pip Foley","Assistant • former sound technician","defense",1],"mara":["Mara Bell","Defendant • sound engineer","defense",2],"vera":["Vera Flint","Prosecutor","court",0],"hank":["Hank Ledger","Detective","court",1],"judge":["Judge","District court","court",2],"celia":["Celia Rook","Stage manager","theatre",0],"tessa":["Tessa Flash","Theatre critic","theatre",2],"ghost":["Hank Ledger’s ghost","Unscheduled witness","court",1]};
 const evidence=[
   {
     "id": "report",
@@ -100,21 +51,21 @@ const evidence=[
     "name": "Publicity rehearsal packet",
     "tag": "DAY 2 • SEALED PRESS ARCHIVE",
     "art": "photo",
-    "text": "Recovered from Tessa’s embargoed press folder overnight. Vale planned a fake death at 7:58 and an 8:03 resurrection to announce three supposedly rediscovered plays. He deliberately provoked Celia while a breakaway replica was on the desk, then played dead for Tessa’s photograph. Tessa agreed to publicize the stunt and uploaded the scream file supplied by Pip; Celia was promised a credit for her late sister. None received the rigging instructions. The signed publicity contract names Pip Foley as technical producer. Tessa admits the estates and provenance were fabricated marketing."
+    "text": "Recovered from Tessa’s embargoed press folder overnight. Vale planned a fake death at 7:58 and an 8:03 resurrection to announce three supposedly rediscovered plays. He deliberately provoked Celia while a breakaway replica was on the desk, then played dead for Tessa’s photograph. Tessa agreed to publicize the stunt and uploaded the scream file supplied by Pip; Celia was promised a credit for her late sister. None received the rigging instructions. The signed publicity contract names Pip Foley as technical producer. Tessa admits the estates and provenance were fabricated marketing. The complete packet retains its old illusion diagrams and safety appendix."
   },
   {
     "id": "relay",
     "name": "Isolated rig safety recorder",
     "tag": "DAY 2 • HARDWARE AUDIT",
     "art": "log",
-    "text": "Independent safety recorder, disconnected from the audio editor. At 8:00:31, Pip Foley’s personal service key enabled an undocumented relay on cue 17B; the booth camera shows him at the maintenance cabinet. His measured load test recorded 4.8 kg, recorded in kilograms. At 8:02:00 Celia’s manual GO both played the scream and released that load directly over Vale’s desk. Celia’s console displayed AUDIO ONLY. The old public cue log did not include this isolated rig channel."
+    "text": "Independent safety recorder, disconnected from the audio editor. At 8:00:31, Pip Foley’s personal service key enabled an undocumented relay on cue 17B; the booth camera shows him at the maintenance cabinet. His load test recorded 4.8 kg. At 8:02:00 Celia’s manual GO both played the scream and released that load directly over Vale’s desk. Celia’s console displayed AUDIO ONLY. The old public cue log did not include this isolated rig channel. The export preserves both actuator and interlock channels, including certificate references."
   },
   {
     "id": "ledger",
     "name": "Escrow instructions and cue revision",
     "tag": "DAY 2 • BANK-CERTIFIED ARCHIVE",
     "art": "report",
-    "text": "Bank-certified instructions identify Pip Foley as sole beneficial owner of all three fictional literary estates; Tessa was a paid publicity front. Vale had scheduled an 8:03 projection exposing the estates and Pip’s diverted royalties. At 8:00:46 Pip signed revision R17: “Replace banner load with award B. Remove safety catch. Suppress relay label on operator display. Keep cue 18 cancelled.” The revision hash matches the isolated recorder. A confirmation photograph shows Pip approving R17. The escrow archive was immutable before the performance; police recovered it independently overnight."
+    "text": "The bank’s register extract identifies Pip Foley as registered owner of all three fictional literary estates; Tessa was a paid publicity front. Vale had scheduled an 8:03 projection exposing the estates and Pip’s diverted royalties. At 8:00:46 Pip signed revision R17: “Replace banner load with award B. Remove safety catch. Suppress relay label on operator display. Keep cue 18 cancelled.” The revision hash matches the isolated recorder. A confirmation photograph shows Pip approving R17. The escrow archive was immutable before the performance; police recovered it independently overnight. Original page folds and cross-referenced deed riders are preserved."
   }
 ];
 const clues=[
@@ -583,7 +534,7 @@ const trials=[
       ],
       [
         "vera",
-        "The bank identifies you as their sole beneficial owner. Tessa sold the fraud; you received its proceeds. Vale’s cancelled slide was going to expose that."
+        "The register names you. Tessa sold the fraud, and the royalties went through your accounts. Vale intended to expose the arrangement."
       ],
       [
         "pip",
@@ -610,39 +561,299 @@ const trials=[
       ],
       [
         "judge",
-        "A fake death used to conceal a real death, concealed again inside a defense investigation. I would like the next case to concern a stolen bicycle."
+        "We have the confession. Detective Ledger, arrange the witness’s detention."
       ],
       [
-        "mara",
-        "Was any part of what you told me real?",
-        "thought"
-      ],
-      [
-        "pip",
-        "You were innocent. That part was real.",
-        "thought"
-      ],
-      [
-        "mara",
-        "You do not get to use that as kindness.",
-        "intense"
-      ],
-      [
-        "vera",
-        "The prosecution withdraws the charge against Mara Bell and requests Pip Foley’s arrest. Celia’s assault and the fraudulent estates will be investigated separately."
-      ],
-      [
-        "judge",
-        "Mara Bell… NOT GUILTY.",
+        "hank",
+        "One moment. There is something in the reverse-side certificate references. I need to check it outside.",
         "thought"
       ],
       [
         "iris",
-        "Two days. Two endings. This time, nobody else had written the last line for us.",
+        "Hank leaves. A shout breaks off in the corridor. Running feet. The clerk bends towards the bench.",
+        "thought"
+      ],
+      [
+        "judge",
+        "The clerk reports that Detective Ledger has collapsed. He… he is dead. We must adjourn immediately.",
+        "intense"
+      ],
+      [
+        "vera",
+        "Medical staff are attending him. The clerk is not a doctor. Please leave that conclusion open.",
+        "thought"
+      ],
+      [
+        "iris",
+        "The lights dim before anyone touches the switches. A pale figure appears where Hank was standing.",
+        "intense"
+      ],
+      [
+        "ghost",
+        "You have spent two days explaining a dead man’s character. Perhaps you could spend the last few minutes listening to a witness.",
+        "thought"
+      ],
+      [
+        "ghost",
+        "Adrian spent a winter teaching the caretaker’s daughter to read stage directions. She thought the small print was a test she kept failing. He stayed after rehearsals until it stopped frightening her.",
+        "thought"
+      ],
+      [
+        "tessa",
+        "He never mentioned that in an interview."
+      ],
+      [
+        "ghost",
+        "He asked her not to mention it either. He did not want her kindness to him confused with gratitude for lessons."
+      ],
+      [
+        "celia",
+        "That does not erase what he did to my sister.",
+        "thought"
+      ],
+      [
+        "ghost",
+        "No. And what he did to your sister does not erase the child. You are allowed to remember both.",
+        "thought"
+      ],
+      [
+        "judge",
+        "This court does not accept testimony from the dead.",
+        "intense"
+      ],
+      [
+        "ghost",
+        "Then listen to the living words already written in your exhibits. I have brought nothing with me.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "No new exhibits. The same pages. I turn them over.",
         "thought"
       ]
     ],
     "day": 2
+  },
+  {
+    "day": 2,
+    "title": "The witness who should not be here",
+    "who": "ghost",
+    "target": 1,
+    "proof": "relay",
+    "lines": [
+      "I can only speak about what was already recorded before I left this room.",
+      "Pip’s service key alone removed every restraint on the award.",
+      "The scream and the falling load shared the same GO command."
+    ],
+    "press": [
+      "No supernatural sight is needed to read an existing export.",
+      "The recorder has an interlock channel as well as an actuator channel. Inspect the full document.",
+      "That establishes the trigger. Does it identify every person who made the release possible?"
+    ],
+    "success": [
+      [
+        "iris",
+        "The reverse-side channel register records a separate safety interlock. Pip enabled the actuator, but the restraint remained engaged until 8:01:56.",
+        "intense"
+      ],
+      [
+        "ghost",
+        "And the later authorization?"
+      ],
+      [
+        "iris",
+        "Certificate C-03. The certificate directory is already attached to the same export: a judicial arts-trust terminal assigned to this bench. The hardware photograph confirms its operator."
+      ],
+      [
+        "judge",
+        "That certificate only opens the secondary latch. It cannot move the counterweight unless—",
+        "intense"
+      ],
+      [
+        "vera",
+        "Unless the actuator is armed. You have just described why both approvals were necessary."
+      ],
+      [
+        "judge",
+        "I am reading the same document as counsel. That is not an admission."
+      ],
+      [
+        "iris",
+        "Then let us read the document that explains your interest in it."
+      ],
+      [
+        "ghost",
+        "I will continue. I am in no hurry.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "day": 2,
+    "title": "The name under the fold",
+    "who": "ghost",
+    "target": 0,
+    "proof": "ledger",
+    "lines": [
+      "Pip’s name on the register means nobody else could receive the estate proceeds.",
+      "The register and the deed rider were certified together before the performance.",
+      "The court already holds every page needed to trace that arrangement."
+    ],
+    "press": [
+      "The register names a registered owner. The retained deed rider defines who benefits.",
+      "Check the folded reverse side; a certified summary is not the whole instrument.",
+      "No new account record has arrived. Re-examine what is already in the court record."
+    ],
+    "success": [
+      [
+        "iris",
+        "The folded rider identifies Pip as nominee, not sole beneficiary. The proceeds are payable to the presiding judge’s private arts trust. Certificate C-03 authorizes its execution.",
+        "intense"
+      ],
+      [
+        "judge",
+        "The trust preserves neglected works. It was not created for my personal enrichment.",
+        "intense"
+      ],
+      [
+        "ghost",
+        "Adrian Vale discovered the rider. His projection would have shown who owned the supposedly dead writers."
+      ],
+      [
+        "iris",
+        "Pip wanted his role concealed. You wanted the beneficiary concealed. You allowed the armed rig to release, then presided over the trial of the woman chosen to take the blame.",
+        "intense"
+      ],
+      [
+        "judge",
+        "Ledger, you cannot know what Vale intended to say to me in that corridor. You were already—",
+        "intense"
+      ],
+      [
+        "vera",
+        "Already what?"
+      ],
+      [
+        "judge",
+        "I will not be questioned by a dead detective. Put out the reflector. The man is standing beside the service door.",
+        "intense"
+      ],
+      [
+        "iris",
+        "A reflector? That is a remarkably practical objection to a haunting."
+      ],
+      [
+        "ghost",
+        "One final point, Ms. Quill. Then we can put an end to this performance."
+      ]
+    ]
+  },
+  {
+    "day": 2,
+    "title": "A ghost with a stage direction",
+    "who": "ghost",
+    "target": 1,
+    "proof": "packet",
+    "lines": [
+      "No exhibit has been added since this witness appeared.",
+      "A living performer standing out of sight could not create the figure you see here.",
+      "The truth of the accusation must stand even when this figure disappears."
+    ],
+    "press": [
+      "The inventory is unchanged. The older publicity packet contains more than a schedule.",
+      "Inspect the retained illusion appendix. What does an angled pane reflect?",
+      "Separate the performance from the authenticated rig and bank records."
+    ],
+    "success": [
+      [
+        "iris",
+        "The packet’s illusion appendix describes an angled pane reflecting a lit performer in a darkened room. Hank, you are alive.",
+        "intense"
+      ],
+      [
+        "ghost",
+        "Very much so. My knees would appreciate an end to the supernatural portion of the hearing.",
+        "thought"
+      ],
+      [
+        "iris",
+        "The pale figure fades. Hank steps out beside the service door, carrying his ordinary notebook.",
+        "thought"
+      ],
+      [
+        "hank",
+        "Vera and I arranged the collapse report with Tessa and the clerk. The clerk said I had collapsed, not that a doctor had pronounced me dead. We needed the authorizing officer to believe I could no longer challenge the record."
+      ],
+      [
+        "tessa",
+        "The reflection uses the theatre’s old demonstration setup. No apparition, no recording of a dead man. A very embarrassed living one.",
+        "thought"
+      ],
+      [
+        "vera",
+        "Iris was not told. Neither was the judge. We wanted the documents examined in open court, with every response preserved."
+      ],
+      [
+        "iris",
+        "The trick proves only that a ghost can be staged. The certificate photograph, channel timing and certified rider establish who acted. Your knowledge of the reflector was a clue, not the case."
+      ],
+      [
+        "hank",
+        "Pip prepared an armed trap. You personally released its independent safety restraint at 8:01:56. The existing recorder identifies your terminal and your face."
+      ],
+      [
+        "judge",
+        "Vale said he would expose the trust at eight-oh-three. I thought four seconds and one authorization could keep the name off the screen.",
+        "intense"
+      ],
+      [
+        "pip",
+        "You told me the restraint had been removed already. You let me confess as though I had done it alone.",
+        "intense"
+      ],
+      [
+        "judge",
+        "You asked for his death. Do not ask me to make you innocent now.",
+        "intense"
+      ],
+      [
+        "iris",
+        "Neither of you gets an innocent role. One built the trap; the other completed it and then tried to write its verdict."
+      ],
+      [
+        "vera",
+        "I request that you stand down from the bench. The authenticated documents and these admissions will go to an independent court. Officers are waiting outside."
+      ],
+      [
+        "hank",
+        "And the story about the child was mine to tell. I knew her family before this case. No forged note, no convenient last letter. Just something he did that nobody in here had asked about.",
+        "thought"
+      ],
+      [
+        "mara",
+        "And Adrian? Does anyone remember him as something other than a plan?",
+        "thought"
+      ],
+      [
+        "celia",
+        "He once stayed until dawn helping my sister repair a scene. I was angry with him. I should not have let that become the whole of who he was.",
+        "thought"
+      ],
+      [
+        "iris",
+        "He cannot answer us. That is a reason to be careful with his story, not a reason to let someone else finish it for him."
+      ],
+      [
+        "iris",
+        "An independent duty judge takes over the hearing. On the existing evidence, the charge against Mara Bell is dismissed. NOT GUILTY.",
+        "thought"
+      ],
+      [
+        "hank",
+        "For the record: still alive. And taking tomorrow off.",
+        "neutral"
+      ]
+    ]
   }
 ];
 const opening=[
@@ -726,7 +937,7 @@ function restore(){try{const x=JSON.parse(localStorage.getItem(KEY));if(!x||!['d
 x.day=x.day===2?2:1;if(x.day===1&&x.stage>3&&x.mode!=='intermission'&&!(x.mode==='dialogue'&&x.after==='intermission'))return null;if(x.day===2&&x.stage<4)return null;
 x.found=[...new Set(x.found.filter(id=>clues.some(c=>c.id===id&&c.day<=x.day)))];x.hp=Number.isInteger(x.hp)&&x.hp>0&&x.hp<=5?x.hp:5;x.statement=Number.isInteger(x.statement)&&x.statement>=0&&x.statement<trials[x.stage].lines.length?x.statement:0;
 if(x.mode==='dialogue'&&(!Number.isInteger(x.cursor)||x.cursor<0||x.cursor>=x.dialogue.length||!['cross','investigate','ending','intermission'].includes(x.after)||!x.dialogue.every(d=>Array.isArray(d)&&cast[d[0]]&&typeof d[1]==='string')))return null;
-x.history=x.history.filter(h=>h&&typeof h.who==='string'&&typeof h.line==='string').slice(-100);x.optionalSeen=Array.isArray(x.optionalSeen)?[...new Set(x.optionalSeen.filter(id=>optionalScenes.some(s=>s.id===id)))]:[];if(x.optionalReturn){const r=x.optionalReturn;if(x.mode!=='dialogue'||!['investigate','cross','ending'].includes(r.mode)||!optionalScenes.some(s=>s.id===r.id)&&!clues.some(c=>c.id===r.id)||!Number.isInteger(r.statement)||r.statement<0||r.statement>=trials[x.stage].lines.length)return null;}if(!['stage','booth','talk','court','ending'].includes(x.notesGroup)||x.mode==='dialogue')x.notesGroup=null;if(x.notesGroup){if(x.mode==='cross')x.notesGroup='court';else if(x.mode==='ending')x.notesGroup='ending';else if(!['stage','booth','talk'].includes(x.notesGroup))x.notesGroup='stage';}if(!interviewCast.includes(x.notesPerson))x.notesPerson='mara';return x;}catch{return null;}}
+x.readDetails=Array.isArray(x.readDetails)?x.readDetails.filter(id=>['relay','ledger','packet'].includes(id)):[];x.history=x.history.filter(h=>h&&typeof h.who==='string'&&typeof h.line==='string').slice(-100);x.optionalSeen=Array.isArray(x.optionalSeen)?[...new Set(x.optionalSeen.filter(id=>optionalScenes.some(s=>s.id===id)))]:[];if(x.optionalReturn){const r=x.optionalReturn;if(x.mode!=='dialogue'||!['investigate','cross','ending'].includes(r.mode)||!optionalScenes.some(s=>s.id===r.id)&&!clues.some(c=>c.id===r.id)||!Number.isInteger(r.statement)||r.statement<0||r.statement>=trials[x.stage].lines.length)return null;}if(!['stage','booth','talk','court','ending'].includes(x.notesGroup)||x.mode==='dialogue')x.notesGroup=null;if(x.notesGroup){if(x.mode==='cross')x.notesGroup='court';else if(x.mode==='ending')x.notesGroup='ending';else if(!['stage','booth','talk'].includes(x.notesGroup))x.notesGroup='stage';}if(!interviewCast.includes(x.notesPerson))x.notesPerson='mara';return x;}catch{return null;}}
 function track(n){wantedTrack=n;if(!sound)return;if(!window.MUSIC?.[n]){if(!loaded.has(n)){loaded.add(n);let s=document.createElement('script');s.src=`assets/music${n}.js`;s.onerror=()=>{loaded.delete(n);sound=false;$('music').textContent='♫ Retry sound'};document.body.append(s);}return;}if(currentTrack!==n){audio.pause();audio.src=MUSIC[n];currentTrack=n;}audio.play().catch(()=>{sound=false;$('music').textContent='♫ Click to play'});}
 window.addEventListener('musicready',()=>track(wantedTrack));
 function bg(name){$('backdrop').style.backgroundImage=`url("${ART[name]}")`;}
@@ -738,11 +949,11 @@ function expressionFor(id,line=''){
  if(id==='judge')return /NOT GUILTY/.test(line)?'thought':/moment of the attack/.test(line)?'intense':'neutral';
  if(id==='vera')return 'thought';return 'neutral';
 }
-function person(id,expression='neutral'){const c=cast[id]||cast.iris;const mood=['neutral','thought','intense'].includes(expression)?expression:'neutral';const asset=mood==='neutral'?c[2]:c[2]+'_'+mood;const key=id+':'+mood;$('speaker').textContent=c[0];$('role').textContent=c[1];$('portrait').style.backgroundImage=`url("${ART[asset]||ART[c[2]]}")`;$('portrait').style.backgroundPosition=`${c[3]*50}% top`;$('portrait').setAttribute('aria-label',c[0]+' — '+mood+' expression');if($('portrait').dataset.character!==key){$('portrait').classList.remove('portrait-arrive');void $('portrait').offsetWidth;$('portrait').classList.add('portrait-arrive')}$('portrait').dataset.character=key;$('portrait').dataset.expression=mood;}
+function person(id,expression='neutral'){$('portrait').classList.toggle('ghost-portrait',id==='ghost');const c=cast[id]||cast.iris;const mood=['neutral','thought','intense'].includes(expression)?expression:'neutral';const asset=mood==='neutral'?c[2]:c[2]+'_'+mood;const key=id+':'+mood;$('speaker').textContent=c[0];$('role').textContent=c[1];$('portrait').style.backgroundImage=`url("${ART[asset]||ART[c[2]]}")`;$('portrait').style.backgroundPosition=`${c[3]*50}% top`;$('portrait').setAttribute('aria-label',c[0]+' — '+mood+' expression');if($('portrait').dataset.character!==key){$('portrait').classList.remove('portrait-arrive');void $('portrait').offsetWidth;$('portrait').classList.add('portrait-arrive')}$('portrait').dataset.character=key;$('portrait').dataset.expression=mood;}
 function log(who,line){const last=state.history.at(-1);if(!last||last.line!==line)state.history.push({who:cast[who]?.[0]||who,line});if(state.history.length>100)state.history.shift();}
 function speak(lines,after,music=null){state.dialogueTrack=music;state.mode='dialogue';state.dialogue=lines;state.cursor=0;state.after=after;render();}
 function visible(id,yes){$(id).hidden=!yes;}
-function render(){visible('notesScreen',false);$('chapter').textContent='DAY '+(state.day||1)+' — TURNABOUT ON CUE';const m=state.mode,cross=m==='cross',dialogue=m==='dialogue';updateExtrasUI();const surreal=(m==='ending'&&state.alternateEnding)||(dialogue&&state.optionalReturn?.id==='duck_tribunal'&&state.cursor>=3);document.body.classList.toggle('surreal',!!surreal);visible('duckReveal',!!surreal);visible('rewindAlternate',m==='ending'&&!!state.alternateEnding);document.body.classList.toggle('cross',cross);['title','investigate','ending','intermission'].forEach(id=>visible(id,m===id));visible('dialogue',cross||dialogue);visible('portrait',cross||dialogue);visible('crossControls',cross);visible('testimonyBadge',cross);visible('credibility',cross);visible('location',m!=='title'&&m!=='ending'&&m!=='intermission');$('record').disabled=m==='title';$('location').textContent=m==='investigate'||(dialogue&&state.after==='investigate')?'Theatre Royal · Day '+(state.day||1):'District Court · Day '+(state.day||1);
+function render(){document.body.classList.toggle('ghost-hearing',state.mode==='cross'&&trials[state.stage]?.who==='ghost'||state.mode==='dialogue'&&state.dialogue[state.cursor]?.[0]==='ghost');visible('notesScreen',false);$('chapter').textContent='DAY '+(state.day||1)+' — TURNABOUT ON CUE';const m=state.mode,cross=m==='cross',dialogue=m==='dialogue';updateExtrasUI();const surreal=(m==='ending'&&state.alternateEnding)||(dialogue&&state.optionalReturn?.id==='duck_tribunal'&&state.cursor>=3);document.body.classList.toggle('surreal',!!surreal);visible('duckReveal',!!surreal);visible('rewindAlternate',m==='ending'&&!!state.alternateEnding);document.body.classList.toggle('cross',cross);['title','investigate','ending','intermission'].forEach(id=>visible(id,m===id));visible('dialogue',cross||dialogue);visible('portrait',cross||dialogue);visible('crossControls',cross);visible('testimonyBadge',cross);visible('credibility',cross);visible('location',m!=='title'&&m!=='ending'&&m!=='intermission');$('record').disabled=m==='title';$('location').textContent=m==='investigate'||(dialogue&&state.after==='investigate')?'Theatre Royal · Day '+(state.day||1):'District Court · Day '+(state.day||1);
  if(state.notesGroup&&['investigate','cross','ending'].includes(m)){
  ['investigate','ending','dialogue','portrait','crossControls','testimonyBadge','credibility','location','extras','duckReveal'].forEach(id=>visible(id,false));
  visible('notesScreen',true);document.body.classList.remove('cross','surreal');bg(state.notesGroup==='booth'?'booth':m==='investigate'?'stage':'courtroom');track(m==='investigate'?0:1);drawNotes();$('objective').textContent='Examine the scene · Choose a topic · Esc to return';save();return;
@@ -752,7 +963,7 @@ function render(){visible('notesScreen',false);$('chapter').textContent='DAY '+(
  if(m==='investigate'){bg('stage');track(0);$('toCourt').disabled=false;$('investigate').querySelector('.eyebrow').textContent='DAY '+(state.day||1)+' · INVESTIGATION';$('investigate').querySelector('h2').innerHTML=state.day===2?'Read the scene<br>again.':'Every room<br>has a story.';$('investigate').querySelector('p').textContent=state.day===2?'Review the new reports in both rooms and speak to everyone again before the second hearing.':'Walk the stage, examine the sound booth, and hear the accounts of the people who were here.';$('objective').textContent='Theatre Royal · Examine the rooms and interview the people involved';}
  if(dialogue){const [who,line,expression]=state.dialogue[state.cursor]||opening[0];person(who,expression||expressionFor(who,line));if(surreal)visible('portrait',false);if(surreal&&who==='judge'){$('speaker').textContent='The Honourable Quack';$('role').textContent='Presiding waterfowl';}$('line').textContent=line;log(who,line);$('next').hidden=false;$('hint').textContent='Enter or Space to continue';if(state.optionalReturn){bg(state.scene);track(state.dialogueTrack??0);$('location').textContent=''+(state.optionalReturn.group==='booth'?'Sound booth':state.optionalReturn.mode==='investigate'?'Theatre Royal':'District Court');$('hint').textContent='Enter to continue · Return when you are ready';}else if(state.after==='investigate'){bg(state.scene||'stage');track(0)}else {bg('courtroom');track(state.dialogueTrack??(state.after==='ending'?3:state.stage>=2?3:1))}$('objective').textContent='Listen carefully. Every detail may matter.';}
  if(cross){const t=trials[state.stage];bg('courtroom');track(state.stage>=2?3:1);person(t.who,(t.who==='pip'&&state.stage>=7)||(t.who==='tessa'&&state.stage>=4)?'intense':t.who==='celia'?'thought':'neutral');$('line').textContent='“'+t.lines[state.statement]+'”';log(t.who,t.lines[state.statement]);$('next').hidden=true;$('hint').textContent='Press for details. Present evidence on the statement it contradicts.';$('testimonyTitle').textContent=t.title;$('statementCount').textContent=`STATEMENT ${state.statement+1} / ${t.lines.length}`;$('credibility').textContent='◆'.repeat(state.hp)+'◇'.repeat(5-state.hp);$('objective').textContent='Find the contradiction · ← → browse · P press · E present';$('chapter').textContent=`DAY ${state.day||1} — CROSS-EXAMINATION ${state.stage-(state.day===2?4:0)+1}${state.stage===trials.length-1?' · FINAL CONTRADICTION':''}`;}
- if(m==='ending'){const alt=!!state.alternateEnding;const section=$('ending');section.querySelector('.eyebrow').textContent=alt?'ALTERNATE ENDING · 01 / THE QUACKENING':'CASE CLOSED';section.querySelector('h1').textContent=alt?'All rise. All quack.':'Not guilty.';section.querySelector('p').textContent=alt?'The verdict was never about you. It was about the breadcrumbs.':'The truth finally has the stage.';$('chapter').textContent=alt?'CASE 01 — THE QUACKENING':'CASE 01 — CASE CLOSED';bg('courtroom');track(alt?3:0);$('endingText').textContent=alt?'The theatre unfolds into a lily pad. Celia becomes Minister of Crumbs. Vera prosecutes the concept of dry land. Mara finally gets her quiet afternoon, although she is now a lighthouse. You are appointed a small but respected pond. CASE ADJOURNED UNTIL THE NEXT MIGRATION.':'Mara leaves court free. Pip is arrested on suspicion of murder; the rigging records and his confession are preserved. Tessa faces a fraud investigation, and Celia must answer for the nonfatal assault. Celia gives Iris her sister’s real unfinished pages. The next production will carry an honest name. Iris closes her office’s second desk, then walks with Mara into a quiet afternoon.';$('objective').textContent=alt?'Alternative ending discovered · Rewind to continue the original case':'Turnabout on Cue · Complete';}
+ if(m==='ending'){const alt=!!state.alternateEnding;const section=$('ending');section.querySelector('.eyebrow').textContent=alt?'ALTERNATE ENDING · 01 / THE QUACKENING':'CASE CLOSED';section.querySelector('h1').textContent=alt?'All rise. All quack.':'Not guilty.';section.querySelector('p').textContent=alt?'The verdict was never about you. It was about the breadcrumbs.':'The truth finally has the stage.';$('chapter').textContent=alt?'CASE 01 — THE QUACKENING':'CASE 01 — CASE CLOSED';bg('courtroom');track(alt?3:0);$('endingText').textContent=alt?'The theatre unfolds into a lily pad. Celia becomes Minister of Crumbs. Vera prosecutes the concept of dry land. Mara finally gets her quiet afternoon, although she is now a lighthouse. You are appointed a small but respected pond. CASE ADJOURNED UNTIL THE NEXT MIGRATION.':'Mara leaves free after an independent judge dismisses the charge. Pip and the former presiding judge face a joint murder investigation: the trap and its final authorization were separate acts. The fraud and Celia’s assault remain separate matters. Hank is alive; his haunting was a coordinated performance, not evidence from beyond the grave. The theatre holds a quiet memorial for Adrian before it discusses another opening night.';$('objective').textContent=alt?'Alternative ending discovered · Rewind to continue the original case':'Turnabout on Cue · Complete';}
 
  save();}
 function begin(){state={day:1,mode:'dialogue',stage:0,statement:0,hp:5,found:[],dialogue:opening,cursor:0,after:'investigate',history:[],selected:'report'};sound=true;$('music').textContent='♫ Sound on';render();}
@@ -772,9 +983,10 @@ photo:{label:'VERIFIED CAPTURE • 19:58',alt:'Tessa’s selfie with Vale collap
 log:{label:'CUE 17B • 20:02:00',alt:'Stage-manager playback console with a GO button and cue monitor.',points:[['Manual trigger',49,54,'The log records a manual GO at 8:02:00 from the stage-manager console, not an automatic cue.'],['Playback file',27,24,'VALE_REHEARSAL_EDIT.wav contains the shout and crash. The upstairs booth was monitor-only.']]}
 };
 function evidencePicture(id){return window.ART?.['evidence_'+(evidenceFor(id)?.art||id)]||'';}
-function notesFor(id){return evidenceNotes[id]||{label:'DAY 2 • DOCUMENT EXTRACT',alt:'Related scene illustration. The new findings are in the written exhibit.',points:[['Read new findings',50,50,evidenceFor(id).text]]};}
-function inspectEvidence(id,present){const e=evidence.find(x=>x.id===id),note=notesFor(id);modal(e.name,'<button id="backToRecord">← Back to record</button><div class="inspection"><img id="inspectionImage"><span class="capture-label"></span><div id="detailMarkers"></div></div><p id="inspectionNote" aria-live="polite">Select a numbered detail, or use Tab and Enter to inspect it.</p>','EXAMINE EVIDENCE');$('inspectionImage').src=evidencePicture(id);$('inspectionImage').alt=note.alt;$('modalBody').querySelector('.capture-label').textContent=note.label;note.points.forEach(([label,x,y,text],i)=>{let b=document.createElement('button');b.className='detail-marker';b.style.left=x+'%';b.style.top=y+'%';b.textContent=i+1;b.setAttribute('aria-label',label);b.onclick=()=>{$('inspectionNote').textContent=label+' — '+text;};$('detailMarkers').append(b)});$('backToRecord').onclick=()=>record(present);$('backToRecord').focus();}
-function record(present=false){const available=evidence.filter(e=>e.id==='report'||state.found.includes(e.id));if(!available.find(e=>e.id===state.selected))state.selected='report';modal(present?'Present evidence':'Court record','<div class="evidence-grid"><div id="evidenceList" class="evidence-list"></div><div id="evidenceDetail" class="evidence-detail"></div></div>',present?'CHOOSE THE EVIDENCE THAT CONTRADICTS THIS STATEMENT':'EVIDENCE • SELECT AN ITEM TO INSPECT');function select(id){state.selected=id;const e=available.find(x=>x.id===id),note=notesFor(id);$('evidenceList').replaceChildren();available.forEach(x=>{let b=document.createElement('button'),img=document.createElement('img');img.src=evidencePicture(x.id);img.alt='';b.append(img,document.createTextNode(x.name));b.className=x.id===id?'selected':'';b.setAttribute('aria-pressed',String(x.id===id));b.onclick=()=>select(x.id);$('evidenceList').append(b)});const d=$('evidenceDetail');d.innerHTML='<span class="tag"></span><h3></h3><button class="evidence-preview" aria-label="Inspect evidence image"><img><span class="capture-label"></span><span class="inspect-caption">Inspect details ↗</span></button><p></p><div class="evidence-actions"></div>';d.querySelector('.tag').textContent=e.tag;d.querySelector('h3').textContent=e.name;d.querySelector('img').src=evidencePicture(id);d.querySelector('img').alt=note.alt;d.querySelector('.capture-label').textContent=note.label;d.querySelector('.evidence-preview').onclick=()=>inspectEvidence(id,present);d.querySelector('p').textContent=e.text;if(present){let b=document.createElement('button');b.className='primary';b.textContent='Present this evidence →';b.onclick=()=>submit(id);d.querySelector('.evidence-actions').append(b)}}select(state.selected);}
+const documentDetails={"relay":{"label":"Reverse-side channel register","text":"The same export’s reverse-side register separates ACTUATOR from SAFETY INTERLOCK. Pip’s 8:00:31 operation armed the actuator; a separate restraint remained engaged. At 8:01:56 certificate C-03 released that restraint. The attached certificate directory assigns C-03 to the presiding judge’s judicial arts-trust terminal; its embedded confirmation photograph shows the judge personally approving the release. Both channels were required for the 8:02 drop. These entries were in the original export, not a later submission."},"ledger":{"label":"Folded deed rider","text":"Unfolded rider to the same bank-certified instructions: Pip Foley is the registered nominee; beneficial proceeds pass to the presiding judge’s private arts trust. C-03 is the trust’s execution certificate, matching the attached directory. The rider and register share the original certification. The headline register entry was not a statement that Pip was the only beneficiary."},"packet":{"label":"Retained illusion appendix","text":"An older demonstration diagram retained in the publicity packet shows a lit performer out of the audience’s sight, reflected by an angled clear pane into a darkened room. The apparent figure can fade without the performer moving. A note describes the portable demonstration frame and the position beside a service door. It explains a staged apparition; it says nothing about the murderer."}};
+function notesFor(id){const base=evidenceNotes[id]||{label:'DAY 2 • DOCUMENT EXTRACT',alt:'Related scene illustration. The findings are in the written exhibit.',points:[['Read findings',50,50,evidenceFor(id).text]]};const detail=documentDetails[id];return detail&&state.stage>=9?{...base,points:[...base.points,[detail.label,75,72,detail.text]]}:base;}
+function inspectEvidence(id,present){const e=evidence.find(x=>x.id===id),note=notesFor(id);modal(e.name,'<button id="backToRecord">← Back to record</button><div class="inspection"><img id="inspectionImage"><span class="capture-label"></span><div id="detailMarkers"></div></div><p id="inspectionNote" aria-live="polite">Select a numbered detail, or use Tab and Enter to inspect it.</p>','EXAMINE EVIDENCE');$('inspectionImage').src=evidencePicture(id);$('inspectionImage').alt=note.alt;$('modalBody').querySelector('.capture-label').textContent=note.label;note.points.forEach(([label,x,y,text],i)=>{let b=document.createElement('button');b.className='detail-marker';b.style.left=x+'%';b.style.top=y+'%';b.textContent=i+1;b.setAttribute('aria-label',label);b.onclick=()=>{$('inspectionNote').textContent=label+' — '+text;if(documentDetails[id]?.label===label){state.readDetails=[...new Set([...(state.readDetails||[]),id])];save();}};$('detailMarkers').append(b)});$('backToRecord').onclick=()=>record(present);$('backToRecord').focus();}
+function record(present=false){const available=evidence.filter(e=>e.id==='report'||state.found.includes(e.id));if(!available.find(e=>e.id===state.selected))state.selected='report';modal(present?'Present evidence':'Court record','<div class="evidence-grid"><div id="evidenceList" class="evidence-list"></div><div id="evidenceDetail" class="evidence-detail"></div></div>',present?'CHOOSE THE EVIDENCE THAT CONTRADICTS THIS STATEMENT':'EVIDENCE • SELECT AN ITEM TO INSPECT');function select(id){state.selected=id;const e=available.find(x=>x.id===id),note=notesFor(id);$('evidenceList').replaceChildren();available.forEach(x=>{let b=document.createElement('button'),img=document.createElement('img');img.src=evidencePicture(x.id);img.alt='';b.append(img,document.createTextNode(x.name));b.className=x.id===id?'selected':'';b.setAttribute('aria-pressed',String(x.id===id));b.onclick=()=>select(x.id);$('evidenceList').append(b)});const d=$('evidenceDetail');d.innerHTML='<span class="tag"></span><h3></h3><button class="evidence-preview" aria-label="Inspect evidence image"><img><span class="capture-label"></span><span class="inspect-caption">Inspect details ↗</span></button><p></p><div class="evidence-actions"></div>';d.querySelector('.tag').textContent=e.tag;d.querySelector('h3').textContent=e.name;d.querySelector('img').src=evidencePicture(id);d.querySelector('img').alt=note.alt;d.querySelector('.capture-label').textContent=note.label;d.querySelector('.evidence-preview').onclick=()=>inspectEvidence(id,present);d.querySelector('p').textContent=e.text+(state.readDetails?.includes(id)&&documentDetails[id]?'\n\n'+documentDetails[id].text:'');if(present){let b=document.createElement('button');b.className='primary';b.textContent='Present this evidence →';b.onclick=()=>submit(id);d.querySelector('.evidence-actions').append(b)}}select(state.selected);}
 function submit(id){if(state.mode!=='cross')return;const t=trials[state.stage];if(id!=='report'&&!state.found.includes(id))return;if(state.statement===t.target&&id===t.proof){$('modal').close();$('burst').classList.remove('show');void $('burst').offsetWidth;$('burst').classList.add('show');track(2);const end=state.stage===trials.length-1,overnight=state.stage===3;if(!end)state.stage++;state.hp=Math.min(5,state.hp+1);speak(t.success,end?'ending':overnight?'intermission':'cross',end?3:2);}else{state.hp--;save();if(state.hp<=0){feedback('Take a breath. Rebuild the argument.','The court grants a short recess. Review the record, then retry this testimony with restored credibility.',()=>{state.hp=5;state.statement=0;render()})}else feedback('That does not contradict this statement.','You lose one point of credibility. Try pressing the witness for a more precise claim, then match it with a detail in your evidence.',render);}}
 function startDayTwo(){if(state.mode!=='intermission')return;state.day=2;state.stage=4;state.statement=0;state.hp=5;state.notesGroup=null;state.scene='stage';speak(day2Opening,'investigate',0);}
 $('nextDay').onclick=startDayTwo;
