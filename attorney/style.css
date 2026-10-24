@@ -31,3 +31,17 @@
 #notesScreen .interview-people button{padding:14px 20px}
 @media(max-width:900px){#notesScreen{padding:20px 4%}#notesScreen #extraLayout.mapped{grid-template-columns:1fr}.notes-heading h2{font-size:34px}.notes-heading{gap:10px}#notesScreen .extra-list{grid-template-columns:1fr 1fr}#notesScreen .extra-map{max-width:65dvh}}
 @media(max-height:760px){#notesScreen{padding-top:18px}.notes-heading{margin-bottom:12px}.notes-heading h2{font-size:34px}#notesScreen .extra-list button{min-height:38px;padding:8px 12px}.extra-intro{margin:10px 0}}
+
+#notesScreen.interview-screen{background-size:cover;background-position:center}
+#notesScreen .interview-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,1fr);align-items:center;gap:40px;max-width:1200px;margin:auto}
+#notesScreen .interview-layout .extra-map{max-width:none;position:relative;min-height:440px;align-self:stretch}
+.interview-portrait{height:420px;width:315px;margin:0 auto;background-size:300% auto;background-repeat:no-repeat;mask-image:linear-gradient(to bottom,#000 72%,transparent 100%)}
+.interview-caption{position:relative;margin:-30px auto 0;max-width:520px;padding:20px 24px;background:#0c1b26ee;border-top:2px solid var(--gold);box-shadow:0 10px 35px #0004}
+.interview-caption p{font-size:17px;line-height:1.55;margin:8px 0}.interview-caption .eyebrow{font-size:10px;color:var(--gold)}
+#notesScreen .interview-layout .extra-list{display:grid;grid-template-columns:1fr;gap:12px}
+#notesScreen .interview-layout .extra-list:before{content:'ASK ABOUT';color:var(--gold);font-size:10px;letter-spacing:3px;margin-bottom:4px}
+#notesScreen .interview-layout .extra-list button{background:#10232def;border-color:#a1bab84a;min-height:64px;font-size:15px}
+#notesScreen .interview-layout .extra-list button:hover{background:#294541;border-color:var(--gold)}
+.interview-screen .interview-description{display:none}
+@media(max-height:800px){#notesScreen .interview-layout .extra-map{min-height:300px}.interview-portrait{height:290px;width:230px}.interview-caption{padding:12px 18px}.interview-caption p{font-size:14px}#notesScreen .interview-layout .extra-list button{min-height:48px}#notesScreen .interview-people button{padding:10px 16px}}
+@media(max-width:800px){#notesScreen .interview-layout{grid-template-columns:1fr;gap:20px}.interview-portrait{height:270px;width:220px}#notesScreen .interview-layout .extra-map{min-height:0}.interview-caption{max-width:none}}
