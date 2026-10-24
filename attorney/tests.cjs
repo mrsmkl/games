@@ -18,8 +18,8 @@ raw='{broken';assert.equal(vm.runInContext('restore()',context),null);
 assert.equal(vm.runInContext('trials[3].proof',context),'report');
 console.log('Passed: save recovery, invalid state rejection, final evidence consistency.');
 
-assert.equal(vm.runInContext('optionalScenes.length',context),22);
-assert.equal(vm.runInContext('new Set(optionalScenes.map(s=>s.id)).size',context),22);
+assert.equal(vm.runInContext('optionalScenes.length',context),23);
+assert.equal(vm.runInContext('new Set(optionalScenes.map(s=>s.id)).size',context),23);
 assert.ok(vm.runInContext("optionalScenes.every(s=>s.lines.every(l=>cast[l[0]]&&typeof l[1]==='string'&&['neutral','thought','intense'].includes(l[2])))",context));
 vm.runInContext(`let state={mode:'cross',stage:2,statement:2,hp:3,found:['mic','alibi','photo','log'],scene:'courtroom',optionalSeen:[]};
 function $(id){return {close(){}}}function speak(lines,after,music){state.mode='dialogue';state.dialogue=lines;state.cursor=0;state.after=after}function render(){}openExtras=()=>{};`,context);
@@ -36,4 +36,18 @@ assert.equal(vm.runInContext('state.optionalSeen.length',context),1);
 vm.runInContext("state.mode='investigate';startOptional('ghostlight','stage');finishOptional(false)",context);
 assert.equal(vm.runInContext('state.mode',context),'investigate');
 assert.equal(vm.runInContext('state.optionalSeen.includes("ghostlight")',context),false);
-console.log('Passed: 22 optional scenes, expression tags, exact return position, no evidence/credibility changes, replay deduplication, skipped scenes.');
+console.log('Passed: 23 optional scenes, expression tags, exact return position, no evidence/credibility changes, replay deduplication, skipped scenes.');
+
+vm.runInContext("state.mode='cross';state.stage=3;state.statement=2;state.hp=4;startOptional('duck_tribunal','court');finishOptional(true)",context);
+assert.equal(vm.runInContext('state.mode',context),'ending');
+assert.equal(vm.runInContext('state.alternateEnding',context),true);
+vm.runInContext('rewindAlternate()',context);
+assert.equal(vm.runInContext('state.mode',context),'cross');
+assert.equal(vm.runInContext('state.statement',context),2);
+assert.equal(vm.runInContext('state.hp',context),4);
+assert.equal(vm.runInContext('state.alternateEnding',context),false);
+vm.runInContext("startOptional('duck_tribunal','court');finishOptional(false)",context);
+assert.equal(vm.runInContext('state.mode',context),'cross');
+console.log('Passed: alternative ending, rewind restores testimony and credibility, skip keeps normal route.');
+
+vm.runInContext("state.mode='ending';startOptional('duck_tribunal','ending');finishOptional(true);rewindAlternate()",context);assert.equal(vm.runInContext('state.mode',context),'ending');console.log('Passed: post-verdict branch rewinds to normal ending.');
