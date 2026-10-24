@@ -18,8 +18,8 @@ raw='{broken';assert.equal(vm.runInContext('restore()',context),null);
 assert.equal(vm.runInContext('trials[3].proof',context),'report');
 console.log('Passed: save recovery, invalid state rejection, final evidence consistency.');
 
-assert.equal(vm.runInContext('optionalScenes.length',context),23);
-assert.equal(vm.runInContext('new Set(optionalScenes.map(s=>s.id)).size',context),23);
+assert.equal(vm.runInContext('optionalScenes.length',context),35);
+assert.equal(vm.runInContext('new Set(optionalScenes.map(s=>s.id)).size',context),35);
 assert.ok(vm.runInContext("optionalScenes.every(s=>s.lines.every(l=>cast[l[0]]&&typeof l[1]==='string'&&['neutral','thought','intense'].includes(l[2])))",context));
 vm.runInContext(`let state={mode:'cross',stage:2,statement:2,hp:3,found:['mic','alibi','photo','log'],scene:'courtroom',optionalSeen:[]};
 function $(id){return {close(){}}}function speak(lines,after,music){state.mode='dialogue';state.dialogue=lines;state.cursor=0;state.after=after}function render(){}openExtras=()=>{};`,context);
@@ -36,7 +36,7 @@ assert.equal(vm.runInContext('state.optionalSeen.length',context),1);
 vm.runInContext("state.mode='investigate';startOptional('ghostlight','stage');finishOptional(false)",context);
 assert.equal(vm.runInContext('state.mode',context),'investigate');
 assert.equal(vm.runInContext('state.optionalSeen.includes("ghostlight")',context),false);
-console.log('Passed: 23 optional scenes, expression tags, exact return position, no evidence/credibility changes, replay deduplication, skipped scenes.');
+console.log('Passed: 35 investigation and conversation scenes, expression tags, exact return position, no evidence/credibility changes, replay deduplication, skipped scenes.');
 
 vm.runInContext("state.mode='cross';state.stage=3;state.statement=2;state.hp=4;startOptional('duck_tribunal','court');finishOptional(true)",context);
 assert.equal(vm.runInContext('state.mode',context),'ending');
@@ -51,3 +51,32 @@ assert.equal(vm.runInContext('state.mode',context),'cross');
 console.log('Passed: alternative ending, rewind restores testimony and credibility, skip keeps normal route.');
 
 vm.runInContext("state.mode='ending';startOptional('duck_tribunal','ending');finishOptional(true);rewindAlternate()",context);assert.equal(vm.runInContext('state.mode',context),'ending');console.log('Passed: post-verdict branch rewinds to normal ending.');
+
+// Exercise the shared investigation menus with a minimal DOM.
+const uiElements={};
+function element(){return {children:[],style:{},attrs:{},append(x){this.children.push(x)},setAttribute(k,v){this.attrs[k]=v},close(){}}}
+const ui=vm.createContext({document:{createElement:element},ART:{stage:'stage',booth:'booth'},$:(id)=>uiElements[id]||(uiElements[id]=element()),modal:()=>{for(const k of Object.keys(uiElements))delete uiElements[k]},render(){}});
+vm.runInContext(extras+data+`let state={mode:'investigate',stage:0,statement:0,hp:5,found:[],optionalSeen:[]};function speak(lines,after){state.mode='dialogue';state.dialogue=lines;state.after=after;state.cursor=0}`,ui);
+const discovery=src.slice(src.indexOf('const investigationDialogue='),src.indexOf('function step('));
+vm.runInContext(discovery,ui);
+vm.runInContext("openExtras('stage')",ui);
+assert.equal(uiElements.extraList.children.length,8);
+assert.ok(uiElements.extraList.children.some(b=>b.textContent.includes('Disconnected microphone')));
+assert.ok(uiElements.extraList.children.some(b=>b.textContent.includes('Velvet curtains')));
+vm.runInContext("openExtras('booth')",ui);
+assert.equal(uiElements.extraList.children.length,6);
+vm.runInContext("openExtras('talk','hank')",ui);
+assert.equal(uiElements.extraList.children.length,2);
+assert.equal(uiElements.interviewPeople.children.filter(x=>x.onclick).length,6);
+vm.runInContext("startOptional('hank_scene','talk');finishOptional(true)",ui);
+assert.ok(uiElements.extraList.children[0].textContent.startsWith('✓'));
+assert.equal(vm.runInContext('interviewPerson',ui),'hank');
+vm.runInContext("examine(0)",ui);
+assert.equal(vm.runInContext('state.optionalReturn.id',ui),'mic');
+raw=vm.runInContext('JSON.stringify({...state,history:[]})',ui);
+assert.ok(vm.runInContext('restore()',context));
+vm.runInContext('finishOptional(true)',ui);
+assert.equal(vm.runInContext('state.mode',ui),'investigate');
+assert.ok(uiElements.extraList.children.some(b=>b.textContent==='✓ Disconnected microphone'));
+assert.ok(vm.runInContext('opening.length>=10 && investigationDialogue.every(s=>s.length>=5)',ui));
+console.log('Passed: integrated clue/scenery menus, six interview subjects, topic return, inspection save recovery, expanded exposition.');
