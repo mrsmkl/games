@@ -3,7 +3,8 @@ const src=fs.readFileSync(fs.existsSync(__dirname+'/dist/game.js')?__dirname+'/d
 const data=src.slice(src.indexOf('const cast='),src.indexOf('let state='));
 const restore=src.slice(src.indexOf('function restore()'),src.indexOf('function track('));
 let raw;const context=vm.createContext({localStorage:{getItem:()=>raw}});
-vm.runInContext("const KEY='test';"+data+restore,context);
+const extras=fs.readFileSync(fs.existsSync(__dirname+'/dist/extras.js')?__dirname+'/dist/extras.js':__dirname+'/extras.js','utf8');
+vm.runInContext("const KEY='test';"+extras+data+restore,context);
 const valid={mode:'cross',stage:3,statement:0,hp:5,found:['mic','alibi','photo','log'],dialogue:[],history:[]};
 function run(x){raw=JSON.stringify(x);return vm.runInContext('restore()',context)}
 assert.equal(run(valid).stage,3);
@@ -16,3 +17,23 @@ assert.equal(run({...valid,stage:99}),null);
 raw='{broken';assert.equal(vm.runInContext('restore()',context),null);
 assert.equal(vm.runInContext('trials[3].proof',context),'report');
 console.log('Passed: save recovery, invalid state rejection, final evidence consistency.');
+
+assert.equal(vm.runInContext('optionalScenes.length',context),22);
+assert.equal(vm.runInContext('new Set(optionalScenes.map(s=>s.id)).size',context),22);
+assert.ok(vm.runInContext("optionalScenes.every(s=>s.lines.every(l=>cast[l[0]]&&typeof l[1]==='string'&&['neutral','thought','intense'].includes(l[2])))",context));
+vm.runInContext(`let state={mode:'cross',stage:2,statement:2,hp:3,found:['mic','alibi','photo','log'],scene:'courtroom',optionalSeen:[]};
+function $(id){return {close(){}}}function speak(lines,after,music){state.mode='dialogue';state.dialogue=lines;state.cursor=0;state.after=after}function render(){}openExtras=()=>{};`,context);
+vm.runInContext("startOptional('court_2','court')",context);
+assert.equal(vm.runInContext('state.mode',context),'dialogue');
+vm.runInContext('finishOptional(true)',context);
+assert.equal(vm.runInContext('state.mode',context),'cross');
+assert.equal(vm.runInContext('state.statement',context),2);
+assert.equal(vm.runInContext('state.hp',context),3);
+assert.equal(vm.runInContext('state.found.length',context),4);
+assert.equal(vm.runInContext('state.optionalSeen.join()',context),'court_2');
+vm.runInContext("startOptional('court_2','court');finishOptional(true)",context);
+assert.equal(vm.runInContext('state.optionalSeen.length',context),1);
+vm.runInContext("state.mode='investigate';startOptional('ghostlight','stage');finishOptional(false)",context);
+assert.equal(vm.runInContext('state.mode',context),'investigate');
+assert.equal(vm.runInContext('state.optionalSeen.includes("ghostlight")',context),false);
+console.log('Passed: 22 optional scenes, expression tags, exact return position, no evidence/credibility changes, replay deduplication, skipped scenes.');
