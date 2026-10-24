@@ -45,3 +45,40 @@
 .interview-screen .interview-description{display:none}
 @media(max-height:800px){#notesScreen .interview-layout .extra-map{min-height:300px}.interview-portrait{height:290px;width:230px}.interview-caption{padding:12px 18px}.interview-caption p{font-size:14px}#notesScreen .interview-layout .extra-list button{min-height:48px}#notesScreen .interview-people button{padding:10px 16px}}
 @media(max-width:800px){#notesScreen .interview-layout{grid-template-columns:1fr;gap:20px}.interview-portrait{height:270px;width:220px}#notesScreen .interview-layout .extra-map{min-height:0}.interview-caption{max-width:none}}
+
+.interview-picker{display:none}
+@media(max-width:600px){
+ #app{min-height:0;height:100dvh}#game{min-height:0}
+ header{height:58px;padding:0 10px;gap:10px;padding-top:env(safe-area-inset-top)}
+ .brand{font-size:22px}.heading{font-size:9px;letter-spacing:1px;min-width:0}.heading small{font-size:7px;letter-spacing:.5px;margin-top:4px}
+ .top-actions{gap:2px}.top-actions button{min-width:36px;height:44px;padding:8px}
+ #caseMenu{display:block}#caseMenu,#music{font-size:0}#caseMenu:before{content:'☰';font-size:18px}#music:before{content:'♫';font-size:19px}#fullscreen{display:none}
+ footer{height:48px;padding:0 10px;padding-bottom:env(safe-area-inset-bottom)}#objective{display:none}.footer-buttons{width:100%;justify-content:space-between}footer button{min-height:44px;font-size:12px}
+ #notesScreen{padding:12px 14px 20px;overscroll-behavior:contain;scrollbar-gutter:stable}
+ .notes-heading{gap:8px;align-items:center;margin-bottom:10px}.notes-heading .eyebrow{font-size:8px;letter-spacing:2px}.notes-heading h2{font-size:29px;margin:5px 0 0}
+ #notesBack{font-size:11px;padding:10px;max-width:138px;min-height:44px;white-space:normal}
+ .extra-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.extra-tabs button{padding:9px 4px;min-height:44px;font-size:11px}
+ .extra-intro{font-size:11px;margin:9px 0}#notesScreen.interview-screen .extra-intro{display:none}
+ #notesScreen .interview-people{margin:10px 0;display:block}#notesScreen .interview-people>button{display:none}
+ .interview-picker{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--gold)}
+ .interview-picker select{flex:1;min-width:0;min-height:44px;border:1px solid #a1bab85a;border-radius:4px;background:#10232d;color:var(--cream);font:16px 'DM Sans',sans-serif;padding:8px 12px}
+ #notesScreen .interview-layout{grid-template-columns:minmax(0,1fr);gap:12px}
+ #notesScreen .interview-layout .extra-map{display:grid;grid-template-columns:100px minmax(0,1fr);align-items:center;gap:10px;min-height:0}
+ .interview-portrait{height:145px;width:100px;margin:0;background-size:300% auto}
+ .interview-caption{margin:0;padding:10px 12px;max-width:none}.interview-caption p{font-size:12px;line-height:1.5;margin:4px 0}.interview-caption .eyebrow{font-size:8px;letter-spacing:1px}
+ #notesScreen .interview-layout .extra-list{gap:7px}#notesScreen .interview-layout .extra-list:before{font-size:9px;margin-bottom:0}
+ #notesScreen .interview-layout .extra-list button{min-height:46px;padding:10px 12px;font-size:13px;line-height:1.35}
+ #notesScreen #extraLayout.mapped{gap:12px}#notesScreen .extra-map{max-width:none}#notesScreen .extra-map>img{max-height:none}
+ #notesScreen .extra-list,#notesScreen .unmapped .extra-list{grid-template-columns:1fr}#notesScreen .extra-list button{min-height:44px}
+ #title{inset:0;padding:24px;max-width:none;overflow:auto}#title h1{font-size:64px;margin:18px 0}#title h2{font-size:20px}#title p{font-size:14px}.title-actions{flex-direction:column;gap:8px;margin:20px 0}.title-actions button{min-height:46px;width:100%}
+ #investigate{left:14px;right:14px;top:65px;width:auto;max-width:none;max-height:calc(100% - 80px);overflow:auto;padding:20px}#investigate h2{font-size:34px}
+ #location{left:14px;top:12px;font-size:9px;padding:8px 10px;max-width:90%}
+ #portrait{width:65%;right:3%;top:55px;max-width:280px}
+ #dialogue{left:10px;right:10px;bottom:10px;min-height:0;max-height:63%;overflow:auto;padding:0 14px 10px}
+ .dialogue-top{gap:8px;flex-wrap:wrap;padding:10px 0}.dialogue-top strong{font-size:14px}.dialogue-top span{font-size:8px;letter-spacing:.5px;max-width:60%}.dialogue-top button{min-height:32px}
+ #line{font-size:16px;line-height:1.5;margin:12px 0}#hint{display:none}#dialogueFooter{gap:8px;position:sticky;bottom:-10px;background:#10232df5;padding:6px 0;margin-top:8px}#leaveAside{font-size:11px;margin:0 auto 0 0;min-height:44px}#next{min-height:44px;font-size:13px;margin-left:auto}
+ body.cross #dialogue{bottom:112px;max-height:52%}#crossControls{left:10px;right:10px;bottom:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px}#crossControls button{min-height:44px;font-size:12px}
+ #testimonyBadge{left:14px;top:55px;gap:7px;max-width:65%}#testimonyBadge strong{font-size:24px}#testimonyBadge span{font-size:8px;letter-spacing:1px}#credibility{right:12px;top:58px;font-size:13px;letter-spacing:2px}
+ dialog{width:calc(100vw - 20px);max-height:90dvh;padding:16px}.modal-header h2{font-size:28px}.evidence-grid{gap:12px}.evidence-detail{padding:12px}.evidence-list button{font-size:11px}.evidence-actions{bottom:-16px}
+ #ending,.surreal #ending{inset:0;max-width:none;padding:24px;overflow:auto}#ending h1,.surreal #ending h1{font-size:58px}#ending p{font-size:14px}#duckReveal{opacity:.3;width:60%;right:0;top:4%}
+}
