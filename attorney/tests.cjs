@@ -15,11 +15,11 @@ assert.equal(run({...valid,found:['mic','mic','bad']}).found.join(','),'mic');
 assert.equal(run({...valid,mode:'dialogue',cursor:99,after:'cross'}),null);
 assert.equal(run({...valid,stage:99}),null);
 raw='{broken';assert.equal(vm.runInContext('restore()',context),null);
-assert.equal(vm.runInContext('trials[3].proof',context),'report');
+assert.equal(vm.runInContext('trials[5].proof',context),'report');
 console.log('Passed: save recovery, invalid state rejection, final evidence consistency.');
 
-assert.equal(vm.runInContext('optionalScenes.length',context),35);
-assert.equal(vm.runInContext('new Set(optionalScenes.map(s=>s.id)).size',context),35);
+assert.equal(vm.runInContext('optionalScenes.length',context),38);
+assert.equal(vm.runInContext('new Set(optionalScenes.map(s=>s.id)).size',context),38);
 assert.ok(vm.runInContext("optionalScenes.every(s=>s.lines.every(l=>cast[l[0]]&&typeof l[1]==='string'&&['neutral','thought','intense'].includes(l[2])))",context));
 vm.runInContext(`let state={mode:'cross',stage:2,statement:2,hp:3,found:['mic','alibi','photo','log'],scene:'courtroom',optionalSeen:[]};
 function $(id){return {close(){},focus(){},replaceChildren(){this.children=[]}}}function speak(lines,after,music){state.mode='dialogue';state.dialogue=lines;state.cursor=0;state.after=after}function render(){}openExtras=()=>{};`,context);
@@ -36,7 +36,7 @@ assert.equal(vm.runInContext('state.optionalSeen.length',context),1);
 vm.runInContext("state.mode='investigate';startOptional('ghostlight','stage');finishOptional(false)",context);
 assert.equal(vm.runInContext('state.mode',context),'investigate');
 assert.equal(vm.runInContext('state.optionalSeen.includes("ghostlight")',context),false);
-console.log('Passed: 35 investigation and conversation scenes, expression tags, exact return position, no evidence/credibility changes, replay deduplication, skipped scenes.');
+console.log('Passed: 38 investigation and conversation scenes, expression tags, exact return position, no evidence/credibility changes, replay deduplication, skipped scenes.');
 
 vm.runInContext("state.mode='cross';state.stage=3;state.statement=2;state.hp=4;startOptional('duck_tribunal','court');finishOptional(true)",context);
 assert.equal(vm.runInContext('state.mode',context),'ending');
@@ -103,3 +103,24 @@ assert.equal(uiElements.notesTitle.textContent,'Mara Bell');
 vm.runInContext("openExtras('stage')",ui);
 assert.equal(uiElements.notesScreen.className,'');
 console.log('Passed: character portrait screens, location-matched dialogue, return to interview, clean location switch.');
+
+assert.equal(vm.runInContext('trials.length',context),6);
+assert.equal(vm.runInContext('trials[3].proof',context),'alibi');
+assert.equal(vm.runInContext('trials[4].proof',context),'log');
+assert.equal(vm.runInContext('trials[5].who',context),'tessa');
+assert.ok(vm.runInContext("trials.every(t=>evidence.some(e=>e.id===t.proof)&&t.target>=0&&t.target<t.lines.length&&t.press.length===t.lines.length)",context));
+assert.ok(vm.runInContext("optionalScenes.some(s=>s.id==='duck_tribunal'&&s.stage===trials.length-1)",context));
+assert.ok(vm.runInContext("evidence.find(e=>e.id==='alibi').text.includes('7:59:10')",context));
+assert.ok(vm.runInContext("trials[5].success.some(l=>l[0]==='tessa'&&l[1].includes('I struck him'))",context));
+console.log('Passed: six linked contradictions, living-victim reversal, Tessa confession, final-stage secret ending.');
+const flow=vm.createContext({});
+vm.runInContext(data+`let state={mode:'cross',stage:0,statement:0,hp:5};function $(id){return {close(){},classList:{remove(){},add(){}},offsetWidth:0}}function track(){}function render(){}function speak(lines,after){state.mode='dialogue';state.dialogue=lines;state.cursor=0;state.after=after}function finishOptional(){};`+src.slice(src.indexOf('function submit('),src.indexOf("$('rewindAlternate').onclick"))+src.slice(src.indexOf('function advance('),src.indexOf('const investigationDialogue=')),flow);
+for(let n=0;n<6;n++){
+ assert.equal(vm.runInContext('state.stage',flow),n);
+ vm.runInContext('state.statement=trials[state.stage].target;submit(trials[state.stage].proof)',flow);
+ assert.equal(vm.runInContext('state.mode',flow),'dialogue');
+ const count=vm.runInContext('state.dialogue.length',flow);
+ for(let i=0;i<count;i++)vm.runInContext('advance()',flow);
+ assert.equal(vm.runInContext('state.mode',flow),n===5?'ending':'cross');
+}
+console.log('Passed: all six evidence submissions and success scenes reach the revised verdict.');
