@@ -569,11 +569,15 @@ function openExtras(group,character=null){
  state.notesGroup=group;if(character)state.notesPerson=character;render();$('notesTitle').focus();
 }
 function closeNotes(){state.notesGroup=null;render();$('extras').focus();}
+const interviewRooms={mara:'booth',pip:'booth',celia:'stage',tessa:'stage',hank:'courtroom',vera:'courtroom'};
+const interviewGreetings={mara:'Ask me anything. I want someone to understand what happened.',pip:'Where do you want to start? The people, the building, or the cables?',celia:'I can spare a moment. A theatre does not stop needing to be run.',tessa:'If you want my account, I would prefer to give it in my own words.',hank:'My notebook is open. Let’s make sure we get the details right.',vera:'You have my attention, Ms. Quill. What would you like to discuss?'};
 function drawNotes(){
  const context=extrasContext(),group=state.notesGroup;
  if(group==='talk')interviewPerson=state.notesPerson||interviewPerson;
  state.optionalSeen=state.optionalSeen||[];
  const titles={stage:'Theatre stage',booth:'Sound booth',talk:'Interviews',court:'Courtroom conversations',ending:'Outside the courtroom'};
+ $('notesScreen').className=group==='talk'?'interview-screen':'';
+ $('notesScreen').style.backgroundImage='';
  $('notesTitle').textContent=titles[group];
  $('notesBack').textContent=context==='court'?'← Return to testimony':context==='ending'?'← Return to verdict':'← Return to investigation';
  ['extraTabs','interviewPeople','extraMap','extraList'].forEach(id=>$(id).replaceChildren());
@@ -591,7 +595,17 @@ function drawNotes(){
   const leads=clues.map((c,i)=>({...c,lead:i,x:[16,56,35,73][i],y:[68,39,65,39][i]})).filter(c=>c.bg===group);
   items=[...items.slice(0,2),...leads,...items.slice(2)];
  }
- $('extraMap').hidden=!mapped;$('extraLayout').className=mapped?'mapped':'unmapped';
+ $('extraMap').hidden=!(mapped||group==='talk');$('extraLayout').className=mapped?'mapped':group==='talk'?'interview-layout':'unmapped';
+ if(group==='talk'){
+  const c=cast[interviewPerson];
+  $('notesTitle').textContent=c[0];
+  $('notesScreen').style.backgroundImage='linear-gradient(90deg,#081923dd,#0c202a99),url("'+ART[interviewRooms[interviewPerson]]+'")';
+  const portrait=document.createElement('div');portrait.className='interview-portrait';portrait.style.backgroundImage='url("'+ART[c[2]]+'")';portrait.style.backgroundPosition=(c[3]*50)+'% top';portrait.setAttribute('role','img');portrait.setAttribute('aria-label',c[0]);$('extraMap').append(portrait);
+  const caption=document.createElement('div');caption.className='interview-caption';
+  const role=document.createElement('p');role.className='eyebrow';role.textContent=c[1];caption.append(role);
+  const quote=document.createElement('p');quote.textContent='“'+interviewGreetings[interviewPerson]+'”';caption.append(quote);$('extraMap').append(caption);
+ }
+
  if(mapped){const img=document.createElement('img');img.src=ART[group];img.alt=titles[group]+' with inspection points';$('extraMap').append(img)}
  items.forEach((s,i)=>{
   const lead=Number.isInteger(s.lead),seen=lead?state.found.includes(s.id):state.optionalSeen.includes(s.id);
@@ -600,7 +614,7 @@ function drawNotes(){
   if(mapped){const marker=document.createElement('button');marker.className='detail-marker';marker.textContent=seen?'✓':i+1;marker.style.left=s.x+'%';marker.style.top=s.y+'%';marker.setAttribute('aria-label','Inspect '+s.name);marker.onclick=act;$('extraMap').append(marker)}
  });
 }
-function startOptional(id,group){const scene=optionalScenes.find(x=>x.id===id);if(!scene||!['investigate','cross','ending'].includes(state.mode))return;state.optionalReturn={mode:state.mode,statement:state.statement,scene:state.scene||'stage',group,id,character:interviewPerson};state.scene=group==='booth'?'booth':group==='stage'||group==='talk'?'stage':'courtroom';state.notesGroup=null;speak(scene.lines,state.optionalReturn.mode,state.optionalReturn.mode==='investigate'?0:1);}
+function startOptional(id,group){const scene=optionalScenes.find(x=>x.id===id);if(!scene||!['investigate','cross','ending'].includes(state.mode))return;state.optionalReturn={mode:state.mode,statement:state.statement,scene:state.scene||'stage',group,id,character:interviewPerson};state.scene=group==='booth'?'booth':group==='talk'?(interviewRooms[interviewPerson]||'stage'):group==='stage'?'stage':'courtroom';state.notesGroup=null;speak(scene.lines,state.optionalReturn.mode,state.optionalReturn.mode==='investigate'?0:1);}
 function finishOptional(complete){const back=state.optionalReturn;if(!back)return;if(complete){state.optionalSeen=[...new Set([...(state.optionalSeen||[]),back.id])]}if(complete&&back.id==='duck_tribunal'){state.alternateReturn={mode:back.mode,stage:state.stage,statement:back.statement,hp:state.hp};state.alternateEnding=true;state.optionalReturn=null;state.mode='ending';render();return;}state.mode=back.mode;state.statement=back.statement;state.scene=back.scene;state.optionalReturn=null;render();openExtras(back.group,back.character);}
 function updateExtrasUI(){const eligible=['investigate','cross','ending'].includes(state.mode);$('extras').hidden=!eligible||!!state.alternateEnding;$('explorePrompt').hidden=state.mode!=='investigate';$('leaveAside').hidden=!state.optionalReturn;$('extras').textContent=state.mode==='ending'?'After the verdict':state.mode==='cross'?'Quiet moment':'Explore & talk';}
 
