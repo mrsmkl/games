@@ -52,7 +52,7 @@
  header{height:58px;padding:0 10px;gap:10px;padding-top:env(safe-area-inset-top)}
  .brand{font-size:22px}.heading{font-size:9px;letter-spacing:1px;min-width:0}.heading small{font-size:7px;letter-spacing:.5px;margin-top:4px}
  .top-actions{gap:2px}.top-actions button{min-width:36px;height:44px;padding:8px}
- #caseMenu{display:block}#caseMenu,#music{font-size:0}#caseMenu:before{content:'☰';font-size:18px}#music:before{content:'♫';font-size:19px}#fullscreen{display:none}
+ #caseMenu{display:block}#caseMenu,#music{font-size:0}#caseMenu:before{content:'☰';font-size:18px}#music:before{content:'♫';font-size:19px}#fullscreen{display:block}
  footer{height:48px;padding:0 10px;padding-bottom:env(safe-area-inset-bottom)}#objective{display:none}.footer-buttons{width:100%;justify-content:space-between}footer button{min-height:44px;font-size:12px}
  #notesScreen{padding:12px 14px 20px;overscroll-behavior:contain;scrollbar-gutter:stable}
  .notes-heading{gap:8px;align-items:center;margin-bottom:10px}.notes-heading .eyebrow{font-size:8px;letter-spacing:2px}.notes-heading h2{font-size:29px;margin:5px 0 0}
