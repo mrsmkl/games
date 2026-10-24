@@ -1,31 +1,705 @@
 'use strict';
 // Optional scenes never add required evidence, change credibility or advance a trial.
 const optionalScenes=[
-{id:'ghostlight',group:'stage',name:'The ghost light',x:81,y:39,lines:[['iris','One lamp, and an entire empty theatre. Is someone still rehearsing?','thought'],['pip','Ghost light. They leave it on so nobody walks off the stage in the dark.','neutral'],['iris','I was hoping for a theatrical explanation.','thought'],['pip','The theatrical explanation is ghosts. The insurance explanation is stairs.','thought']]},
-{id:'curtains',group:'stage',name:'Velvet curtains',x:90,y:22,lines:[['iris','These curtains must weigh more than my entire office.','thought'],['pip','And they still move more smoothly than your filing cabinet.','thought'],['iris','The lower drawer has a system.','intense'],['pip','Yes. It only opens when you apologise to it.','thought']]},
-{id:'mirror',group:'stage',name:'The gold mirror',x:31,y:39,lines:[['iris','From here, the mirror makes the room look twice as large.','thought'],['pip','Set design. Give an audience one room and convince them there is another behind it.','neutral'],['iris','A useful trick. Until the second room shows something the first one tried to hide.','thought']]},
-{id:'desk',group:'stage',name:'The director’s desk',x:61,y:58,lines:[['iris','Every drawer has a little brass label. None of them says “miscellaneous”.','thought'],['pip','Directors prefer “creative development”.','thought'],['iris','That is what I am calling my lower drawer from now on.','neutral'],['pip','It still needs an apology.','thought']]},
-{id:'seats',group:'stage',name:'Empty audience',x:42,y:88,lines:[['iris','It feels different with nobody watching.','thought'],['pip','Mara always said the best sound check is an empty room. You can hear what the building wants to do.','neutral'],['iris','And what does this one want?','thought'],['pip','For somebody to finish the show.','thought']]},
-{id:'spotlight',group:'stage',name:'A pool of light',x:63,y:24,lines:[['pip','Stand in that light and the whole audience looks dark.','neutral'],['iris','So the person everyone can see may see the least.','thought'],['pip','You are going to use that in court, aren’t you?','thought'],['iris','Only if I can make it sound less rehearsed.','neutral']]},
-{id:'patchbay',group:'booth',name:'Patch bay',x:9,y:34,lines:[['iris','I count approximately a thousand ways to plug the wrong thing in.','thought'],['pip','Colour coding. Labels. And never trusting whoever says they will remember.','neutral'],['iris','That last rule seems broadly useful.','thought'],['pip','It is why I put dates on your coffee.','thought']]},
-{id:'headphones',group:'booth',name:'Worn headphones',x:81,y:61,lines:[['mara','The left cushion is splitting. I kept meaning to replace it.','neutral'],['iris','But it was comfortable.','thought'],['mara','It sounded familiar. You learn what is wrong with a room by hearing it through something you know.','thought'],['iris','Then we will keep listening through your version of events.','thought']]},
-{id:'plans',group:'booth',name:'Pinned stage plans',x:21,y:21,lines:[['pip','Three versions of the same set. The desk moves every time.','neutral'],['iris','A carefully planned production?','thought'],['pip','A director who discovered sightlines two days before opening.','thought'],['iris','I have met judges with the same relationship to calendars.','neutral']]},
-{id:'stool',group:'booth',name:'The sound engineer’s stool',x:31,y:73,lines:[['iris','This stool has one polished patch and no backrest.','thought'],['mara','You don’t sit still during a performance. Not if you are listening properly.','neutral'],['iris','I spend most of my working day standing too.','neutral'],['mara','Then I hope your shoes are kinder than mine.','thought']]},
-{id:'mara_first',group:'talk',name:'Mara · First night backstage',lines:[['iris','How did you start working here?','thought'],['mara','I volunteered to carry cables. Someone handed me a headset and never asked for it back.','thought'],['mara','During my first show I missed a thunder cue. An actor stamped his foot and everyone applauded.','neutral'],['iris','A theatre that forgives a late thunderstorm can survive hearing the truth.','thought']]},
-{id:'mara_future',group:'talk',name:'Mara · After the hearing',lines:[['mara','Everyone keeps asking what I will do if I am cleared.','intense'],['iris','You don’t owe anyone a five-year plan today.','thought'],['mara','I would like to go somewhere without a headset. Just for an afternoon.','thought'],['iris','Then that is the plan. One quiet afternoon.','neutral']]},
-{id:'pip_work',group:'talk',name:'Pip · Why leave the theatre?',lines:[['iris','You still know every cable in this building. Why did you leave?','thought'],['pip','I got tired of being asked to make bad decisions sound better.','neutral'],['iris','And you chose a law office?','thought'],['pip','I said I was tired. I did not say I had thought it through.','thought']]},
-{id:'iris_pen',group:'talk',name:'Pip · The fountain-pen hairpin',lines:[['pip','Does that pen in your hair actually write?','thought'],['iris','It was my first mentor’s. She told me to keep something sharp near my head.','neutral'],['pip','For thinking?','thought'],['iris','For signing the invoice before a grateful client leaves.','thought']]},
-{id:'celia_order',group:'talk',name:'Celia · Keeping the show together',lines:[['iris','You seem to know where everything belongs.','thought'],['celia','Someone has to. The audience remembers the person in the spotlight, not the person who got them there.','thought'],['iris','Does that bother you?','thought'],['celia','Only when they start believing the spotlight made itself.','thought']]},
-{id:'tessa_review',group:'talk',name:'Tessa · A kinder review',lines:[['tessa','People think critics enjoy a bad evening. I bought a ticket too, you know.','neutral'],['iris','Have you ever changed your mind about a performance?','thought'],['tessa','Once. I read an old review and realised I had described my own bad day.','thought'],['iris','Then there is hope for all of us who wrote something too confidently.','thought']]},
-{id:'court_0',group:'court',stage:0,name:'Pip · Before the first question',lines:[['iris','My hands have decided this is an excellent time to forget how paper works.','thought'],['pip','Put the file down. Breathe. Ask one question, not the whole case.','neutral'],['iris','And if the answer is not what I expect?','thought'],['pip','Then we will finally have learned something.','thought']]},
-{id:'court_1',group:'court',stage:1,name:'Hank · Getting it right',lines:[['hank','I wrote “certain” in my notebook. I should have written “reported”.','thought'],['iris','You can correct it.','neutral'],['hank','I know. I just wish correcting a word could give someone back the night they spent in a cell.','thought'],['iris','It cannot. But getting the next word right still matters.','thought']]},
-{id:'court_2',group:'court',stage:2,name:'Vera · What the evidence owes us',lines:[['vera','You are looking at me as though I resent the correction.','thought'],['iris','Most people dislike losing an argument.','thought'],['vera','An argument is replaceable. A person’s freedom is not. Bring me something better than my theory.','neutral'],['iris','I intend to.','intense']]},
-{id:'court_3',group:'court',stage:3,name:'Pip · One detail left',lines:[['pip','You have gone very quiet.','neutral'],['iris','I am trying not to turn a suspicion into a fact just because I want it to be one.','thought'],['pip','Good. We have already seen what happens when someone does that.','thought'],['iris','One claim. One exhibit. Let them meet.','intense']]},
-{id:'duck_tribunal',group:'court',stage:3,name:'Judge · One last procedural question',lines:[['iris','One last question, Your Honour… does this court actually have jurisdiction?','thought'],['judge','At last. Someone has asked the correct question.','thought'],['pip','Why did all the clocks just stop?','intense'],['judge','This court has been a duck since 1847.','intense'],['iris','The court? Or the building?','intense'],['judge','Yes.','thought'],['vera','I withdraw my species.','intense'],['celia','Is this still about the murder?','intense'],['judge','Murder? Counsel, this is the annual inspection of bread.','neutral'],['pip','Then where is the jury?','intense'],['judge','Behind you.','intense'],['iris','Twelve ducks in powdered wigs rise from the gallery. The moon cracks open like an egg. Somewhere, a bailiff stamps my soul: APPROVED FOR POND USE.','intense']]},
-{id:'after_mara',group:'ending',name:'Mara · A quiet afternoon',lines:[['mara','I keep waiting for someone to call me back into the courtroom.','thought'],['iris','You can leave whenever you like.','neutral'],['mara','Then I think I will walk. No music. No headphones.','thought'],['iris','One quiet afternoon. Just as planned.','thought']]},
-{id:'after_vera',group:'ending',name:'Vera · Until next time',lines:[['vera','A sound argument, Ms. Quill. Eventually.','thought'],['iris','Was that a compliment?','neutral'],['vera','Do not make me repeat myself. The transcript will be available.','neutral'],['pip','I am framing it.','thought']]}
-];
-optionalScenes.push(...[
+  {
+    "id": "ghostlight",
+    "group": "stage",
+    "name": "The ghost light",
+    "x": 81,
+    "y": 39,
+    "lines": [
+      [
+        "iris",
+        "One lamp, and an entire empty theatre. Is someone still rehearsing?",
+        "thought"
+      ],
+      [
+        "pip",
+        "Ghost light. They leave it on so nobody walks off the stage in the dark.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "I was hoping for a theatrical explanation.",
+        "thought"
+      ],
+      [
+        "pip",
+        "The theatrical explanation is ghosts. The insurance explanation is stairs.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "curtains",
+    "group": "stage",
+    "name": "Velvet curtains",
+    "x": 90,
+    "y": 22,
+    "lines": [
+      [
+        "iris",
+        "These curtains must weigh more than my entire office.",
+        "thought"
+      ],
+      [
+        "pip",
+        "And they still move more smoothly than your filing cabinet.",
+        "thought"
+      ],
+      [
+        "iris",
+        "The lower drawer has a system.",
+        "intense"
+      ],
+      [
+        "pip",
+        "Yes. It only opens when you apologise to it.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "mirror",
+    "group": "stage",
+    "name": "The gold mirror",
+    "x": 31,
+    "y": 39,
+    "lines": [
+      [
+        "iris",
+        "From here, the mirror makes the room look twice as large.",
+        "thought"
+      ],
+      [
+        "pip",
+        "Set design. Give an audience one room and convince them there is another behind it.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "A useful trick. Until the second room shows something the first one tried to hide.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "desk",
+    "group": "stage",
+    "name": "The director’s desk",
+    "x": 61,
+    "y": 58,
+    "lines": [
+      [
+        "iris",
+        "Every drawer has a little brass label. None of them says “miscellaneous”.",
+        "thought"
+      ],
+      [
+        "pip",
+        "Directors prefer “creative development”.",
+        "thought"
+      ],
+      [
+        "iris",
+        "That is what I am calling my lower drawer from now on.",
+        "neutral"
+      ],
+      [
+        "pip",
+        "It still needs an apology.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "seats",
+    "group": "stage",
+    "name": "Empty audience",
+    "x": 42,
+    "y": 88,
+    "lines": [
+      [
+        "iris",
+        "It feels different with nobody watching.",
+        "thought"
+      ],
+      [
+        "pip",
+        "Mara always said the best sound check is an empty room. You can hear what the building wants to do.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "And what does this one want?",
+        "thought"
+      ],
+      [
+        "pip",
+        "For somebody to finish the show.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "spotlight",
+    "group": "stage",
+    "name": "A pool of light",
+    "x": 63,
+    "y": 24,
+    "lines": [
+      [
+        "pip",
+        "Stand in that light and the whole audience looks dark.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "So the person everyone can see may see the least.",
+        "thought"
+      ],
+      [
+        "pip",
+        "You are going to use that in court, aren’t you?",
+        "thought"
+      ],
+      [
+        "iris",
+        "Only if I can make it sound less rehearsed.",
+        "neutral"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "patchbay",
+    "group": "booth",
+    "name": "Patch bay",
+    "x": 9,
+    "y": 34,
+    "lines": [
+      [
+        "iris",
+        "I count approximately a thousand ways to plug the wrong thing in.",
+        "thought"
+      ],
+      [
+        "pip",
+        "Colour coding. Labels. And never trusting whoever says they will remember.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "That last rule seems broadly useful.",
+        "thought"
+      ],
+      [
+        "pip",
+        "It is why I put dates on your coffee.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "headphones",
+    "group": "booth",
+    "name": "Worn headphones",
+    "x": 81,
+    "y": 61,
+    "lines": [
+      [
+        "mara",
+        "The left cushion is splitting. I kept meaning to replace it.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "But it was comfortable.",
+        "thought"
+      ],
+      [
+        "mara",
+        "It sounded familiar. You learn what is wrong with a room by hearing it through something you know.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Then we will keep listening through your version of events.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "plans",
+    "group": "booth",
+    "name": "Pinned stage plans",
+    "x": 21,
+    "y": 21,
+    "lines": [
+      [
+        "pip",
+        "Three versions of the same set. The desk moves every time.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "A carefully planned production?",
+        "thought"
+      ],
+      [
+        "pip",
+        "A director who discovered sightlines two days before opening.",
+        "thought"
+      ],
+      [
+        "iris",
+        "I have met judges with the same relationship to calendars.",
+        "neutral"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "stool",
+    "group": "booth",
+    "name": "The sound engineer’s stool",
+    "x": 31,
+    "y": 73,
+    "lines": [
+      [
+        "iris",
+        "This stool has one polished patch and no backrest.",
+        "thought"
+      ],
+      [
+        "mara",
+        "You don’t sit still during a performance. Not if you are listening properly.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "I spend most of my working day standing too.",
+        "neutral"
+      ],
+      [
+        "mara",
+        "Then I hope your shoes are kinder than mine.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "mara_first",
+    "group": "talk",
+    "name": "Mara · First night backstage",
+    "lines": [
+      [
+        "iris",
+        "How did you start working here?",
+        "thought"
+      ],
+      [
+        "mara",
+        "I volunteered to carry cables. Someone handed me a headset and never asked for it back.",
+        "thought"
+      ],
+      [
+        "mara",
+        "During my first show I missed a thunder cue. An actor stamped his foot and everyone applauded.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "A theatre that forgives a late thunderstorm can survive hearing the truth.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "mara_future",
+    "group": "talk",
+    "name": "Mara · After the hearing",
+    "lines": [
+      [
+        "mara",
+        "Everyone keeps asking what I will do if I am cleared.",
+        "intense"
+      ],
+      [
+        "iris",
+        "You don’t owe anyone a five-year plan today.",
+        "thought"
+      ],
+      [
+        "mara",
+        "I would like to go somewhere without a headset. Just for an afternoon.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Then that is the plan. One quiet afternoon.",
+        "neutral"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "pip_work",
+    "group": "talk",
+    "name": "Pip · Why leave the theatre?",
+    "lines": [
+      [
+        "iris",
+        "You still know every cable in this building. Why did you leave?",
+        "thought"
+      ],
+      [
+        "pip",
+        "I got tired of being asked to make bad decisions sound better.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "And you chose a law office?",
+        "thought"
+      ],
+      [
+        "pip",
+        "I said I was tired. I did not say I had thought it through.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "iris_pen",
+    "group": "talk",
+    "name": "Pip · The fountain-pen hairpin",
+    "lines": [
+      [
+        "pip",
+        "Does that pen in your hair actually write?",
+        "thought"
+      ],
+      [
+        "iris",
+        "It was my first mentor’s. She told me to keep something sharp near my head.",
+        "neutral"
+      ],
+      [
+        "pip",
+        "For thinking?",
+        "thought"
+      ],
+      [
+        "iris",
+        "For signing the invoice before a grateful client leaves.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "celia_order",
+    "group": "talk",
+    "name": "Celia · Keeping the show together",
+    "lines": [
+      [
+        "iris",
+        "You seem to know where everything belongs.",
+        "thought"
+      ],
+      [
+        "celia",
+        "Someone has to. The audience remembers the person in the spotlight, not the person who got them there.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Does that bother you?",
+        "thought"
+      ],
+      [
+        "celia",
+        "Only when they start believing the spotlight made itself.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "tessa_review",
+    "group": "talk",
+    "name": "Tessa · A kinder review",
+    "lines": [
+      [
+        "tessa",
+        "People think critics enjoy a bad evening. I bought a ticket too, you know.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "Have you ever changed your mind about a performance?",
+        "thought"
+      ],
+      [
+        "tessa",
+        "Once. I read an old review and realised I had described my own bad day.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Then there is hope for all of us who wrote something too confidently.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "court_0",
+    "group": "court",
+    "stage": 0,
+    "name": "Pip · Before the first question",
+    "lines": [
+      [
+        "iris",
+        "My hands have decided this is an excellent time to forget how paper works.",
+        "thought"
+      ],
+      [
+        "pip",
+        "Put the file down. Breathe. Ask one question, not the whole case.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "And if the answer is not what I expect?",
+        "thought"
+      ],
+      [
+        "pip",
+        "Then we will finally have learned something.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "court_1",
+    "group": "court",
+    "stage": 1,
+    "name": "Hank · Getting it right",
+    "lines": [
+      [
+        "hank",
+        "I wrote “certain” in my notebook. I should have written “reported”.",
+        "thought"
+      ],
+      [
+        "iris",
+        "You can correct it.",
+        "neutral"
+      ],
+      [
+        "hank",
+        "I know. I just wish correcting a word could give someone back the night they spent in a cell.",
+        "thought"
+      ],
+      [
+        "iris",
+        "It cannot. But getting the next word right still matters.",
+        "thought"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "court_2",
+    "group": "court",
+    "stage": 2,
+    "name": "Vera · What the evidence owes us",
+    "lines": [
+      [
+        "vera",
+        "You are looking at me as though I resent the correction.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Most people dislike losing an argument.",
+        "thought"
+      ],
+      [
+        "vera",
+        "An argument is replaceable. A person’s freedom is not. Bring me something better than my theory.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "I intend to.",
+        "intense"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "court_3",
+    "group": "court",
+    "stage": 3,
+    "name": "Pip · One detail left",
+    "lines": [
+      [
+        "pip",
+        "You have gone very quiet.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "I am trying not to turn a suspicion into a fact just because I want it to be one.",
+        "thought"
+      ],
+      [
+        "pip",
+        "Good. We have already seen what happens when someone does that.",
+        "thought"
+      ],
+      [
+        "iris",
+        "One claim. One exhibit. Let them meet.",
+        "intense"
+      ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "duck_tribunal",
+    "group": "court",
+    "stage": 8,
+    "name": "Judge · One last procedural question",
+    "lines": [
+      [
+        "iris",
+        "One last question, Your Honour… does this court actually have jurisdiction?",
+        "thought"
+      ],
+      [
+        "judge",
+        "At last. Someone has asked the correct question.",
+        "thought"
+      ],
+      [
+        "pip",
+        "Why did all the clocks just stop?",
+        "intense"
+      ],
+      [
+        "judge",
+        "This court has been a duck since 1847.",
+        "intense"
+      ],
+      [
+        "iris",
+        "The court? Or the building?",
+        "intense"
+      ],
+      [
+        "judge",
+        "Yes.",
+        "thought"
+      ],
+      [
+        "vera",
+        "I withdraw my species.",
+        "intense"
+      ],
+      [
+        "celia",
+        "Is this still about the murder?",
+        "intense"
+      ],
+      [
+        "judge",
+        "Murder? Counsel, this is the annual inspection of bread.",
+        "neutral"
+      ],
+      [
+        "pip",
+        "Then where is the jury?",
+        "intense"
+      ],
+      [
+        "judge",
+        "Behind you.",
+        "intense"
+      ],
+      [
+        "iris",
+        "Twelve ducks in powdered wigs rise from the gallery. The moon cracks open like an egg. Somewhere, a bailiff stamps my soul: APPROVED FOR POND USE.",
+        "intense"
+      ]
+    ],
+    "day": 2
+  },
+  {
+    "id": "after_mara",
+    "group": "ending",
+    "name": "Mara · A quiet afternoon",
+    "lines": [
+      [
+        "mara",
+        "I keep waiting for someone to call me back into the courtroom.",
+        "thought"
+      ],
+      [
+        "iris",
+        "You can leave whenever you like.",
+        "neutral"
+      ],
+      [
+        "mara",
+        "Then I think I will walk. No music. No headphones.",
+        "thought"
+      ],
+      [
+        "iris",
+        "One quiet afternoon. Just as planned.",
+        "thought"
+      ]
+    ],
+    "day": 2
+  },
+  {
+    "id": "after_vera",
+    "group": "ending",
+    "name": "Vera · Until next time",
+    "lines": [
+      [
+        "vera",
+        "Your assistant left you a very carefully selected truth.",
+        "thought"
+      ],
+      [
+        "iris",
+        "You made me keep reading.",
+        "thought"
+      ],
+      [
+        "vera",
+        "You did the reading yourself. Do not make me repeat the compliment.",
+        "neutral"
+      ]
+    ],
+    "day": 2
+  },
   {
     "id": "mara_night",
     "group": "talk",
@@ -67,7 +741,8 @@ optionalScenes.push(...[
         "You have been telling everyone what you touched. We also need to establish when you could have been there.",
         "neutral"
       ]
-    ]
+    ],
+    "day": 1
   },
   {
     "id": "mara_vale",
@@ -110,7 +785,8 @@ optionalScenes.push(...[
         "Then write this down too: I loved doing this job. Even on the nights I hated working for him.",
         "thought"
       ]
-    ]
+    ],
+    "day": 1
   },
   {
     "id": "pip_building",
@@ -153,7 +829,8 @@ optionalScenes.push(...[
         "So we should follow each signal back to the place it actually came from.",
         "neutral"
       ]
-    ]
+    ],
+    "day": 1
   },
   {
     "id": "pip_history",
@@ -196,7 +873,8 @@ optionalScenes.push(...[
         "Now we return the favour.",
         "neutral"
       ]
-    ]
+    ],
+    "day": 1
   },
   {
     "id": "celia_night",
@@ -244,7 +922,8 @@ optionalScenes.push(...[
         "I kept the show together for as long as I could. You make that sound like a suspicious occupation.",
         "neutral"
       ]
-    ]
+    ],
+    "day": 1
   },
   {
     "id": "celia_sister",
@@ -292,7 +971,8 @@ optionalScenes.push(...[
         "People say that, and then the next cue arrives. Is there anything else you need?",
         "neutral"
       ]
-    ]
+    ],
+    "day": 1
   },
   {
     "id": "tessa_night",
@@ -335,7 +1015,8 @@ optionalScenes.push(...[
         "Thank you. An image can preserve a detail neither of us thought to look for.",
         "neutral"
       ]
-    ]
+    ],
+    "day": 1
   },
   {
     "id": "tessa_play",
@@ -383,7 +1064,8 @@ optionalScenes.push(...[
         "Yes. You may stop underlining it with your voice.",
         "neutral"
       ]
-    ]
+    ],
+    "day": 1
   },
   {
     "id": "hank_scene",
@@ -426,7 +1108,8 @@ optionalScenes.push(...[
         "I will use the written report. A recollection of a report is how details get lost.",
         "neutral"
       ]
-    ]
+    ],
+    "day": 1
   },
   {
     "id": "hank_arrest",
@@ -469,7 +1152,8 @@ optionalScenes.push(...[
         "Then leave room in the margin.",
         "neutral"
       ]
-    ]
+    ],
+    "day": 1
   },
   {
     "id": "vera_case",
@@ -512,7 +1196,8 @@ optionalScenes.push(...[
         "Then we both have work to do.",
         "neutral"
       ]
-    ]
+    ],
+    "day": 1
   },
   {
     "id": "vera_method",
@@ -555,18 +1240,1056 @@ optionalScenes.push(...[
         "For once, we agree before the judge has asked us to.",
         "neutral"
       ]
+    ],
+    "day": 1
+  },
+  {
+    "id": "d2_mara_night",
+    "group": "talk",
+    "day": 2,
+    "character": "mara",
+    "name": "The night between hearings",
+    "lines": [
+      [
+        "mara",
+        "I kept replaying Celia’s confession. I thought that meant I could stop being afraid.",
+        "thought"
+      ],
+      [
+        "iris",
+        "It meant we had to test what she admitted. I should have said that more clearly.",
+        "thought"
+      ],
+      [
+        "mara",
+        "Will you tell me if the answer changes again?",
+        "thought"
+      ],
+      [
+        "iris",
+        "Before I promise you an ending. Yes.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_mara_award",
+    "group": "talk",
+    "day": 2,
+    "character": "mara",
+    "name": "Being watched",
+    "lines": [
+      [
+        "iris",
+        "Do you remember picking up the award?",
+        "thought"
+      ],
+      [
+        "mara",
+        "I remember wishing I had put it down. Everything after that became a question about my hands.",
+        "thought"
+      ],
+      [
+        "iris",
+        "We can leave that question for court.",
+        "thought"
+      ],
+      [
+        "mara",
+        "Thank you. I would like to be allowed to hold a cup without explaining it.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_celia_confession",
+    "group": "talk",
+    "day": 2,
+    "character": "celia",
+    "name": "The pauses",
+    "lines": [
+      [
+        "celia",
+        "Everyone wants a cleaner version of what I said yesterday.",
+        "thought"
+      ],
+      [
+        "iris",
+        "I want the version you remember.",
+        "thought"
+      ],
+      [
+        "celia",
+        "Then you will have to tolerate the pauses.",
+        "thought"
+      ],
+      [
+        "iris",
+        "I have a notebook. It can wait.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_celia_credit",
+    "group": "talk",
+    "day": 2,
+    "character": "celia",
+    "name": "Her middle initial",
+    "lines": [
+      [
+        "celia",
+        "My sister hated seeing her name abbreviated.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Even on a poster?",
+        "thought"
+      ],
+      [
+        "celia",
+        "Especially on a poster. She said if there was room for the director’s ego, there was room for her middle initial.",
+        "thought"
+      ],
+      [
+        "iris",
+        "She sounds difficult to fit in small print.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_tessa_contract",
+    "group": "talk",
+    "day": 2,
+    "character": "tessa",
+    "name": "The publicity agreement",
+    "lines": [
+      [
+        "tessa",
+        "I was hired to report a miracle: a director returning from the dead with three lost masterpieces.",
+        "thought"
+      ],
+      [
+        "iris",
+        "You were hired to disguise advertising as criticism.",
+        "thought"
+      ],
+      [
+        "tessa",
+        "Yes. There is no elegant way to say it. Pip handled the technical side and the estates.",
+        "thought"
+      ],
+      [
+        "iris",
+        "The contract will be more useful than an elegant version.",
+        "thought"
+      ]
+    ],
+    "requires": [
+      "packet"
+    ]
+  },
+  {
+    "id": "d2_tessa_upload",
+    "group": "talk",
+    "day": 2,
+    "character": "tessa",
+    "name": "The scream file",
+    "lines": [
+      [
+        "iris",
+        "Why did you upload a recording naming Mara?",
+        "thought"
+      ],
+      [
+        "tessa",
+        "Pip sent the file as the revised publicity cue. Vale had approved a fake death. I thought the name was part of that stunt.",
+        "thought"
+      ],
+      [
+        "iris",
+        "You did not ask Mara whether she agreed to be part of it.",
+        "thought"
+      ],
+      [
+        "tessa",
+        "No. I thought an explanation at 8:03 would make everything harmless. There was no explanation.",
+        "thought"
+      ]
+    ],
+    "requires": [
+      "packet"
+    ]
+  },
+  {
+    "id": "d2_hank_lab",
+    "group": "talk",
+    "day": 2,
+    "character": "hank",
+    "name": "Correcting the inventory",
+    "lines": [
+      [
+        "hank",
+        "The same shape and finish. One base, one detached handle. We assumed they belonged together.",
+        "thought"
+      ],
+      [
+        "iris",
+        "And a third item under the scenery.",
+        "thought"
+      ],
+      [
+        "hank",
+        "The solid original. It reached the lab in a separate bag. Matching the fracture surfaces exposed the mistake.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Put that correction in the record as plainly as you put the first conclusion.",
+        "thought"
+      ]
+    ],
+    "requires": [
+      "lab"
+    ]
+  },
+  {
+    "id": "d2_hank_recorder",
+    "group": "talk",
+    "day": 2,
+    "character": "hank",
+    "name": "Why the second channel was late",
+    "lines": [
+      [
+        "hank",
+        "The first export followed Mara’s route. Overnight the recorder team recovered the damaged index for the other channel.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Nobody changed the time stamps?",
+        "thought"
+      ],
+      [
+        "hank",
+        "No. Both channels match the verified time signal. We kept the original storage and documented the recovery.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Then the surprise belongs to our theory, not to the clock.",
+        "thought"
+      ]
+    ],
+    "requires": [
+      "camera2"
+    ]
+  },
+  {
+    "id": "d2_vera_reopen",
+    "group": "talk",
+    "day": 2,
+    "character": "vera",
+    "name": "Reopening the apparent solution",
+    "lines": [
+      [
+        "iris",
+        "You could have asked for a verdict after the confession.",
+        "thought"
+      ],
+      [
+        "vera",
+        "With unsigned medical findings and an unfinished inventory? That would have been convenient, not complete.",
+        "thought"
+      ],
+      [
+        "iris",
+        "I wanted it to be complete.",
+        "thought"
+      ],
+      [
+        "vera",
+        "So did I. Wanting is not an evidentiary standard.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_vera_estates",
+    "group": "talk",
+    "day": 2,
+    "character": "vera",
+    "name": "Reading a large file",
+    "lines": [
+      [
+        "iris",
+        "How do you get through a file this large?",
+        "thought"
+      ],
+      [
+        "vera",
+        "I begin at the first page.",
+        "thought"
+      ],
+      [
+        "iris",
+        "I was hoping for a professional secret.",
+        "thought"
+      ],
+      [
+        "vera",
+        "There is one. I do not skip the dull pages merely because somebody else has highlighted the exciting ones.",
+        "thought"
+      ]
+    ],
+    "requires": [
+      "ledger"
+    ]
+  },
+  {
+    "id": "d2_pip_contract",
+    "group": "talk",
+    "day": 2,
+    "character": "pip",
+    "name": "Your name on the contract",
+    "lines": [
+      [
+        "iris",
+        "Why did you not tell me you were the technical producer?",
+        "thought"
+      ],
+      [
+        "pip",
+        "I thought Celia had turned a tasteless stunt into a murder. My freelance invoice would only confuse your defense.",
+        "thought"
+      ],
+      [
+        "iris",
+        "You decided which facts I needed.",
+        "thought"
+      ],
+      [
+        "pip",
+        "I helped you find the microphone slip. I helped you prove Mara was upstairs. Those facts have not changed.",
+        "thought"
+      ]
+    ],
+    "requires": [
+      "packet"
+    ]
+  },
+  {
+    "id": "d2_pip_rig",
+    "group": "talk",
+    "day": 2,
+    "character": "pip",
+    "name": "The maintenance cabinet",
+    "lines": [
+      [
+        "iris",
+        "You worked on the maintenance cabinet?",
+        "thought"
+      ],
+      [
+        "pip",
+        "I checked a banner release. There is a service record.",
+        "thought"
+      ],
+      [
+        "iris",
+        "I may ask you about that in court.",
+        "thought"
+      ],
+      [
+        "pip",
+        "Then ask. I would rather answer a specific question than guess what you think of me.",
+        "thought"
+      ]
+    ],
+    "requires": [
+      "relay"
+    ]
+  },
+  {
+    "id": "d2_stage_desk",
+    "group": "stage",
+    "name": "The cleared desk",
+    "x": 62,
+    "y": 58,
+    "day": 2,
+    "lines": [
+      [
+        "iris",
+        "Someone has put all the desk ornaments in a cardboard box.",
+        "thought"
+      ],
+      [
+        "hank",
+        "The property team labelled every one. Even the little paperweight shaped like a larger desk.",
+        "thought"
+      ],
+      [
+        "iris",
+        "A desk for a desk.",
+        "thought"
+      ],
+      [
+        "hank",
+        "Please do not make me inventory its drawers too.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_stage_poster",
+    "group": "stage",
+    "name": "An unfinished poster",
+    "x": 88,
+    "y": 25,
+    "day": 2,
+    "lines": [
+      [
+        "celia",
+        "The paste is still damp at the corners.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Can the poster be taken down in one piece?",
+        "thought"
+      ],
+      [
+        "celia",
+        "Probably. I cannot decide whether I want to keep it.",
+        "thought"
+      ],
+      [
+        "iris",
+        "You do not have to decide this morning.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_booth_chair",
+    "group": "booth",
+    "name": "The work stool",
+    "x": 31,
+    "y": 73,
+    "day": 2,
+    "lines": [
+      [
+        "iris",
+        "The stool wobbles.",
+        "thought"
+      ],
+      [
+        "mara",
+        "Only if you sit like a normal person.",
+        "thought"
+      ],
+      [
+        "iris",
+        "What is the approved posture?",
+        "thought"
+      ],
+      [
+        "mara",
+        "Half standing, one foot on the crossbar, regretting your career.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_booth_labels",
+    "group": "booth",
+    "name": "Two sets of labels",
+    "x": 12,
+    "y": 25,
+    "day": 2,
+    "lines": [
+      [
+        "iris",
+        "Someone has labelled a drawer “labels”.",
+        "thought"
+      ],
+      [
+        "hank",
+        "Inside it is another box labelled “small labels”.",
+        "thought"
+      ],
+      [
+        "iris",
+        "A self-sustaining administrative system.",
+        "thought"
+      ],
+      [
+        "hank",
+        "We have one at the station. It is called a department.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_court_0",
+    "group": "court",
+    "stage": 4,
+    "day": 2,
+    "name": "Iris · A still image",
+    "lines": [
+      [
+        "iris",
+        "Yesterday I treated the photograph like a death certificate. Today I will ask what it actually records.",
+        "thought"
+      ],
+      [
+        "vera",
+        "Take your time, Ms. Quill. Then make the record precise.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_court_1",
+    "group": "court",
+    "stage": 5,
+    "day": 2,
+    "name": "Iris · An admission",
+    "lines": [
+      [
+        "iris",
+        "Celia confessed to a strike. I supplied the word “fatal”. That difference matters.",
+        "thought"
+      ],
+      [
+        "vera",
+        "Take your time, Ms. Quill. Then make the record precise.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_court_2",
+    "group": "court",
+    "stage": 6,
+    "day": 2,
+    "name": "Iris · The empty defense chair",
+    "lines": [
+      [
+        "iris",
+        "I keep turning to ask Pip a question. I need to stop doing that.",
+        "thought"
+      ],
+      [
+        "vera",
+        "Take your time, Ms. Quill. Then make the record precise.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_court_3",
+    "group": "court",
+    "stage": 7,
+    "day": 2,
+    "name": "Iris · The second channel",
+    "lines": [
+      [
+        "iris",
+        "The audio file explains what they heard. The isolated recorder explains what happened.",
+        "thought"
+      ],
+      [
+        "vera",
+        "Take your time, Ms. Quill. Then make the record precise.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_court_4",
+    "group": "court",
+    "stage": 8,
+    "day": 2,
+    "name": "Iris · An answer without a guide",
+    "lines": [
+      [
+        "iris",
+        "The evidence does not need a reassuring voice beside me. It needs to be read.",
+        "thought"
+      ],
+      [
+        "vera",
+        "Take your time, Ms. Quill. Then make the record precise.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "after_celia",
+    "day": 2,
+    "group": "ending",
+    "name": "Celia · Her real pages",
+    "lines": [
+      [
+        "celia",
+        "My sister’s play ends halfway through an argument.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Then leave it unfinished. Under her own name.",
+        "thought"
+      ],
+      [
+        "celia",
+        "That would be a very small opening night.",
+        "thought"
+      ],
+      [
+        "iris",
+        "After this one, that sounds rather good.",
+        "neutral"
+      ]
+    ]
+  },
+  {
+    "id": "d2_umbrella",
+    "group": "stage",
+    "name": "An abandoned umbrella",
+    "day": 2,
+    "x": 10,
+    "y": 70,
+    "lines": [
+      [
+        "iris",
+        "A perfectly dry umbrella. In a theatre.",
+        "thought"
+      ],
+      [
+        "celia",
+        "It is a rain effect. The actor opens it just before the sound cue.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Does it ever actually rain?",
+        "thought"
+      ],
+      [
+        "celia",
+        "Once. A pipe burst. It was our best-reviewed matinee.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_programmes",
+    "group": "stage",
+    "name": "A box of programmes",
+    "day": 2,
+    "x": 45,
+    "y": 82,
+    "lines": [
+      [
+        "iris",
+        "They printed a thousand.",
+        "thought"
+      ],
+      [
+        "celia",
+        "We have three hundred seats. Adrian believed optimism was a purchasing policy.",
+        "thought"
+      ],
+      [
+        "iris",
+        "What will happen to the rest?",
+        "thought"
+      ],
+      [
+        "celia",
+        "Shopping lists. Everybody gets an unusually dramatic shopping list.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_mark",
+    "group": "stage",
+    "name": "A strip of green tape",
+    "day": 2,
+    "x": 58,
+    "y": 80,
+    "lines": [
+      [
+        "iris",
+        "There is a green cross on the floor.",
+        "thought"
+      ],
+      [
+        "celia",
+        "A mark for the understudy. He always stood six inches too far left.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Did the tape help?",
+        "thought"
+      ],
+      [
+        "celia",
+        "He began missing the tape instead. Progress is difficult to measure.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_door",
+    "group": "stage",
+    "name": "The stubborn scenery door",
+    "day": 2,
+    "x": 16,
+    "y": 32,
+    "lines": [
+      [
+        "iris",
+        "This door opens into a painted brick wall.",
+        "thought"
+      ],
+      [
+        "celia",
+        "The set has changed twice. Nobody has told the door.",
+        "thought"
+      ],
+      [
+        "iris",
+        "I know a filing cabinet with similar ambitions.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_cups",
+    "group": "booth",
+    "name": "A row of old mugs",
+    "day": 2,
+    "x": 75,
+    "y": 75,
+    "lines": [
+      [
+        "mara",
+        "Everyone has a mug here. Nobody washes the one belonging to someone else.",
+        "thought"
+      ],
+      [
+        "iris",
+        "A strict professional boundary.",
+        "thought"
+      ],
+      [
+        "mara",
+        "Mostly fear. Some of the tea has seniority.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_radio",
+    "group": "booth",
+    "name": "A tiny weather radio",
+    "day": 2,
+    "x": 55,
+    "y": 28,
+    "lines": [
+      [
+        "iris",
+        "Why keep a weather radio in a windowless booth?",
+        "thought"
+      ],
+      [
+        "mara",
+        "So you know whether you are missing a nice day.",
+        "thought"
+      ],
+      [
+        "iris",
+        "That seems unnecessarily cruel.",
+        "thought"
+      ],
+      [
+        "mara",
+        "It also settles arguments about whether the thunder outside is ours.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_cactus",
+    "group": "booth",
+    "name": "The plastic cactus",
+    "day": 2,
+    "x": 85,
+    "y": 22,
+    "lines": [
+      [
+        "iris",
+        "This cactus has a watering schedule.",
+        "thought"
+      ],
+      [
+        "mara",
+        "Nobody knew it was plastic for three months.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Who discovered it?",
+        "thought"
+      ],
+      [
+        "mara",
+        "The person who complained it was growing too slowly.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_drawer",
+    "group": "booth",
+    "name": "The emergency snack drawer",
+    "day": 2,
+    "x": 42,
+    "y": 61,
+    "lines": [
+      [
+        "iris",
+        "Biscuits, batteries, and a single formal glove.",
+        "thought"
+      ],
+      [
+        "mara",
+        "The three backstage emergencies.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Hunger, silence, and…",
+        "thought"
+      ],
+      [
+        "mara",
+        "An unexpectedly important guest.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_mara_walk",
+    "group": "talk",
+    "name": "A route without headphones",
+    "day": 2,
+    "character": "mara",
+    "lines": [
+      [
+        "iris",
+        "Where will you go for that quiet afternoon?",
+        "thought"
+      ],
+      [
+        "mara",
+        "Along the river. There is a footbridge that hums in the wind.",
+        "thought"
+      ],
+      [
+        "iris",
+        "You are choosing somewhere for its sound again.",
+        "thought"
+      ],
+      [
+        "mara",
+        "I am allowed to listen. I just do not want to be responsible for the volume.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_pip_lunch",
+    "group": "talk",
+    "name": "The office lunch rota",
+    "day": 2,
+    "character": "pip",
+    "lines": [
+      [
+        "iris",
+        "You left three lunches labelled for today.",
+        "thought"
+      ],
+      [
+        "pip",
+        "You forget to eat when there is a hearing.",
+        "thought"
+      ],
+      [
+        "iris",
+        "One label says “not evidence”.",
+        "thought"
+      ],
+      [
+        "pip",
+        "That was after the sandwich in the document bag.",
+        "thought"
+      ],
+      [
+        "iris",
+        "It had been a long morning.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_celia_matinee",
+    "group": "talk",
+    "name": "The children’s matinee",
+    "day": 2,
+    "character": "celia",
+    "lines": [
+      [
+        "celia",
+        "My favourite audience was a school group. They booed a chair.",
+        "thought"
+      ],
+      [
+        "iris",
+        "What had the chair done?",
+        "thought"
+      ],
+      [
+        "celia",
+        "Nothing. They thought it was concealing the villain.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Was it?",
+        "thought"
+      ],
+      [
+        "celia",
+        "By the third performance, yes. We rewrote the scene.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_tessa_first",
+    "group": "talk",
+    "name": "Your first review",
+    "day": 2,
+    "character": "tessa",
+    "lines": [
+      [
+        "tessa",
+        "I reviewed a school production at fourteen.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Were you kind?",
+        "thought"
+      ],
+      [
+        "tessa",
+        "I praised the lighting. My mother operated the switch.",
+        "thought"
+      ],
+      [
+        "iris",
+        "A complicated relationship with impartiality.",
+        "thought"
+      ],
+      [
+        "tessa",
+        "She still has the clipping. She considers it my finest work.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_hank_notebook",
+    "group": "talk",
+    "name": "The notebook collection",
+    "day": 2,
+    "character": "hank",
+    "lines": [
+      [
+        "iris",
+        "Do you keep your old notebooks?",
+        "thought"
+      ],
+      [
+        "hank",
+        "Every one. They fill a wardrobe.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Where do you put your coats?",
+        "thought"
+      ],
+      [
+        "hank",
+        "On a chair. There is a system, but my wife refuses to recognise it.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_vera_garden",
+    "group": "talk",
+    "name": "Something outside court",
+    "day": 2,
+    "character": "vera",
+    "lines": [
+      [
+        "iris",
+        "Do you have a hobby that does not involve an argument?",
+        "thought"
+      ],
+      [
+        "vera",
+        "I grow tomatoes.",
+        "thought"
+      ],
+      [
+        "iris",
+        "Successfully?",
+        "thought"
+      ],
+      [
+        "vera",
+        "They are given clear instructions.",
+        "thought"
+      ],
+      [
+        "iris",
+        "And do they follow them?",
+        "thought"
+      ],
+      [
+        "vera",
+        "We are discussing something else now.",
+        "thought"
+      ]
     ]
   }
-]);
-optionalScenes.forEach(s=>{s.day=s.group==='ending'?2:1;});
-optionalScenes.find(s=>s.id==='duck_tribunal').stage=8;optionalScenes.find(s=>s.id==='duck_tribunal').day=2;
-optionalScenes.find(s=>s.id==='after_vera').lines=[['vera','Your assistant left you a very carefully selected truth.','thought'],['iris','You made me keep reading.','thought'],['vera','You did the reading yourself. Do not make me repeat the compliment.','neutral']];
-optionalScenes.push(...[{"id":"d2_mara_night","group":"talk","day":2,"character":"mara","name":"The night between hearings","lines":[["mara","I kept replaying Celia’s confession. I thought that meant I could stop being afraid.","thought"],["iris","It meant we had to test what she admitted. I should have said that more clearly.","thought"],["mara","Will you tell me if the answer changes again?","thought"],["iris","Before I promise you an ending. Yes.","thought"]]},{"id":"d2_mara_award","group":"talk","day":2,"character":"mara","name":"The award you picked up","lines":[["iris","Did the award feel heavy when you lifted it?","thought"],["mara","No. I thought I was shaking too hard to notice.","thought"],["iris","The lab found a hollow replica and a solid original.","thought"],["mara","He was on the floor, and I was holding a prop. I could not even tell which part of the room was real.","thought"]]},{"id":"d2_celia_confession","group":"talk","day":2,"character":"celia","name":"What you actually remember","lines":[["celia","I struck him. I will not pretend otherwise because a report gives me a way out.","thought"],["iris","We are separating what you did from what somebody else did later.","thought"],["celia","He fell so neatly. Behind the desk, away from me. Then the handle broke and I ran to my station.","thought"],["iris","Tell the court exactly that. No reconstructed ending.","thought"]]},{"id":"d2_celia_credit","group":"talk","day":2,"character":"celia","name":"Your sister’s name","lines":[["celia","He promised to put her name on the poster if I kept the opening running.","thought"],["iris","What happened before you struck him?","thought"],["celia","He called her unfinished pages worthless and said he could invent a better dead sister. I lost my temper.","thought"],["iris","His cruelty was real. So was your anger. Neither tells us who loaded the rig.","thought"]]},{"id":"d2_tessa_contract","group":"talk","day":2,"character":"tessa","name":"The publicity agreement","lines":[["tessa","I was hired to report a miracle: a director returning from the dead with three lost masterpieces.","thought"],["iris","You were hired to disguise advertising as criticism.","thought"],["tessa","Yes. There is no elegant way to say it. Pip handled the technical side and the estates.","thought"],["iris","The contract will be more useful than an elegant version.","thought"]]},{"id":"d2_tessa_upload","group":"talk","day":2,"character":"tessa","name":"The scream file","lines":[["iris","Why did you upload a recording naming Mara?","thought"],["tessa","Pip sent the file as the revised publicity cue. Vale had approved a fake death. I thought the name was part of that stunt.","thought"],["iris","You did not ask Mara whether she agreed to be part of it.","thought"],["tessa","No. I thought an explanation at 8:03 would make everything harmless. There was no explanation.","thought"]]},{"id":"d2_hank_lab","group":"talk","day":2,"character":"hank","name":"Correcting the inventory","lines":[["hank","The same shape and finish. One base, one detached handle. We assumed they belonged together.","thought"],["iris","And a third item under the scenery.","thought"],["hank","The solid original. It reached the lab in a separate bag. Matching the fracture surfaces exposed the mistake.","thought"],["iris","Put that correction in the record as plainly as you put the first conclusion.","thought"]]},{"id":"d2_hank_recorder","group":"talk","day":2,"character":"hank","name":"Why the second channel was late","lines":[["hank","The first export followed Mara’s route. Overnight the recorder team recovered the damaged index for the other channel.","thought"],["iris","Nobody changed the time stamps?","thought"],["hank","No. Both channels match the verified time signal. We kept the original storage and documented the recovery.","thought"],["iris","Then the surprise belongs to our theory, not to the clock.","thought"]]},{"id":"d2_vera_reopen","group":"talk","day":2,"character":"vera","name":"Reopening the apparent solution","lines":[["iris","You could have asked for a verdict after the confession.","thought"],["vera","With unsigned medical findings and an unfinished inventory? That would have been convenient, not complete.","thought"],["iris","I wanted it to be complete.","thought"],["vera","So did I. Wanting is not an evidentiary standard.","thought"]]},{"id":"d2_vera_estates","group":"talk","day":2,"character":"vera","name":"Three authors, one owner","lines":[["vera","The estates are paper companies, not the deceased authors advertised in the programme.","thought"],["iris","Tessa was the face. Who controlled them?","thought"],["vera","The bank-certified archive answers that. Read the ownership instructions alongside the rig revision.","thought"],["iris","A financial record and a stage cue. The strangest pair of documents I have ever compared.","thought"]]},{"id":"d2_pip_contract","group":"talk","day":2,"character":"pip","name":"Your name on the contract","lines":[["iris","Why did you not tell me you were the technical producer?","thought"],["pip","I thought Celia had turned a tasteless stunt into a murder. My freelance invoice would only confuse your defense.","thought"],["iris","You decided which facts I needed.","thought"],["pip","I helped you find the microphone slip. I helped you prove Mara was upstairs. Those facts have not changed.","thought"]]},{"id":"d2_pip_rig","group":"talk","day":2,"character":"pip","name":"The maintenance cabinet","lines":[["iris","The safety recorder places you at the cabinet at eight.","thought"],["pip","There was supposed to be a paper banner for the resurrection. I checked its release.","thought"],["iris","The recorded test load is rather heavy for paper.","thought"],["pip","The theatre reuses counterweights. You cannot read a whole mechanism from one number.","thought"]]},{"id":"d2_stage_desk","group":"stage","name":"The cleared desk","x":62,"y":58,"day":2,"lines":[["iris","Now that the scenery has been lifted, you can see the gap underneath.","thought"],["hank","That is where we recovered the solid award. The first photograph never showed this space.","thought"],["iris","A room can look familiar while still withholding half its contents.","thought"]]},{"id":"d2_stage_poster","group":"stage","name":"An unfinished poster","x":88,"y":25,"day":2,"lines":[["celia","There is a blank strip where my sister’s name was going to go.","thought"],["iris","Do not let them fill it with another invented author.","thought"],["celia","I will bring her own pages. Even if they are unfinished.","thought"]]},{"id":"d2_booth_chair","group":"booth","name":"Pip’s old work stool","x":31,"y":73,"day":2,"lines":[["iris","Yesterday Pip made a joke about this stool.","thought"],["mara","He knew where everything was. We all trusted people who knew where things were.","thought"],["iris","Knowing a room is not the same as telling the truth about it.","thought"]]},{"id":"d2_booth_labels","group":"booth","name":"Two sets of labels","x":12,"y":25,"day":2,"lines":[["hank","Audio on the front. Rig service inside.","thought"],["iris","Celia only saw the front panel.","thought"],["hank","The independent recorder is why the second set of instructions survived.","thought"]]},{"id":"d2_court_0","group":"court","stage":4,"day":2,"name":"Iris · A still image","lines":[["iris","Yesterday I treated the photograph like a death certificate. Today I will ask what it actually records.","thought"],["vera","Take your time, Ms. Quill. Then make the record precise.","thought"]]},{"id":"d2_court_1","group":"court","stage":5,"day":2,"name":"Iris · An admission","lines":[["iris","Celia confessed to a strike. I supplied the word “fatal”. That difference matters.","thought"],["vera","Take your time, Ms. Quill. Then make the record precise.","thought"]]},{"id":"d2_court_2","group":"court","stage":6,"day":2,"name":"Iris · The empty defense chair","lines":[["iris","I keep turning to ask Pip a question. I need to stop doing that.","thought"],["vera","Take your time, Ms. Quill. Then make the record precise.","thought"]]},{"id":"d2_court_3","group":"court","stage":7,"day":2,"name":"Iris · The second channel","lines":[["iris","The audio file explains what they heard. The isolated recorder explains what happened.","thought"],["vera","Take your time, Ms. Quill. Then make the record precise.","thought"]]},{"id":"d2_court_4","group":"court","stage":8,"day":2,"name":"Iris · An answer without a guide","lines":[["iris","The evidence does not need a reassuring voice beside me. It needs to be read.","thought"],["vera","Take your time, Ms. Quill. Then make the record precise.","thought"]]},{"id":"after_celia","day":2,"group":"ending","name":"Celia · Her real pages","lines":[["celia","My sister’s play ends halfway through an argument.","thought"],["iris","Then leave it unfinished. Under her own name.","thought"],["celia","That would be a very small opening night.","thought"],["iris","After this one, that sounds rather good.","neutral"]]}]);
+];
 const interviewCast=['mara','pip','celia','tessa','hank','vera'];
 const interviewOwners={mara_first:'mara',mara_future:'mara',pip_work:'pip',iris_pen:'pip',celia_order:'celia',tessa_review:'tessa'};
 let interviewPerson=null;
 function extrasContext(){return state.mode==='cross'?'court':state.mode==='ending'?'ending':'investigate';}
-function availableExtras(group){return optionalScenes.filter(s=>s.day===(state.day||1)&&(s.group===group||(group==='ending'&&s.id==='duck_tribunal'))&&(group!=='court'||s.stage===state.stage));}
+function availableExtras(group){return optionalScenes.filter(s=>s.day===(state.day||1)&&(!s.requires||s.requires.every(id=>state.found.includes(id)))&&(s.group===group||(group==='ending'&&s.id==='duck_tribunal'))&&(group!=='court'||s.stage===state.stage));}
 function openExtras(group,character=null){
  const context=extrasContext();if(!['investigate','cross','ending'].includes(state.mode))return;
  group=context==='court'?'court':context==='ending'?'ending':(['stage','booth','talk'].includes(group)?group:'stage');
@@ -622,7 +2345,7 @@ function drawNotes(){
   if(mapped){const marker=document.createElement('button');marker.className='detail-marker';marker.textContent=seen?'✓':i+1;marker.style.left=s.x+'%';marker.style.top=s.y+'%';marker.setAttribute('aria-label','Inspect '+s.name);marker.onclick=act;$('extraMap').append(marker)}
  });
 }
-function startOptional(id,group){const scene=optionalScenes.find(x=>x.id===id);if(!scene||scene.day!==(state.day||1)||!['investigate','cross','ending'].includes(state.mode))return;state.optionalReturn={mode:state.mode,statement:state.statement,scene:state.scene||'stage',group,id,character:interviewPerson};state.scene=group==='booth'?'booth':group==='talk'?(interviewRooms[interviewPerson]||'stage'):group==='stage'?'stage':'courtroom';state.notesGroup=null;speak(scene.lines,state.optionalReturn.mode,state.optionalReturn.mode==='investigate'?0:1);}
+function startOptional(id,group){const scene=optionalScenes.find(x=>x.id===id);if(!scene||scene.day!==(state.day||1)||(scene.requires&&!scene.requires.every(id=>state.found.includes(id)))||!['investigate','cross','ending'].includes(state.mode))return;state.optionalReturn={mode:state.mode,statement:state.statement,scene:state.scene||'stage',group,id,character:interviewPerson};state.scene=group==='booth'?'booth':group==='talk'?(interviewRooms[interviewPerson]||'stage'):group==='stage'?'stage':'courtroom';state.notesGroup=null;speak(scene.lines,state.optionalReturn.mode,state.optionalReturn.mode==='investigate'?0:1);}
 function finishOptional(complete){const back=state.optionalReturn;if(!back)return;if(complete){state.optionalSeen=[...new Set([...(state.optionalSeen||[]),back.id])]}if(complete&&back.id==='duck_tribunal'){state.alternateReturn={mode:back.mode,stage:state.stage,statement:back.statement,hp:state.hp};state.alternateEnding=true;state.optionalReturn=null;state.mode='ending';render();return;}state.mode=back.mode;state.statement=back.statement;state.scene=back.scene;state.optionalReturn=null;render();openExtras(back.group,back.character);}
 function updateExtrasUI(){const eligible=['investigate','cross','ending'].includes(state.mode);$('extras').hidden=!eligible||!!state.alternateEnding;$('explorePrompt').hidden=state.mode!=='investigate';$('leaveAside').hidden=!state.optionalReturn;$('extras').textContent=state.mode==='ending'?'After the verdict':state.mode==='cross'?'Quiet moment':'Explore & talk';}
 
