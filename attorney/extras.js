@@ -105,12 +105,22 @@ const optionalScenes=[
       ],
       [
         "iris",
-        "That is what I am calling my lower drawer from now on.",
+        "The trim looks expensive.",
         "neutral"
       ],
       [
         "pip",
-        "It still needs an apology.",
+        "Painted wood. From the back row, a good finish can do most of the work.",
+        "neutral"
+      ],
+      [
+        "iris",
+        "I should try that on my office furniture.",
+        "thought"
+      ],
+      [
+        "pip",
+        "Your clients sit considerably closer.",
         "thought"
       ]
     ],
@@ -250,6 +260,16 @@ const optionalScenes=[
       ],
       [
         "iris",
+        "Except for this little cross behind it.",
+        "thought"
+      ],
+      [
+        "pip",
+        "An actor’s mark. Sometimes the scenery has to move around the performer.",
+        "neutral"
+      ],
+      [
+        "iris",
         "A carefully planned production?",
         "thought"
       ],
@@ -257,11 +277,6 @@ const optionalScenes=[
         "pip",
         "A director who discovered sightlines two days before opening.",
         "thought"
-      ],
-      [
-        "iris",
-        "I have met judges with the same relationship to calendars.",
-        "neutral"
       ]
     ],
     "day": 1
@@ -1027,7 +1042,7 @@ const optionalScenes=[
       [
         "iris",
         "Why did this opening attract so much attention?",
-        "neutral"
+        "thought"
       ],
       [
         "tessa",
@@ -1037,31 +1052,31 @@ const optionalScenes=[
       [
         "iris",
         "An awkward theme for this evening.",
-        "neutral"
+        "thought"
       ],
       [
         "tessa",
         "He spoke more about his genius than about the play. I had hoped the writing would be less exhausting than the publicity.",
-        "neutral"
+        "thought"
       ],
       [
         "iris",
         "Had you read it before?",
-        "neutral"
+        "thought"
       ],
       [
         "tessa",
-        "Only a short press extract. A critic should distinguish what she has read from what she assumes she recognises.",
+        "Only a short press extract. The rest came in a sealed publicity folder, with instructions to wait until after the performance.",
         "neutral"
       ],
       [
         "iris",
-        "A useful rule for a witness too.",
-        "neutral"
+        "Do critics usually accept instructions?",
+        "thought"
       ],
       [
         "tessa",
-        "Yes. You may stop underlining it with your voice.",
+        "Only about when to publish. Never about what adjective to use.",
         "neutral"
       ]
     ],
