@@ -22,7 +22,7 @@ assert.equal(vm.runInContext('optionalScenes.length',context),35);
 assert.equal(vm.runInContext('new Set(optionalScenes.map(s=>s.id)).size',context),35);
 assert.ok(vm.runInContext("optionalScenes.every(s=>s.lines.every(l=>cast[l[0]]&&typeof l[1]==='string'&&['neutral','thought','intense'].includes(l[2])))",context));
 vm.runInContext(`let state={mode:'cross',stage:2,statement:2,hp:3,found:['mic','alibi','photo','log'],scene:'courtroom',optionalSeen:[]};
-function $(id){return {close(){}}}function speak(lines,after,music){state.mode='dialogue';state.dialogue=lines;state.cursor=0;state.after=after}function render(){}openExtras=()=>{};`,context);
+function $(id){return {close(){},focus(){},replaceChildren(){this.children=[]}}}function speak(lines,after,music){state.mode='dialogue';state.dialogue=lines;state.cursor=0;state.after=after}function render(){}openExtras=()=>{};`,context);
 vm.runInContext("startOptional('court_2','court')",context);
 assert.equal(vm.runInContext('state.mode',context),'dialogue');
 vm.runInContext('finishOptional(true)',context);
@@ -54,8 +54,8 @@ vm.runInContext("state.mode='ending';startOptional('duck_tribunal','ending');fin
 
 // Exercise the shared investigation menus with a minimal DOM.
 const uiElements={};
-function element(){return {children:[],style:{},attrs:{},append(x){this.children.push(x)},setAttribute(k,v){this.attrs[k]=v},close(){}}}
-const ui=vm.createContext({document:{createElement:element},ART:{stage:'stage',booth:'booth'},$:(id)=>uiElements[id]||(uiElements[id]=element()),modal:()=>{for(const k of Object.keys(uiElements))delete uiElements[k]},render(){}});
+function element(){return {children:[],style:{},attrs:{},append(x){this.children.push(x)},setAttribute(k,v){this.attrs[k]=v},close(){},focus(){},replaceChildren(){this.children=[]}}}
+const ui=vm.createContext({document:{createElement:element},ART:{stage:'stage',booth:'booth'},$:(id)=>uiElements[id]||(uiElements[id]=element()),modal:()=>{throw Error('Case notes must not open a dialog')},render(){vm.runInContext('if(state.notesGroup)drawNotes()',ui)}});
 vm.runInContext(extras+data+`let state={mode:'investigate',stage:0,statement:0,hp:5,found:[],optionalSeen:[]};function speak(lines,after){state.mode='dialogue';state.dialogue=lines;state.after=after;state.cursor=0}`,ui);
 const discovery=src.slice(src.indexOf('const investigationDialogue='),src.indexOf('function step('));
 vm.runInContext(discovery,ui);
@@ -80,3 +80,13 @@ assert.equal(vm.runInContext('state.mode',ui),'investigate');
 assert.ok(uiElements.extraList.children.some(b=>b.textContent==='✓ Disconnected microphone'));
 assert.ok(vm.runInContext('opening.length>=10 && investigationDialogue.every(s=>s.length>=5)',ui));
 console.log('Passed: integrated clue/scenery menus, six interview subjects, topic return, inspection save recovery, expanded exposition.');
+
+vm.runInContext("openExtras('talk','vera')",ui);
+raw=vm.runInContext('JSON.stringify({...state,dialogue:[],history:[]})',ui);
+assert.equal(vm.runInContext('restore().notesGroup',context),'talk');
+assert.equal(vm.runInContext('restore().notesPerson',context),'vera');
+vm.runInContext('closeNotes()',ui);
+assert.equal(vm.runInContext('state.notesGroup',ui),null);
+vm.runInContext("state.mode='cross';state.stage=2;state.statement=2;openExtras();closeNotes()",ui);
+assert.equal(vm.runInContext('state.statement',ui),2);
+console.log('Passed: case notes are non-modal screens; saved interview and exact testimony return.');
