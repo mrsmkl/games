@@ -598,7 +598,7 @@ const optionalScenes=[
   {
     "id": "duck_tribunal",
     "group": "court",
-    "stage": 8,
+    "stage": 11,
     "name": "Judge · One last procedural question",
     "lines": [
       [
@@ -2295,6 +2295,91 @@ const optionalScenes=[
       [
         "vera",
         "We are discussing something else now.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_court_ghost_0",
+    "group": "court",
+    "day": 2,
+    "stage": 9,
+    "name": "Iris · The same pages",
+    "lines": [
+      [
+        "iris",
+        "The room feels different. The documents have not changed.",
+        "thought"
+      ],
+      [
+        "mara",
+        "Then start with the documents.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_court_ghost_1",
+    "group": "court",
+    "day": 2,
+    "stage": 10,
+    "name": "Iris · Looking at the bench",
+    "lines": [
+      [
+        "iris",
+        "I keep waiting for someone to tell me I cannot ask this.",
+        "thought"
+      ],
+      [
+        "mara",
+        "You asked everyone else.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "d2_court_ghost_2",
+    "group": "court",
+    "day": 2,
+    "stage": 11,
+    "name": "Iris · A witness, not a miracle",
+    "lines": [
+      [
+        "iris",
+        "Whatever happens next, I need an explanation I can write down.",
+        "thought"
+      ],
+      [
+        "mara",
+        "Please let it be shorter than the last one.",
+        "thought"
+      ]
+    ]
+  },
+  {
+    "id": "after_hank",
+    "group": "ending",
+    "day": 2,
+    "name": "Hank · Still here",
+    "lines": [
+      [
+        "iris",
+        "Was the transparent entrance really necessary?",
+        "thought"
+      ],
+      [
+        "hank",
+        "Tessa insisted on a fade-in. I asked for a chair. We compromised on neither.",
+        "thought"
+      ],
+      [
+        "iris",
+        "And Adrian?",
+        "thought"
+      ],
+      [
+        "hank",
+        "Complicated. As people usually are when there is someone left to remember more than their worst day.",
         "thought"
       ]
     ]
