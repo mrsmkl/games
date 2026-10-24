@@ -55,11 +55,19 @@ console.log('Passed: day-gated topics and evidence, save/resume at every discove
 assert.equal(run('evidence.length'),10);
 assert.equal(run("evidence.map(e=>e.id).join(',')"),'report,mic,alibi,photo,log,camera2,lab,packet,relay,ledger');
 assert.ok(run("trials.slice(-3).every(t=>t.who==='ghost')"));
-assert.ok(run("trials[11].success.some(l=>l[0]==='hank'&&l[1].includes('arranged the collapse'))"));
-assert.ok(run("trials[11].success.some(l=>l[0]==='judge'&&l[1].includes('four seconds'))"));
+assert.ok(run("trials[11].success.some(l=>l[0]==='vale'&&l[1].includes('never was a second man'))"));
+assert.ok(run("trials[11].success.some(l=>l[0]==='judge'&&l[1].includes('watched the release'))"));
 vm.runInContext(src.slice(src.indexOf('const evidenceNotes='),src.indexOf('function inspectEvidence(')),ctx);
 run('state.stage=8');assert.equal(run("notesFor('relay').points.length"),1);
 run('state.stage=9');assert.equal(run("notesFor('relay').points.length"),2);
 assert.ok(run("notesFor('ledger').points.some(p=>p[0]==='Folded deed rider')"));
-assert.ok(run("trials[8].success.some(l=>l[0]==='ghost'&&l[1].includes('remember both'))"));
-console.log('Passed: unchanged ten-exhibit inventory, late document details, Hank as final witness, staged haunting, judge admission, balanced remembrance.');
+assert.ok(run("trials[8].success.some(l=>l[0]==='ghost'&&l[1].includes('whole person'))"));
+console.log('Passed: unchanged ten-exhibit inventory, late document details, Vale’s ghost as final witness, staged haunting, judge admission, same-person reveal, attempted murder, balanced remembrance.');
+
+assert.equal(run("cast.ghost[0]"),'Adrian Vale’s ghost');
+assert.equal(run("cast.ghost[2]"),'theatre');
+assert.equal(run("cast.ghost[3]"),1);
+assert.ok(run("documentDetails.packet.text.includes('performer: ADRIAN VALE')"));
+assert.ok(run("documentDetails.report.text.includes('no signed death certificate')"));
+assert.ok(run("trials[11].success.some(l=>l[0]==='iris'&&l[1].includes('both intended to kill'))"));
+console.log('Passed: Vale portrait crop, shared identity in existing packet, uncertified death, attempted-killing resolution.');
