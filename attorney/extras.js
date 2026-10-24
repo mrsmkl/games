@@ -566,14 +566,22 @@ function availableExtras(group){return optionalScenes.filter(s=>(s.group===group
 function openExtras(group,character=null){
  const context=extrasContext();if(!['investigate','cross','ending'].includes(state.mode))return;
  group=context==='court'?'court':context==='ending'?'ending':(['stage','booth','talk'].includes(group)?group:'stage');
- if(group==='talk'&&character)interviewPerson=character;
+ state.notesGroup=group;if(character)state.notesPerson=character;render();$('notesTitle').focus();
+}
+function closeNotes(){state.notesGroup=null;render();$('extras').focus();}
+function drawNotes(){
+ const context=extrasContext(),group=state.notesGroup;
+ if(group==='talk')interviewPerson=state.notesPerson||interviewPerson;
  state.optionalSeen=state.optionalSeen||[];
  const titles={stage:'Theatre stage',booth:'Sound booth',talk:'Interviews',court:'Courtroom conversations',ending:'Outside the courtroom'};
- modal(titles[group],'<div id="extraTabs" class="extra-tabs"></div><p class="extra-intro">Examine your surroundings and hear each person’s account.</p><div id="interviewPeople" class="interview-people"></div><div id="extraLayout"><div id="extraMap" class="extra-map"></div><div id="extraList" class="extra-list"></div></div>','CASE NOTES');
+ $('notesTitle').textContent=titles[group];
+ $('notesBack').textContent=context==='court'?'← Return to testimony':context==='ending'?'← Return to verdict':'← Return to investigation';
+ ['extraTabs','interviewPeople','extraMap','extraList'].forEach(id=>$(id).replaceChildren());
+ $('notesBack').onclick=closeNotes;
  if(context==='investigate'){[['stage','Theatre stage'],['booth','Sound booth'],['talk','Interviews']].forEach(([id,name])=>{const b=document.createElement('button');b.textContent=name;b.setAttribute('aria-pressed',String(id===group));b.onclick=()=>openExtras(id);$('extraTabs').append(b)})}
  let items=availableExtras(group);
  if(group==='talk'){
-  if(!interviewCast.includes(interviewPerson))interviewPerson='mara';
+  if(!interviewCast.includes(interviewPerson))interviewPerson='mara';state.notesPerson=interviewPerson;
   interviewCast.forEach(id=>{const b=document.createElement('button');b.textContent=cast[id][0];b.setAttribute('aria-pressed',String(id===interviewPerson));b.onclick=()=>openExtras('talk',id);$('interviewPeople').append(b)});
   items=items.filter(s=>(s.character||interviewOwners[s.id])===interviewPerson);
   const intro=document.createElement('p');intro.className='interview-description';intro.textContent=cast[interviewPerson][0]+' · '+cast[interviewPerson][1];$('interviewPeople').append(intro);
@@ -587,12 +595,12 @@ function openExtras(group,character=null){
  if(mapped){const img=document.createElement('img');img.src=ART[group];img.alt=titles[group]+' with inspection points';$('extraMap').append(img)}
  items.forEach((s,i)=>{
   const lead=Number.isInteger(s.lead),seen=lead?state.found.includes(s.id):state.optionalSeen.includes(s.id);
-  const act=()=>{if(lead){$('modal').close();examine(s.lead)}else startOptional(s.id,group)};
+  const act=()=>{if(lead){examine(s.lead)}else startOptional(s.id,group)};
   const b=document.createElement('button');b.textContent=(seen?'✓ ':i+1+'. ')+s.name;b.onclick=act;$('extraList').append(b);
   if(mapped){const marker=document.createElement('button');marker.className='detail-marker';marker.textContent=seen?'✓':i+1;marker.style.left=s.x+'%';marker.style.top=s.y+'%';marker.setAttribute('aria-label','Inspect '+s.name);marker.onclick=act;$('extraMap').append(marker)}
  });
 }
-function startOptional(id,group){const scene=optionalScenes.find(x=>x.id===id);if(!scene||!['investigate','cross','ending'].includes(state.mode))return;state.optionalReturn={mode:state.mode,statement:state.statement,scene:state.scene||'stage',group,id,character:interviewPerson};state.scene=group==='booth'?'booth':group==='stage'||group==='talk'?'stage':'courtroom';$('modal').close();speak(scene.lines,state.optionalReturn.mode,state.optionalReturn.mode==='investigate'?0:1);}
+function startOptional(id,group){const scene=optionalScenes.find(x=>x.id===id);if(!scene||!['investigate','cross','ending'].includes(state.mode))return;state.optionalReturn={mode:state.mode,statement:state.statement,scene:state.scene||'stage',group,id,character:interviewPerson};state.scene=group==='booth'?'booth':group==='stage'||group==='talk'?'stage':'courtroom';state.notesGroup=null;speak(scene.lines,state.optionalReturn.mode,state.optionalReturn.mode==='investigate'?0:1);}
 function finishOptional(complete){const back=state.optionalReturn;if(!back)return;if(complete){state.optionalSeen=[...new Set([...(state.optionalSeen||[]),back.id])]}if(complete&&back.id==='duck_tribunal'){state.alternateReturn={mode:back.mode,stage:state.stage,statement:back.statement,hp:state.hp};state.alternateEnding=true;state.optionalReturn=null;state.mode='ending';render();return;}state.mode=back.mode;state.statement=back.statement;state.scene=back.scene;state.optionalReturn=null;render();openExtras(back.group,back.character);}
 function updateExtrasUI(){const eligible=['investigate','cross','ending'].includes(state.mode);$('extras').hidden=!eligible||!!state.alternateEnding;$('explorePrompt').hidden=state.mode!=='investigate';$('leaveAside').hidden=!state.optionalReturn;$('extras').textContent=state.mode==='ending'?'After the verdict':state.mode==='cross'?'Quiet moment':'Explore & talk';}
 
