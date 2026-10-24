@@ -699,18 +699,18 @@ const optionalScenes=[
     "lines": [
       [
         "vera",
-        "Your assistant left you a very carefully selected truth.",
+        "An independent prosecutor will review my part in keeping this performance going.",
         "thought"
       ],
       [
         "iris",
-        "You made me keep reading.",
+        "You could have told me he was alive.",
         "thought"
       ],
       [
         "vera",
-        "You did the reading yourself. Do not make me repeat the compliment.",
-        "neutral"
+        "Yes. I chose the trap over your trust. I will not ask you to call that a compliment.",
+        "thought"
       ]
     ],
     "day": 2
@@ -2360,27 +2360,27 @@ const optionalScenes=[
     "id": "after_hank",
     "group": "ending",
     "day": 2,
-    "name": "Hank · Still here",
+    "name": "Vale · Without the coat",
     "lines": [
       [
         "iris",
-        "Was the transparent entrance really necessary?",
+        "Will you keep the detective costume?",
         "thought"
       ],
       [
-        "hank",
-        "Tessa insisted on a fade-in. I asked for a chair. We compromised on neither.",
+        "vale",
+        "It is in an evidence locker. I have been told that I do not get to choose the label this time.",
         "thought"
       ],
       [
         "iris",
-        "And Adrian?",
+        "And when people ask who you are?",
         "thought"
       ],
       [
-        "hank",
-        "Complicated. As people usually are when there is someone left to remember more than their worst day.",
-        "thought"
+        "vale",
+        "Adrian Vale. I will have to learn to stop there.",
+        "neutral"
       ]
     ]
   }
