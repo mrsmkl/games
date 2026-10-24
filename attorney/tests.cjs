@@ -27,11 +27,19 @@ assert.equal(run('state.day'),1);assert.equal(run('state.stage'),4);reload();
 assert.equal(run('state.mode'),'intermission');run('startDayTwo()');assert.equal(run('state.day'),2);reload();finish();
 assert.equal(run('state.mode'),'investigate');assert.equal(run('activeClues().length'),5);
 assert.equal(run('activeClues().every(c=>!state.found.includes(c.id))'),true);
-run("openExtras('talk','pip')");assert.ok(elements.extraList.children.some(b=>b.textContent.includes('Your name on the contract')));
+run("openExtras('talk','pip')");assert.equal(elements.extraList.children.some(b=>b.textContent.includes('Your name on the contract')),false);assert.ok(elements.extraList.children.some(b=>b.textContent.includes('The office lunch rota')));
 assert.equal(run("availableExtras('talk').every(s=>s.day===2)"),true);
 run('closeNotes()');
 for(let i=4;i<9;i++){run(`examine(${i})`);reload();finish();run('closeNotes()')}
-assert.equal(run('state.found.length'),9);run("speak(day2Intro,'cross')");finish();
+assert.equal(run('state.found.length'),9);
+run("openExtras('talk','pip')");assert.ok(elements.extraList.children.some(b=>b.textContent.includes('Your name on the contract')));run('closeNotes()');
+const progress=run('JSON.stringify([state.stage,state.hp,state.found])');
+run("startOptional('d2_pip_lunch','talk')");finish();run('closeNotes()');
+run("startOptional('d2_drawer','booth')");finish();run('closeNotes()');
+assert.equal(run('JSON.stringify([state.stage,state.hp,state.found])'),progress);
+assert.ok(run("optionalScenes.filter(s=>s.day===2&&['stage','booth'].includes(s.group)).length>=12"));
+assert.ok(run("['mara','pip','celia','tessa','hank','vera'].every(id=>optionalScenes.some(s=>s.day===2&&s.character===id&&!s.requires))"));
+run("speak(day2Intro,'cross')");finish();
 for(let n=4;n<9;n++){win(n);assert.equal(run('state.mode'),n===8?'ending':'cross')}
 assert.equal(run('trials[8].who'),'pip');assert.ok(run("trials[8].success.some(l=>l[0]==='pip'&&l[1].includes('stayed dead'))"));reload();
 console.log('Passed: Day 1 investigation and four contradictions → saved overnight break → Day 2 investigation and five contradictions → new verdict.');
