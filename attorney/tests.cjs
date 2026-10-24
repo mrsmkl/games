@@ -10,7 +10,7 @@ const run=s=>vm.runInContext(s,ctx);
 function finish(){const n=run('state.dialogue.length-state.cursor');for(let i=0;i<n;i++)run('advance()')}
 function reload(){raw=run('JSON.stringify(state)');const s=run('restore()');assert.ok(s);run('state=restore()');return s}
 run('begin()');assert.equal(run('state.day'),1);finish();assert.equal(run('state.mode'),'investigate');
-assert.equal(run('trials.length'),9);assert.equal(run('activeClues().length'),4);
+assert.equal(run('trials.length'),12);assert.equal(run('activeClues().length'),4);
 assert.equal(run("availableExtras('talk').some(s=>s.day===2)"),false);
 assert.equal(run("availableExtras('court').some(s=>s.id==='duck_tribunal')"),false);
 run("openExtras('stage')");assert.equal(elements.extraList.children.length,8);
@@ -40,10 +40,10 @@ assert.equal(run('JSON.stringify([state.stage,state.hp,state.found])'),progress)
 assert.ok(run("optionalScenes.filter(s=>s.day===2&&['stage','booth'].includes(s.group)).length>=12"));
 assert.ok(run("['mara','pip','celia','tessa','hank','vera'].every(id=>optionalScenes.some(s=>s.day===2&&s.character===id&&!s.requires))"));
 run("speak(day2Intro,'cross')");finish();
-for(let n=4;n<9;n++){win(n);assert.equal(run('state.mode'),n===8?'ending':'cross')}
+for(let n=4;n<12;n++){win(n);assert.equal(run('state.mode'),n===11?'ending':'cross')}
 assert.equal(run('trials[8].who'),'pip');assert.ok(run("trials[8].success.some(l=>l[0]==='pip'&&l[1].includes('stayed dead'))"));reload();
-console.log('Passed: Day 1 investigation and four contradictions → saved overnight break → Day 2 investigation and five contradictions → new verdict.');
-run("state.mode='cross';state.day=2;state.stage=8;state.statement=2;state.hp=3;startOptional('duck_tribunal','court')");finish();assert.equal(run('state.alternateEnding'),true);run('rewindAlternate()');assert.equal(run('state.mode'),'cross');assert.equal(run('state.statement'),2);assert.equal(run('state.hp'),3);
+console.log('Passed: Day 1 investigation and four contradictions → saved overnight break → Day 2 investigation, apparent confession and final ghost witness → new verdict.');
+run("state.mode='cross';state.day=2;state.stage=11;state.statement=2;state.hp=3;startOptional('duck_tribunal','court')");finish();assert.equal(run('state.alternateEnding'),true);run('rewindAlternate()');assert.equal(run('state.mode'),'cross');assert.equal(run('state.statement'),2);assert.equal(run('state.hp'),3);
 run("startOptional('duck_tribunal','court');finishOptional(false)");assert.equal(run('state.mode'),'cross');
 assert.ok(run('trials.every(t=>t.target>=0&&t.target<t.lines.length&&t.press.length===t.lines.length&&evidence.some(e=>e.id===t.proof))'));
 assert.ok(run('new Set(optionalScenes.map(s=>s.id)).size===optionalScenes.length'));
@@ -51,3 +51,15 @@ assert.ok(run("optionalScenes.every(s=>s.lines.every(l=>cast[l[0]]&&typeof l[1]=
 raw='{bad';assert.equal(run('restore()'),null);
 raw=JSON.stringify({day:1,mode:'cross',stage:8,statement:0,hp:5,found:[],dialogue:[],history:[]});assert.equal(run('restore()'),null);
 console.log('Passed: day-gated topics and evidence, save/resume at every discovery and testimony, unique scenes, valid speakers, secret ending and exact rewind.');
+
+assert.equal(run('evidence.length'),10);
+assert.equal(run("evidence.map(e=>e.id).join(',')"),'report,mic,alibi,photo,log,camera2,lab,packet,relay,ledger');
+assert.ok(run("trials.slice(-3).every(t=>t.who==='ghost')"));
+assert.ok(run("trials[11].success.some(l=>l[0]==='hank'&&l[1].includes('arranged the collapse'))"));
+assert.ok(run("trials[11].success.some(l=>l[0]==='judge'&&l[1].includes('four seconds'))"));
+vm.runInContext(src.slice(src.indexOf('const evidenceNotes='),src.indexOf('function inspectEvidence(')),ctx);
+run('state.stage=8');assert.equal(run("notesFor('relay').points.length"),1);
+run('state.stage=9');assert.equal(run("notesFor('relay').points.length"),2);
+assert.ok(run("notesFor('ledger').points.some(p=>p[0]==='Folded deed rider')"));
+assert.ok(run("trials[8].success.some(l=>l[0]==='ghost'&&l[1].includes('remember both'))"));
+console.log('Passed: unchanged ten-exhibit inventory, late document details, Hank as final witness, staged haunting, judge admission, balanced remembrance.');
