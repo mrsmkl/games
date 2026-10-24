@@ -11,9 +11,9 @@
 .result-title{font-size:clamp(28px,8vw,48px)!important;overflow-wrap:anywhere}
 .panel .eyebrow,.panel .description,.panel .play{overflow-wrap:anywhere}
 @media(max-height:440px){.panel{padding:16px 20px}.result-title{font-size:30px!important}.description{font-size:12px;line-height:1.4;margin:10px 0}.stats{margin:12px 0}.stat{padding:8px 5px}.play{margin-top:12px}.eyebrow{margin-bottom:10px}}
-</style></head><body>
+@media(max-width:380px){.brand{font-size:9px;letter-spacing:1px}.tools{gap:5px}.tool{width:36px;height:38px}header{left:12px;right:12px}}</style></head><body>
 <canvas id="game" aria-label="Duck shooting game. Tap or click a flying duck to shoot." role="img"></canvas>
-<header><div class="brand">MARSH PATROL ↗</div><div class="tools"><button id="sound" class="tool" aria-label="Mute sound" aria-pressed="true" title="Sound">♫</button><button id="full" class="tool" aria-label="Enter fullscreen" title="Fullscreen">⛶</button><button id="pause" class="tool" aria-label="Pause game" title="Pause">Ⅱ</button></div></header>
+<header><div class="brand">MARSH PATROL ↗</div><div class="tools"><button id="sound" class="tool" aria-label="Mute sound" aria-pressed="true" title="Sound">♫</button><button id="music" class="tool" aria-label="Turn music off" aria-pressed="true" title="Music">♬</button><button id="full" class="tool" aria-label="Enter fullscreen" title="Fullscreen">⛶</button><button id="pause" class="tool" aria-label="Pause game" title="Pause">Ⅱ</button></div></header>
 <section id="menu" class="overlay"><div class="panel"><p class="eyebrow">A LITTLE FRESH AIR. A LITTLE GOOD AIM.</p><h1>MARSH<br><span>PATROL</span></h1><div class="badge">DUCK HUNT • ARCADE EDITION</div><p class="description">Two ducks. Three shots. Make them count.<br>Tap the ducks before they escape.<br>Your faithful field assistant is waiting.</p><button id="start" class="play">LET’S GO HUNTING ↗</button><p class="small">10 DUCKS PER ROUND · HIT 6 TO ADVANCE<br>TOUCH OR MOUSE · ORIGINAL ART & SYNTHESIZED SOUND</p><a class="back" href="../">← More games</a></div></section>
 <section id="result" class="overlay hidden"><div class="panel"><p class="eyebrow" id="resultLabel">FIELD REPORT</p><h1 class="result-title" id="resultTitle">Nice shooting.</h1><div class="stats"><div class="stat"><span>SCORE</span><strong id="finalScore">0</strong></div><div class="stat"><span>DUCKS</span><strong id="finalHits">0/10</strong></div><div class="stat"><span>BEST</span><strong id="finalBest">0</strong></div></div><p class="description" id="resultText"></p><button id="next" class="play">NEXT ROUND ↗</button><a class="back" href="../">← More games</a></div></section>
 <section id="paused" class="overlay hidden"><div class="panel"><p class="eyebrow">TAKE A BREATHER</p><h1 class="result-title">On a break.</h1><p class="description">The ducks can wait.</p><button id="resume" class="play">BACK TO THE MARSH ↗</button></div></section>
@@ -28,11 +28,53 @@ addEventListener('resize',resize);resize();const ground=()=>H*.78;const unit=()=
 function unlock(){if(muted)return;try{audio??=new(window.AudioContext||window.webkitAudioContext)();audio.resume().catch(()=>{})}catch{}}
 function note(freq,duration=.15,type='square',volume=.035,delay=0,end=freq){if(muted)return;unlock();if(!audio)return;const t=audio.currentTime+delay,o=audio.createOscillator(),g=audio.createGain();o.type=type;o.frequency.setValueAtTime(freq,t);o.frequency.exponentialRampToValueAtTime(Math.max(20,end),t+duration);g.gain.setValueAtTime(volume,t);g.gain.exponentialRampToValueAtTime(.001,t+duration);o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+duration);o.onended=()=>{o.disconnect();g.disconnect()}}
 function sound(name){if(muted)return;unlock();if(!audio)return;if(name==='shot'){const t=audio.currentTime,b=audio.createBuffer(1,Math.ceil(audio.sampleRate*.13),audio.sampleRate),a=b.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=(Math.random()*2-1)*(1-i/a.length);const src=audio.createBufferSource(),f=audio.createBiquadFilter(),g=audio.createGain();src.buffer=b;f.type='lowpass';f.frequency.value=1600;g.gain.setValueAtTime(.2,t);g.gain.exponentialRampToValueAtTime(.001,t+.13);src.connect(f);f.connect(g);g.connect(audio.destination);src.start();src.onended=()=>{src.disconnect();f.disconnect();g.disconnect()};note(110,.14,'triangle',.12,0,40)}else if(name==='hit'){note(700,.1,'square',.035,.08);note(1050,.15,'square',.03,.16)}else if(name==='quack'){note(340,.12,'sawtooth',.018,0,160);note(290,.12,'sawtooth',.015,.15,150)}else if(name==='win'){[523,659,784,1046].forEach((n,i)=>note(n,.2,'square',.035,i*.13))}else if(name==='lose'){[330,294,247,165].forEach((n,i)=>note(n,.22,'triangle',.07,i*.17))}else if(name==='dog'){[0,.16,.32].forEach(t=>note(180,.09,'triangle',.06,t,310))}else if(name==='empty')note(85,.05,'square',.025);}
-function soundUI(){$('sound').textContent=muted?'♪̸':'♫';$('sound').setAttribute('aria-label',muted?'Enable sound':'Mute sound');$('sound').setAttribute('aria-pressed',String(!muted))}soundUI();$('sound').onclick=()=>{muted=!muted;soundUI();try{localStorage.setItem('marsh-muted',muted)}catch{}if(!muted)sound('quack')};
+function soundUI(){$('sound').textContent=muted?'♪̸':'♫';$('sound').setAttribute('aria-label',muted?'Enable sound':'Mute sound');$('sound').setAttribute('aria-pressed',String(!muted))}soundUI();$('sound').onclick=()=>{muted=!muted;soundUI();try{localStorage.setItem('marsh-muted',muted)}catch{}if(!muted)sound('quack');syncMusic()};
+
+let musicEnabled=true,musicTimer=null,musicStep=0,musicNext=0;
+const musicVoices=new Set();
+try{musicEnabled=localStorage.getItem('marsh-music')!=='false'}catch{}
+const melody=[72,76,79,76,74,77,81,77,72,76,79,84,83,79,76,74,69,72,76,72,71,74,77,74,67,71,74,79,77,74,71,67,72,0,79,76,74,0,81,77,76,79,84,79,83,81,79,76,69,72,76,79,77,74,71,67,72,76,79,83,84,79,76,0];
+const roots=[48,53,48,55,45,53,55,48];
+function musicNote(midi,t,duration,type,volume){
+if(!midi||!audio)return;
+const o=audio.createOscillator(),g=audio.createGain();
+o.type=type;o.frequency.setValueAtTime(440*Math.pow(2,(midi-69)/12),t);
+g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(volume,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+duration);
+o.connect(g);g.connect(audio.destination);musicVoices.add(o);
+o.onended=()=>{musicVoices.delete(o);o.disconnect();g.disconnect()};
+o.start(t);o.stop(t+duration+.02);
+}
+function stopMusic(){
+if(musicTimer!==null){clearInterval(musicTimer);musicTimer=null}
+for(const o of musicVoices){try{o.stop()}catch{}o.disconnect()}
+musicVoices.clear();
+}
+function musicPump(){
+if(!audio||audio.state!=='running'||muted||!musicEnabled||paused||state!=='playing'||document.hidden)return;
+const step=60/Math.min(160,112+(round-1)*8)/2;
+if(musicNext<audio.currentTime-.15)musicNext=audio.currentTime+.03;
+while(musicNext<audio.currentTime+.12){
+const i=musicStep%64,root=roots[Math.floor(i/8)],t=musicNext;
+musicNote(melody[i],t,step*.78,'square',.018);
+if(i%2===0)musicNote(root+(i%4===2?12:0),t,step*1.5,'triangle',.055);
+if(i%4===1){musicNote(root+19,t,step*.6,'triangle',.018);musicNote(root+24,t,step*.6,'triangle',.012)}
+if(i%4===0)musicNote(30,t,.07,'sine',.065);
+musicNext+=step;musicStep++;
+}
+}
+function syncMusic(reset=false){
+stopMusic();if(reset)musicStep=0;
+if(muted||!musicEnabled||paused||state!=='playing'||document.hidden)return;
+unlock();if(!audio)return;musicNext=audio.currentTime+.04;
+musicTimer=setInterval(musicPump,25);musicPump();
+}
+function musicUI(){$('music').textContent=musicEnabled?'♬':'♬̸';$('music').setAttribute('aria-label',musicEnabled?'Turn music off':'Turn music on');$('music').setAttribute('aria-pressed',String(musicEnabled))}
+musicUI();$('music').onclick=()=>{musicEnabled=!musicEnabled;try{localStorage.setItem('marsh-music',String(musicEnabled))}catch{}musicUI();syncMusic();if(musicEnabled&&muted)toast('Music is on. Enable sound with the speaker control to hear it.')};
+
 function toast(text){$('toast').textContent=text;$('toast').classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.add('hidden'),4000)}
 $('full').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else toast('Fullscreen is unavailable here. Try opening in Chrome or adding to your Home Screen.')}catch{toast('Open the game directly in your browser to use fullscreen.')}};document.addEventListener('fullscreenchange',()=>{$('full').textContent=document.fullscreenElement?'✕':'⛶';$('full').setAttribute('aria-label',document.fullscreenElement?'Exit fullscreen':'Enter fullscreen');resize()});
-function setPause(value){if(state!=='playing')return;paused=value;last=0;$('paused').classList.toggle('hidden',!value)}$('pause').onclick=()=>setPause(!paused);$('resume').onclick=()=>setPause(false);document.addEventListener('visibilitychange',()=>{if(document.hidden)setPause(true);last=0});addEventListener('keydown',e=>{if(e.code==='Escape'||e.code==='KeyP')setPause(!paused)});
-function start(){unlock();score=0;round=1;totalHits=0;combo=0;beginRound()}function beginRound(){state='playing';paused=false;wave=0;hits=0;marks=[];ducks=[];shots=3;particles=[];ripples=[];labels=[];roundShots=0;phase='intro';phaseTime=1.8;timer=7;$('menu').classList.add('hidden');$('result').classList.add('hidden');$('paused').classList.add('hidden');$('help').style.display='none';sound('win')}
+function setPause(value){if(state!=='playing')return;paused=value;last=0;$('paused').classList.toggle('hidden',!value);syncMusic()}$('pause').onclick=()=>setPause(!paused);$('resume').onclick=()=>setPause(false);document.addEventListener('visibilitychange',()=>{if(document.hidden)setPause(true);last=0});addEventListener('keydown',e=>{if(e.code==='Escape'||e.code==='KeyP')setPause(!paused)});
+function start(){unlock();score=0;round=1;totalHits=0;combo=0;beginRound()}function beginRound(){state='playing';paused=false;wave=0;hits=0;marks=[];ducks=[];shots=3;particles=[];ripples=[];labels=[];roundShots=0;phase='intro';phaseTime=1.8;timer=7;$('menu').classList.add('hidden');$('result').classList.add('hidden');$('paused').classList.add('hidden');$('help').style.display='none';sound('win');syncMusic(true)}
 $('start').onclick=start;$('next').onclick=()=>{unlock();if(win){round++;beginRound()}else start()};
 function flightBounds(){const u=unit();return {left:u*1.5,right:W-u*1.5,top:Math.min(125,H*.3),bottom:Math.max(H*.34,ground()-u*1.1)}}
 function flightDifficulty(){
@@ -68,7 +110,7 @@ const x=b.left+(b.right-b.left)*(i*.5+.08+Math.random()*.34);
 const d={x,y:b.bottom-Math.random()*Math.min(50,H*.08),vx:(Math.random()-.5)*130,vy:-(100+Math.random()*90),t:Math.random()*5,alive:true,fall:false,escaped:false,age:0,variant:i,rot:0,maneuvers:0};
 chooseFlight(d);d.targetVY=-Math.abs(d.targetVY)-60;d.turnIn=(.35+Math.random()*.55)*flightDifficulty().turnScale;ducks.push(d)}sound('quack')}
 function finishWave(){if(phase!=='flight')return;phase='retrieve';phaseTime=1.7;const caught=ducks.filter(d=>d.fall).length;if(caught===0){combo=0;sound('dog')}for(const d of ducks)marks.push(d.fall);if(caught===2&&shots>0){const bonus=shots*100;score+=bonus;labels.push({x:W/2,y:H*.44,text:'CLEAN SWEEP +'+bonus,life:1.5,color:'#ffe295'})}}
-function finishRound(){win=hits>=6;state='result';best=Math.max(best,score);try{localStorage.setItem('marsh-best',best)}catch{}$('finalScore').textContent=score.toLocaleString();$('finalHits').textContent=hits+'/10';$('finalBest').textContent=best.toLocaleString();$('resultLabel').textContent='ROUND '+round+' · FIELD REPORT';$('resultTitle').textContent=win?(hits===10?'Perfect flight.':'Sharp shooting.'):'They got away.';$('resultText').textContent=win?'The next flock is faster. Ready for another round?':'You need 6 ducks to advance. Take your time and lead the target.';$('next').textContent=win?'NEXT ROUND ↗':'TRY AGAIN ↗';$('result').classList.remove('hidden');sound(win?'win':'lose')}
+function finishRound(){win=hits>=6;state='result';stopMusic();best=Math.max(best,score);try{localStorage.setItem('marsh-best',best)}catch{}$('finalScore').textContent=score.toLocaleString();$('finalHits').textContent=hits+'/10';$('finalBest').textContent=best.toLocaleString();$('resultLabel').textContent='ROUND '+round+' · FIELD REPORT';$('resultTitle').textContent=win?(hits===10?'Perfect flight.':'Sharp shooting.'):'They got away.';$('resultText').textContent=win?'The next flock is faster. Ready for another round?':'You need 6 ducks to advance. Take your time and lead the target.';$('next').textContent=win?'NEXT ROUND ↗':'TRY AGAIN ↗';$('result').classList.remove('hidden');sound(win?'win':'lose')}
 function shoot(x,y){if(state!=='playing'||paused||phase!=='flight')return;unlock();if(shots<=0){sound('empty');return}shots--;roundShots++;flash=.065;shake=5;sound('shot');ripples.push({x,y,t:.3,hit:false});const u=unit();const target=ducks.filter(d=>d.alive&&!d.escaped).sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y)).find(d=>Math.hypot((d.x-x)/1.25,d.y-y)<u*1.13);if(target){target.alive=false;target.fall=true;target.vy=40;hits++;totalHits++;combo++;const points=400+Math.min(combo-1,5)*100+round*50;score+=points;ripples[ripples.length-1].hit=true;labels.push({x:target.x,y:target.y-u,text:'+'+points,life:1.1,color:'#fff0a8'});for(let i=0;i<14;i++)particles.push({x:target.x,y:target.y,vx:(Math.random()-.5)*220,vy:(Math.random()-.8)*200,life:.4+Math.random()*.5,color:i%2?'#fff0bf':'#df9d51'});sound('hit')}else combo=0;if(shots===0)timer=Math.min(timer,.5)}
 canvas.addEventListener('pointerdown',e=>{e.preventDefault();if(e.isPrimary===false)return;const r=canvas.getBoundingClientRect();shoot((e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height)});canvas.addEventListener('pointermove',e=>{if(e.pointerType==='mouse')mouse={x:e.clientX,y:e.clientY}});canvas.addEventListener('pointerleave',()=>mouse=null);
 function ellipse(x,y,rx,ry,color){ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(x,y,Math.max(.1,rx),Math.max(.1,ry),0,0,Math.PI*2);ctx.fill()}function rect(x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(x,y,w,h)}function text(s,x,y,size,color='#fff0c9',align='center'){ctx.font='900 '+size+'px ui-monospace,monospace';ctx.fillStyle=color;ctx.textAlign=align;ctx.fillText(s,x,y)}function roundRect(x,y,w,h,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
