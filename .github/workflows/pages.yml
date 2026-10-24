@@ -24,8 +24,8 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp -R pocket-flap _site/
-          printf '%s\n' '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Games</title><meta http-equiv="refresh" content="0;url=./pocket-flap/"><a href="./pocket-flap/">Play Pocket Flap</a>' > _site/index.html
+          cp -R pocket-flap duck-hunt _site/
+          cp index.html _site/index.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
