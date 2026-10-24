@@ -13,7 +13,7 @@ Shared direction: small 4:3 evidence illustrations for Behind the Curtain, refin
 
 ## Review findings
 Implemented: image thumbnails, enlarged evidence inspection, keyboard-accessible detail markers, recovery report as final proof, save-preserving case menu, new-game confirmation, malformed save validation and recovery from zero credibility, sound retry handling, completed-case header.
-Remaining production work: expression/pose variants, dialogue animation, voice performances and more elaborate investigation scenes. The opening investigation still uses four lead buttons rather than free exploration. The alibi image is a representative still; its annotation describes the verified continuous recording.
+The next expansion adds expression variants, optional scenery hotspots, character conversations, courtroom asides and epilogues. The four required evidence leads remain separate from optional exploration. Remaining production work includes new body poses, dialogue animation and voice performances. The alibi image is a representative still; its annotation describes the verified continuous recording.
 
 ## Validation
 Save-recovery checks: `node tests.cjs` (works with both the local and deployed source layout). Browser walkthrough: evidence thumbnails and detail views, return-to-present flow, save protection, all testimony solutions and final verdict.
