@@ -119,7 +119,7 @@ const evidence=[
     "name": "Isolated rig safety recorder",
     "tag": "DAY 2 • HARDWARE AUDIT",
     "art": "log",
-    "text": "Independent safety recorder, disconnected from the audio editor. At 8:00:31, Pip Foley’s personal service key enabled an undocumented relay on cue 17B; the booth camera shows him at the maintenance cabinet. His load test recorded 4.8 kg. At 8:02:00 Celia’s manual GO both played the scream and released that load directly over Vale’s desk. Celia’s console displayed AUDIO ONLY. The old public cue log did not include this isolated rig channel. The export preserves both actuator and interlock channels, including certificate references."
+    "text": "Independent safety recorder, disconnected from the audio editor. At 8:00:31, Pip Foley’s personal service key enabled an undocumented relay on cue 17B; the booth camera shows him at the maintenance cabinet. His load test recorded 4.8 kg. At 8:02:00 Celia’s manual GO both played the scream and released that load directly over Vale’s desk. Celia’s console displayed AUDIO ONLY. The old public cue log did not include this isolated rig channel. The export retains its maintenance correspondence and inspection-status history."
   },
   {
     "id": "ledger",
@@ -696,36 +696,36 @@ const trials=[
     "proof": "relay",
     "lines": [
       "I will speak only about what was recorded before that opening night ended.",
-      "Pip’s service key alone removed every restraint on the award.",
+      "Nobody outside the theatre intervened in the rig’s safety inspection.",
       "The scream and the falling load shared the same GO command."
     ],
     "press": [
       "No supernatural sight is needed to read an existing export.",
-      "The recorder has an interlock channel as well as an actuator channel. Inspect the full document.",
-      "That establishes the trigger. Does it identify every person who made the release possible?"
+      "The export includes inspection correspondence as well as machine events. Inspect the full document.",
+      "That establishes the trigger. What happened to the scheduled inspection?"
     ],
     "success": [
       [
         "iris",
-        "The reverse-side channel register records a separate safety interlock. Pip enabled the actuator, but the restraint remained engaged until 8:01:56.",
+        "The attached inspection history says a technician was due at the desk rig at 8:01:30. At 8:01:12 someone certified the revised load as already inspected and cancelled that visit.",
         "intense"
       ],
       [
         "ghost",
-        "And the later authorization?"
+        "Who signed that clearance?"
       ],
       [
         "iris",
-        "Certificate C-03. The certificate directory is already attached to the same export: a judicial arts-trust terminal assigned to this bench. The hardware photograph confirms its operator."
+        "C-03, the arts trust’s signing certificate. Its directory and confirmation photograph identify the presiding judge. The receipt includes the exact R17 attachment: award B, safety catch removed. You certified that arrangement as safe without visiting the theatre."
       ],
       [
         "judge",
-        "That certificate only opens the secondary latch. It cannot move the counterweight unless—",
+        "The inspector would have stopped the performance over one missing catch. I merely prevented a pointless delay—",
         "intense"
       ],
       [
         "vera",
-        "Unless the actuator is armed. You have just described why both approvals were necessary."
+        "You knew the catch was missing. Yet you signed that you had personally inspected it, and told the technician not to attend."
       ],
       [
         "judge",
@@ -733,7 +733,7 @@ const trials=[
       ],
       [
         "iris",
-        "Then let us read the document that explains your interest in it."
+        "Then let us read why your trust cared whether this performance went ahead."
       ],
       [
         "ghost",
@@ -775,17 +775,17 @@ const trials=[
       ],
       [
         "iris",
-        "Pip wanted his role concealed. You wanted the beneficiary concealed. You allowed the armed rig to release, then presided over the trial of the woman chosen to take the blame.",
+        "Pip wanted his role concealed. You wanted the beneficiary concealed. You kept the inspector away from the armed rig, then presided over the trial of the woman chosen to take the blame.",
         "intense"
       ],
       [
         "judge",
-        "Vale, that is impossible. You could not have survived the release. I watched the authorization complete—",
+        "Vale, that is impossible. You were seated directly beneath it. I checked the live feed after the inspector stood down—",
         "intense"
       ],
       [
         "vera",
-        "Already what?"
+        "Why were you watching that desk?"
       ],
       [
         "judge",
@@ -871,7 +871,7 @@ const trials=[
       ],
       [
         "vera",
-        "I learned his identity during the overnight inventory. Tessa helped prepare the reflection and the clerk arranged the lighting. Iris was not told. We wanted the authorizing officer to respond in open court."
+        "I learned his identity during the overnight inventory. Tessa helped prepare the reflection and the clerk arranged the lighting. Iris was not told. We wanted the person who signed the false clearance to respond in open court."
       ],
       [
         "iris",
@@ -890,15 +890,15 @@ const trials=[
       ],
       [
         "iris",
-        "The performance explains the witness. It does not prove the accusation. The authenticated terminal photograph, the two rig channels and the certified rider do that."
+        "The performance explains the witness. It does not prove the accusation. The signed false clearance, its acknowledged rigging instructions, the confirmation photograph and the certified rider do that."
       ],
       [
         "vale",
-        "Pip armed the trap. Your authorization removed its last restraint at 8:01:56. You intended the award to strike me. The recorder identifies your terminal and your face."
+        "Pip built the trap. You read its instructions and sent away the person who would have dismantled it. You signed a personal inspection that never happened, then watched me sit beneath the award."
       ],
       [
         "judge",
-        "You should have been on your mark. You were on the camera. I watched the release complete.",
+        "You should have been on your mark. I saw you sit down. The inspector was gone. There was nobody left to stop it.",
         "intense"
       ],
       [
@@ -1469,7 +1469,7 @@ photo:{label:'VERIFIED CAPTURE • 19:58',alt:'Tessa’s selfie with Vale collap
 log:{label:'CUE 17B • 20:02:00',alt:'Stage-manager playback console with a GO button and cue monitor.',points:[['Manual trigger',49,54,'The log records a manual GO at 8:02:00 from the stage-manager console, not an automatic cue.'],['Playback file',27,24,'VALE_REHEARSAL_EDIT.wav contains the shout and crash. The upstairs booth was monitor-only.']]}
 };
 function evidencePicture(id){return window.ART?.['evidence_'+(evidenceFor(id)?.art||id)]||'';}
-const documentDetails={"relay":{"label":"Reverse-side channel register","text":"The same export’s reverse-side register separates ACTUATOR from SAFETY INTERLOCK. Pip’s 8:00:31 operation armed the actuator; a separate restraint remained engaged. At 8:01:56 certificate C-03 released that restraint. The attached certificate directory assigns C-03 to the presiding judge’s judicial arts-trust terminal; its embedded confirmation photograph shows the judge personally approving the release. Both channels were required for the 8:02 drop. These entries were in the original export, not a later submission."},"ledger":{"label":"Folded deed rider","text":"Unfolded rider to the same bank-certified instructions: Pip Foley is the registered nominee; beneficial proceeds pass to the presiding judge’s private arts trust. C-03 is the trust’s execution certificate, matching the attached directory. The rider and register share the original certification. The headline register entry was not a statement that Pip was the only beneficiary."},"packet":{"label":"Illusion and costume appendix","text":"Retained repertory costume sheet: “DETECTIVE HANK LEDGER — performer: ADRIAN VALE.” Padding, beard pieces, altered hairline and vocal placement belong to a single performer, not a double. Adjacent diagrams show (1) a seated performer leaving through the desk hatch as a lifelike rehearsal figure replaces him during blackout and (2) a living performer reflected in an angled clear pane. The portable reflection frame places its performer beside a service door. These are the packet’s original pages."},"report":{"label":"Clinical certification field","text":"The original scene report records an assumed death. Its clinical certification field remains PENDING: no signed death certificate is attached. The laboratory exhibit concerns materials, traces and an injury reconstruction; it is not a post-mortem examination. Read the two documents separately before treating their conclusions as interchangeable."}};
+const documentDetails={"relay": {"label": "Attached inspection correspondence", "text": "The export’s original maintenance attachment records an 8:01:30 physical inspection of the desk rig. At 8:01:12 certificate C-03 signed “Personally inspected revised load R17; safe to proceed; cancel technician attendance.” The technician acknowledged cancellation and did not attend. The signed receipt preserves the complete R17 attachment, including award B and removal of the safety catch. C-03’s directory and confirmation photograph identify the presiding judge using the arts-trust terminal, away from the theatre. The clearance was paperwork: it sent no command to the rig. Celia’s GO remained the sole release trigger."}, "ledger": {"label": "Folded deed rider", "text": "Unfolded rider to the same bank-certified instructions: Pip Foley is the registered nominee; beneficial proceeds pass to the presiding judge’s private arts trust. C-03 is the trust’s execution certificate, matching the signer of the false inspection clearance. The rider and register share the original certification. The headline register entry was not a statement that Pip was the only beneficiary."}, "packet": {"label": "Illusion and costume appendix", "text": "Retained repertory costume sheet: “DETECTIVE HANK LEDGER — performer: ADRIAN VALE.” Padding, beard pieces, altered hairline and vocal placement belong to a single performer, not a double. Adjacent diagrams show (1) a seated performer leaving through the desk hatch as a lifelike rehearsal figure replaces him during blackout and (2) a living performer reflected in an angled clear pane. The portable reflection frame places its performer beside a service door. These are the packet’s original pages."}, "report": {"label": "Clinical certification field", "text": "The original scene report records an assumed death. Its clinical certification field remains PENDING: no signed death certificate is attached. The laboratory exhibit concerns materials, traces and an injury reconstruction; it is not a post-mortem examination. Read the two documents separately before treating their conclusions as interchangeable."}};
 function notesFor(id){const base=evidenceNotes[id]||{label:'DAY 2 • DOCUMENT EXTRACT',alt:'Related scene illustration. The findings are in the written exhibit.',points:[['Read findings',50,50,evidenceFor(id).text]]};const detail=documentDetails[id];return detail&&state.stage>=9?{...base,points:[...base.points,[detail.label,75,72,detail.text]]}:base;}
 function inspectEvidence(id,present){const e=evidence.find(x=>x.id===id),note=notesFor(id);modal(e.name,'<button id="backToRecord">← Back to record</button><div class="inspection"><img id="inspectionImage"><span class="capture-label"></span><div id="detailMarkers"></div></div><p id="inspectionNote" aria-live="polite">Select a numbered detail, or use Tab and Enter to inspect it.</p>','EXAMINE EVIDENCE');$('inspectionImage').src=evidencePicture(id);$('inspectionImage').alt=note.alt;$('modalBody').querySelector('.capture-label').textContent=note.label;note.points.forEach(([label,x,y,text],i)=>{let b=document.createElement('button');b.className='detail-marker';b.style.left=x+'%';b.style.top=y+'%';b.textContent=i+1;b.setAttribute('aria-label',label);b.onclick=()=>{$('inspectionNote').textContent=label+' — '+text;if(documentDetails[id]?.label===label){state.readDetails=[...new Set([...(state.readDetails||[]),id])];save();}};$('detailMarkers').append(b)});$('backToRecord').onclick=()=>record(present);$('backToRecord').focus();}
 function record(present=false){const available=evidence.filter(e=>e.id==='report'||state.found.includes(e.id));if(!available.find(e=>e.id===state.selected))state.selected='report';modal(present?'Present evidence':'Court record','<div class="evidence-grid"><div id="evidenceList" class="evidence-list"></div><div id="evidenceDetail" class="evidence-detail"></div></div>',present?'CHOOSE THE EVIDENCE THAT CONTRADICTS THIS STATEMENT':'EVIDENCE • SELECT AN ITEM TO INSPECT');function select(id){state.selected=id;const e=available.find(x=>x.id===id),note=notesFor(id);$('evidenceList').replaceChildren();available.forEach(x=>{let b=document.createElement('button'),img=document.createElement('img');img.src=evidencePicture(x.id);img.alt='';b.append(img,document.createTextNode(x.name));b.className=x.id===id?'selected':'';b.setAttribute('aria-pressed',String(x.id===id));b.onclick=()=>select(x.id);$('evidenceList').append(b)});const d=$('evidenceDetail');d.innerHTML='<span class="tag"></span><h3></h3><button class="evidence-preview" aria-label="Inspect evidence image"><img><span class="capture-label"></span><span class="inspect-caption">Inspect details ↗</span></button><p></p><div class="evidence-actions"></div>';d.querySelector('.tag').textContent=e.tag;d.querySelector('h3').textContent=e.name;d.querySelector('img').src=evidencePicture(id);d.querySelector('img').alt=note.alt;d.querySelector('.capture-label').textContent=note.label;d.querySelector('.evidence-preview').onclick=()=>inspectEvidence(id,present);d.querySelector('p').textContent=e.text+(state.readDetails?.includes(id)&&documentDetails[id]?'\n\n'+documentDetails[id].text:'');if(present){let b=document.createElement('button');b.className='primary';b.textContent='Present this evidence →';b.onclick=()=>submit(id);d.querySelector('.evidence-actions').append(b)}}select(state.selected);}
