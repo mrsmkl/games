@@ -1064,7 +1064,397 @@ function render(){document.body.classList.toggle('ghost-hearing',state.mode==='c
  save();}
 function begin(){state={day:1,mode:'dialogue',stage:0,statement:0,hp:5,found:[],dialogue:opening,cursor:0,after:'investigate',history:[],selected:'report'};sound=true;$('music').textContent='♫ Sound on';render();}
 function advance(){if(state.mode!=='dialogue')return;if(++state.cursor>=state.dialogue.length){if(state.optionalReturn){finishOptional(true);return;}state.mode=state.after;if(state.mode==='cross')state.statement=0;}render();}
-const investigationDialogue=[[["iris","The microphone stand is still facing the empty front row. Why is there a cable on the floor?"],["pip","Mara disconnected the stage mic at the patch panel. Here is the service slip: 7:55, her signature."],["iris","Yet everyone heard Vale at 8:02."],["pip","These are separate routes into the speakers. Unplug a microphone and you lose that live input. A recording can still play through the same speakers."],["iris","Then hearing a voice does not establish that someone was speaking at that moment. Let’s keep the slip."]],[["iris","There is only one door into this booth?"],["mara","One door, no other exit. Celia sent me up after the microphone trouble. I stayed until I heard Adrian."],["pip","The corridor camera records you entering at 7:56 and leaving at 8:03. The police checked its clock."],["iris","What can you see from here?"],["mara","The stage through the window, but not behind the desk. I was watching the levels, not looking down the whole time."],["iris","The footage establishes where you were. We still need to establish when the attack happened."]],[["tessa","If the angle makes me look startled, that is because the front row lighting is criminal."],["iris","We are interested in the mirror behind you. May I enlarge the original?"],["tessa","You may. I took it at 7:58. The police checked the file and the camera clock."],["pip","Look at the reflection. Vale is already collapsed beside the desk, with the award on the floor."],["tessa","I thought… I remembered him standing there. I had not looked at that corner of the image."],["iris","That is why we keep the original. Four minutes before the shout, something was already badly wrong."]],[["iris","This export lists the audio cues and the commands that started them. Can it distinguish a timer from a person pressing a button?"],["pip","Yes. Cue 17B, 8:02 precisely. Manual GO. Trigger source: the stage-manager console at stage left."],["iris","Could the upstairs booth have sent it?"],["pip","It was in monitor-only mode. This command came from the downstairs station. The log can be reviewed here in the booth."],["iris","And the file?"],["pip","An edited rehearsal: “Mara, put that down!” and a crash. In the full recording, he was asking her to lower a speaker."],["iris","The words were real. The situation the audience imagined was not. Add the log and recording notes to the record."]],[["hank","The recorder team recovered a second channel overnight. Here is the continuous export."],["iris","Has its clock been checked?"],["hank","Against the first channel and the time signal. The verification sheet is attached."],["iris","I will take the full sequence."],["hank","The landing and stage-desk segments are indexed by timestamp. The original storage remains sealed."]],[["hank","The laboratory has corrected the property inventory. Items A and B now have separate entries."],["iris","What was corrected?"],["hank","Their materials, weights and fracture matches. The original scene labels are included so the correction can be traced."],["iris","And the medical findings?"],["hank","Signed and attached. Here is the complete report."]],[["tessa","This was embargoed until after the performance. There is not much point in that now."],["iris","Is it complete?"],["tessa","The schedule, publicity agreement, supplier credits and correspondence. I kept the originals."],["iris","I will need to ask about some of the names in it."],["tessa","I expected that. Just distinguish what I signed from what someone merely sent me."]],[["hank","An independent unit records activity in the maintenance cabinet. This is its export."],["iris","Can the sound editor alter it?"],["hank","No. The examiner verified the recorder separately. Operator authentication, load readings and event times are all included."],["iris","Are the units and channel names documented?"],["hank","On the attached key. You will not have to guess what a number measures."]],[["vera","The bank supplied a certified archive, including the ownership instructions and production attachments."],["iris","Is any of it still awaiting authentication?"],["vera","No. The signatures, confirmation image and revision hash have been checked."],["iris","Then I can put the documents to the witnesses."],["vera","Yes. Read the originals carefully. I have not written a conclusion for you."]]];
+const investigationDialogue=[
+  [
+    [
+      "iris",
+      "The microphone stand is still facing the empty front row. Why is there a cable on the floor?"
+    ],
+    [
+      "pip",
+      "Mara disconnected the stage mic at the patch panel. Here is the service slip: 7:55, her signature."
+    ],
+    [
+      "iris",
+      "Yet everyone heard Vale at 8:02."
+    ],
+    [
+      "pip",
+      "These are separate routes into the speakers. Unplug a microphone and you lose that live input. A recording can still play through the same speakers."
+    ],
+    [
+      "mara",
+      "That was his voice. I ran because I thought he needed help.",
+      "thought"
+    ],
+    [
+      "iris",
+      "Of course you did. You were not listening for an edit while someone screamed your name."
+    ],
+    [
+      "pip",
+      "I can preserve the signal routes and the service slip."
+    ],
+    [
+      "iris",
+      "Do that. I want to know what reached those speakers."
+    ]
+  ],
+  [
+    [
+      "iris",
+      "There is only one door into this booth?"
+    ],
+    [
+      "mara",
+      "One door, no other exit. Celia sent me up after the microphone trouble. I stayed until I heard Adrian."
+    ],
+    [
+      "pip",
+      "The corridor camera records you entering at 7:56 and leaving at 8:03. The police checked its clock."
+    ],
+    [
+      "iris",
+      "What can you see from here?"
+    ],
+    [
+      "mara",
+      "The stage through the window, but not behind the desk. I was watching the levels, not looking down the whole time."
+    ],
+    [
+      "iris",
+      "The footage establishes where you were. We still need to establish when the attack happened."
+    ]
+  ],
+  [
+    [
+      "tessa",
+      "If the angle makes me look startled, that is because the front row lighting is criminal."
+    ],
+    [
+      "iris",
+      "We are interested in the mirror behind you. May I enlarge the original?"
+    ],
+    [
+      "tessa",
+      "You may. I took it at 7:58. The police checked the file and the camera clock."
+    ],
+    [
+      "pip",
+      "Look at the reflection. Vale is already collapsed beside the desk, with the award on the floor."
+    ],
+    [
+      "tessa",
+      "I thought… I remembered him standing there. I had not looked at that corner of the image."
+    ],
+    [
+      "iris",
+      "Four minutes before the shout…",
+      "thought"
+    ],
+    [
+      "tessa",
+      "I stood there choosing a photograph. He is right behind me.",
+      "thought"
+    ],
+    [
+      "iris",
+      "Did you notice anything from where you were standing?"
+    ],
+    [
+      "tessa",
+      "The mirror is in the picture. I was looking at the camera. That sounds awful when I say it."
+    ],
+    [
+      "iris",
+      "It tells me where your attention was. Keep the original, including the parts you would normally crop."
+    ]
+  ],
+  [
+    [
+      "iris",
+      "This export lists the audio cues and the commands that started them. Can it distinguish a timer from a person pressing a button?"
+    ],
+    [
+      "pip",
+      "Yes. Cue 17B, 8:02 precisely. Manual GO. Trigger source: the stage-manager console at stage left."
+    ],
+    [
+      "iris",
+      "Could the upstairs booth have sent it?"
+    ],
+    [
+      "pip",
+      "It was in monitor-only mode. This command came from the downstairs station. The log can be reviewed here in the booth."
+    ],
+    [
+      "iris",
+      "And the file?"
+    ],
+    [
+      "pip",
+      "An edited rehearsal: “Mara, put that down!” and a crash. In the full recording, he was asking her to lower a speaker."
+    ],
+    [
+      "mara",
+      "He said that when I nearly dropped the speaker. He laughed afterwards.",
+      "thought"
+    ],
+    [
+      "iris",
+      "They cut the laugh?"
+    ],
+    [
+      "pip",
+      "And the words around it. The crash is a separate edit."
+    ],
+    [
+      "mara",
+      "I have heard that shout in my head all night. I had forgotten the real conversation."
+    ],
+    [
+      "iris",
+      "We will keep the full recording beside the cue log. The missing words matter too."
+    ]
+  ],
+  [
+    [
+      "hank",
+      "The recorder team recovered a second channel overnight. The clocks have been checked against the first channel and the time signal."
+    ],
+    [
+      "iris",
+      "Wait. Go back to the lower landing. That is Vale carrying a cup.",
+      "intense"
+    ],
+    [
+      "mara",
+      "At 7:59? After Tessa’s photograph?",
+      "intense"
+    ],
+    [
+      "hank",
+      "7:59:10. He returns towards the stage twelve seconds later. Identity and continuity are independently verified."
+    ],
+    [
+      "mara",
+      "I spent yesterday trying to remember whether I could have heard him fall. And he was walking around with coffee.",
+      "thought"
+    ],
+    [
+      "iris",
+      "I argued from that photograph as if I knew everything that had happened after it. I did not.",
+      "thought"
+    ],
+    [
+      "mara",
+      "Does this mean we start again?"
+    ],
+    [
+      "iris",
+      "It means we correct what we got wrong. Your booth footage is still here."
+    ],
+    [
+      "hank",
+      "There is a later desk segment at 8:01:40. Take the continuous export, not just these frames."
+    ],
+    [
+      "iris",
+      "Yes. This time I want the whole interval in front of me."
+    ]
+  ],
+  [
+    [
+      "hank",
+      "The laboratory has separated two awards. The first inventory treated pieces from both as one object."
+    ],
+    [
+      "iris",
+      "Two? We spent an entire hearing talking about “the award.”",
+      "intense"
+    ],
+    [
+      "hank",
+      "A is hollow resin under brass paint. B is solid brass. Their handles came from the same mould."
+    ],
+    [
+      "mara",
+      "The one I picked up felt light. I thought I was remembering it wrong.",
+      "thought"
+    ],
+    [
+      "iris",
+      "You should not have had to explain away your own memory to fit a label."
+    ],
+    [
+      "hank",
+      "The corrected sheet keeps the original labels, weights and fracture matches. You can trace every change."
+    ],
+    [
+      "iris",
+      "And the injury reconstruction?"
+    ],
+    [
+      "hank",
+      "It describes an impact from above and a separate superficial injury. The lab’s scope is stated in the report."
+    ],
+    [
+      "mara",
+      "I keep thinking I understand what I walked into. Then another piece changes."
+    ],
+    [
+      "iris",
+      "Then we take the pieces separately. We do not force them back into yesterday’s story."
+    ]
+  ],
+  [
+    [
+      "tessa",
+      "This was embargoed until after the performance. The schedule, publicity agreement and correspondence are all here."
+    ],
+    [
+      "iris",
+      "“7:58: death tableau. 8:03: resurrection.” Tessa, what am I reading?",
+      "intense"
+    ],
+    [
+      "tessa",
+      "A publicity stunt. Adrian was going to announce three rediscovered plays. I was meant to publish the photograph first.",
+      "thought"
+    ],
+    [
+      "mara",
+      "You knew he was pretending? You let us sit through yesterday without saying that?",
+      "intense"
+    ],
+    [
+      "tessa",
+      "I thought the stunt had become a real killing. Every explanation I rehearsed sounded like I had helped arrange it."
+    ],
+    [
+      "mara",
+      "So you rehearsed explanations while I was on trial."
+    ],
+    [
+      "tessa",
+      "Yes. I was afraid. That is the answer, not an excuse.",
+      "thought"
+    ],
+    [
+      "iris",
+      "And the plays? The estates behind them?"
+    ],
+    [
+      "tessa",
+      "Invented provenance. A story to sell the opening. Celia was promised a credit for her sister."
+    ],
+    [
+      "mara",
+      "Even the resurrection had a press release. Of course it did."
+    ],
+    [
+      "iris",
+      "I need the signed agreement and the correspondence together. We will ask everyone what they actually agreed to."
+    ],
+    [
+      "tessa",
+      "Take the originals. I have done enough editing."
+    ]
+  ],
+  [
+    [
+      "hank",
+      "This recorder is independent of the audio editor. The examiner verified its export separately."
+    ],
+    [
+      "iris",
+      "There is a load reading here. 4.8 kilograms. I thought we were checking a sound cue.",
+      "intense"
+    ],
+    [
+      "celia",
+      "My console said AUDIO ONLY. I read it before I pressed GO."
+    ],
+    [
+      "hank",
+      "The export records a rig release at 8:02 as well as the audio. Channel names and units are on the attached key."
+    ],
+    [
+      "celia",
+      "I remember that button more clearly than anything else in the room. I cannot remember a warning that was not there.",
+      "thought"
+    ],
+    [
+      "iris",
+      "I am not asking you to invent one. Tell me exactly what the screen showed."
+    ],
+    [
+      "celia",
+      "The cue number. AUDIO ONLY. Then the green confirmation. That is all."
+    ],
+    [
+      "iris",
+      "Who could get into the maintenance cabinet?"
+    ],
+    [
+      "hank",
+      "Operator authentication is included, along with the camera reference. Read those beside the event times."
+    ],
+    [
+      "iris",
+      "We will. First, Celia, let me write down what you saw in your own words."
+    ]
+  ],
+  [
+    [
+      "vera",
+      "The bank supplied a certified archive. Signatures, confirmation image and revision hash have been checked."
+    ],
+    [
+      "iris",
+      "These are not just royalty accounts. There is a production revision attached: “Replace banner load with award B.”",
+      "intense"
+    ],
+    [
+      "vera",
+      "That is the wording in the original."
+    ],
+    [
+      "iris",
+      "And below it, an instruction to suppress the relay label. Someone put this in writing.",
+      "thought"
+    ],
+    [
+      "vera",
+      "A bank archive can preserve an ugly instruction as readily as an ordinary one."
+    ],
+    [
+      "iris",
+      "Pip’s name is on the approval. He has been standing beside me explaining how all this equipment works."
+    ],
+    [
+      "vera",
+      "Then you have questions to put to him. Give him the exact document to answer."
+    ],
+    [
+      "iris",
+      "The accounts also name him as registered owner of the estates. Tessa called them a publicity invention."
+    ],
+    [
+      "vera",
+      "The money moving through them was real."
+    ],
+    [
+      "iris",
+      "I want a moment before we go back inside.",
+      "thought"
+    ],
+    [
+      "vera",
+      "Take one. Then bring the complete archive."
+    ]
+  ]
+];
 function examine(i){state.notesGroup=null;const c=clues[i];if(!c||c.day!==(state.day||1))return;if(!state.found.includes(c.id))state.found.push(c.id);state.optionalReturn={mode:'investigate',statement:state.statement,scene:state.scene||'stage',group:c.bg,id:c.id};state.scene=c.bg;speak([...investigationDialogue[i],['iris',evidence.find(e=>e.id===c.id).name+' added to the court record.']],'investigate');}
 function step(d){if(state.mode!=='cross')return;state.statement=(state.statement+d+trials[state.stage].lines.length)%trials[state.stage].lines.length;render();}
 function modal(title,html,kicker='CASE 01'){ $('modalTitle').textContent=title;$('modalKicker').textContent=kicker;$('modalBody').innerHTML=html;if(!$('modal').open)$('modal').showModal();}
