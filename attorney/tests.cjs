@@ -56,7 +56,7 @@ assert.equal(run('evidence.length'),10);
 assert.equal(run("evidence.map(e=>e.id).join(',')"),'report,mic,alibi,photo,log,camera2,lab,packet,relay,ledger');
 assert.ok(run("trials.slice(-3).every(t=>t.who==='ghost')"));
 assert.ok(run("trials[11].success.some(l=>l[0]==='vale'&&l[1].includes('never was a second man'))"));
-assert.ok(run("trials[11].success.some(l=>l[0]==='judge'&&l[1].includes('watched the release'))"));
+assert.ok(run("trials[11].success.some(l=>l[0]==='judge'&&l[1].includes('nobody left to stop it'))"));
 vm.runInContext(src.slice(src.indexOf('const evidenceNotes='),src.indexOf('function inspectEvidence(')),ctx);
 run('state.stage=8');assert.equal(run("notesFor('relay').points.length"),1);
 run('state.stage=9');assert.equal(run("notesFor('relay').points.length"),2);
@@ -71,3 +71,8 @@ assert.ok(run("documentDetails.packet.text.includes('performer: ADRIAN VALE')"))
 assert.ok(run("documentDetails.report.text.includes('no signed death certificate')"));
 assert.ok(run("trials[11].success.some(l=>l[0]==='iris'&&l[1].includes('both intended to kill'))"));
 console.log('Passed: Vale portrait crop, shared identity in existing packet, uncertified death, attempted-killing resolution.');
+
+assert.ok(run("documentDetails.relay.text.includes('sole release trigger')"));
+assert.ok(run("trials[9].success.some(l=>l[1].includes('cancelled that visit'))"));
+assert.equal(/secondary latch|SAFETY INTERLOCK|two rig channels|8:01:56/.test(src),false);
+console.log('Passed: single rig trigger, forged inspection clearance and judge connection.');
